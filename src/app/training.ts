@@ -47,3 +47,4 @@ export const users: ISystemUser[] = [
 export const filteredUsers = users.filter(user => user.age >= 18);
 
 console.log(filteredUsers);
+
