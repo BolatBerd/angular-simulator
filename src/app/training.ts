@@ -17,7 +17,7 @@ export function calculateSum(a: number, b: number): number {
 
 console.log(calculateSum(5, 10));
 
-export function formatText(text: string, format: 'uppercase' | 'lowercase' | 'capitalize'): string {
+export function formatText(text: string, format: typeof textFormat): string {
   switch (format) {
     case 'uppercase':
       return text.toUpperCase();
