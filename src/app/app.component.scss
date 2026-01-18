@@ -7,24 +7,15 @@
 
   height: 985px;
 }
-  div {
+  div .padding-top-8 {
      padding-top: 8px;
   }
 
-// .logo {
-//   display: flex;
-//   flex-direction: column;
-//   gap: 9px;
-// }
-
-
 .nav {
-  display: flex;
-  justify-content: space-between;
-  gap: 24px;
-  font-size: 18px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
   font-weight: 600;
-
 }
   a{
     color: var(--primary-color);
@@ -33,14 +24,12 @@
 
 .consultation {
   margin-left: 49px;
-  font-size: 16px;;
   width: 157px;
   height: 44px;
   background-color: var(--bt-color);
   color: var(--primary-color);
   font-family: 'Nunito Sans';
   border: none;
-  border-radius: 8px;
 }
 
 .logo-name{
@@ -65,18 +54,38 @@
 .menu {
   background: #FFFFFF33;
   height: 161px;
-  border-radius: 8px;
 }
 
 .menu-item {
   margin-left: 43px;
   width: 1095px;
   height: 81px;
+  padding-top: 40px;
+  align-items: start;
+  justify-self: start;
 }
 
 .button {
+  background-color: var(--white-color);
   color: var(--bt-color);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
 }
 
+.menu-field {
+  width: 270px;
+}
 
+.menu-title {
+  height: 52px;
+  border: 1px solid #fff;
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+}
 
+.menu-subtitle {
+  opacity: 0.7;
+  margin-top: 8px;
+}

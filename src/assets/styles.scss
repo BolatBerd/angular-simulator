@@ -5,11 +5,6 @@
   font-family: 'Nunito Sans', sans-serif;
 }
 
-.container {
-  margin: 0 auto;
-  width: 1180px;
-}
-
 :root {
   --primary-color: #FDFDFD;
   --black-color: #18121E;
@@ -17,6 +12,12 @@
   --white-color: #FFFFFF;
   --footer-header-color: #F3F5F4;
   --bt-color: #1A3E3E;
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .flex-center {
@@ -48,14 +49,17 @@
   gap: 9px;
 }
 
-.font-16 {
-  font-size: 16px;
-}
-
 .font-14 {
   font-size: 14px;
 }
 
+.font-16 {
+  font-size: 16px;
+}
+
+.font-18 {
+  font-size: 18px;
+}
 
 .size-270-52 {
   width: 270px;
@@ -68,10 +72,15 @@
   border-radius: 8px;
 }
 
+.border-radius-8 {
+  border-radius: 8px;
+}
+
 .padding-top-8 {
   padding-top: 8px;
 }
 
-// .align-items {
-//     align-items: center;
-// }
+.padding-right-16 {
+  padding-right: 16px;
+}
+
