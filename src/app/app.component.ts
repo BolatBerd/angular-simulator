@@ -14,21 +14,17 @@ import './training';
 export class AppComponent {
 
   constructor() {
-    this.saveLestVisitDate();
+    this.saveLastVisitDate();
     this.countVisit();
   }
 
   testColorEnum(color: Color): boolean {
-    if (color === Color.RED || color === Color.GREEN || color === Color.BLUE) {
-      return true;
-    } else {
-      return false;
-    }
+    return (color === Color.RED || color === Color.GREEN || color === Color.BLUE);
   }
 
-  saveLestVisitDate(): void {
-    const correntDate: string = new Date().toISOString();
-    localStorage.setItem('lestVisitDate', correntDate);
+  saveLastVisitDate(): void {
+    const currentDate: string = new Date().toISOString();
+    localStorage.setItem('lastVisitDate', currentDate);
   }
 
   countVisit(): void {
@@ -42,8 +38,20 @@ export class AppComponent {
 
 }
 
-const tours = new Collection<String>();
-const prices = new Collection<Number>();
+const tours = new Collection<string>([
+  'Поход на реку',
+  'Поход на озеро',
+  'Поход в горы'
+]);
 
-tours.replace(0, 'Поход на реку');
+const prices = new Collection<number>();
+
 prices.replace(0, 550);
+
+console.log(tours.getAll());
+console.log(prices.getAll());
+console.log(tours.getByNumber(1));
+tours.remove(1);
+console.log(tours.getAll());
+tours.clearCollection();
+console.log(tours.getAll());
