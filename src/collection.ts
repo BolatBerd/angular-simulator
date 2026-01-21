@@ -16,7 +16,7 @@ export class Collection<T> {
   }
 
   remove(index: number): T | undefined {
-    return this.items.slice(index, 1)[0];
+    return this.items.splice(index, 1)[0];
   }
 
   replace(index: number, newСomponent: T): void {
