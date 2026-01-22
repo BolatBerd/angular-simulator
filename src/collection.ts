@@ -1,26 +1,30 @@
 export class Collection<T> {
 
-  constructor(private items: T[] = []) {}
+  items: T[] = [];
 
+  constructor(items: T[]) {
+
+    this.items = items;
+  }
 
   getAll(): T[] {
     return this.items;
   }
 
-  getByNumber(index: number): T | undefined {
+  getByIndex(index: number): T | undefined {
     return this.items[index];
   }
 
-  clearCollection(): void{
+  clearCollection(): void {
     this.items = [];
   }
 
-  remove(index: number): T | undefined {
-    return this.items.splice(index, 1)[0];
+  remove(index: number): void {
+    this.items.splice(index, 1)[0];
   }
 
-  replace(index: number, newСomponent: T): void {
-   this.items[index] = newСomponent;
+  replace(index: number, newValue: T): void {
+    this.items[index] = newValue;
   }
 
 }

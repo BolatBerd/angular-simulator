@@ -13,13 +13,30 @@ import './training';
 
 export class AppComponent {
 
+  companyName: string = 'РУМТИБЕТ';
+
+  tours = new Collection<string>([
+    'Поход в горы',
+    'Прогулка по парку',
+    'Поход к реке'
+  ]);
+
+  prices = new Collection<number>([
+    500,
+    600,
+    700
+  ]);
+
   constructor() {
     this.saveLastVisitDate();
     this.countVisit();
+    this.prices.replace(2, 550);
+    this.tours.remove(1);
+    this.tours.clearCollection();
   }
 
-  testColorEnum(color: Color): boolean {
-    return (color === Color.RED || color === Color.GREEN || color === Color.BLUE);
+  isColorEnum(color: string): boolean {
+    return color === Color.BLUE || color === Color.GREEN || color === Color.RED;
   }
 
   saveLastVisitDate(): void {
@@ -29,7 +46,7 @@ export class AppComponent {
 
   countVisit(): void {
     const countString: string | null = localStorage.getItem('visitCount');
-    let count = countString ? parseInt(countString, 10) : 0;
+    let count: number = countString ? parseInt(countString, 10) : 0;
 
     count++;
 
@@ -37,21 +54,3 @@ export class AppComponent {
   }
 
 }
-
-const tours = new Collection<string>([
-  'Поход на реку',
-  'Поход на озеро',
-  'Поход в горы'
-]);
-
-const prices = new Collection<number>();
-
-prices.replace(0, 550);
-
-console.log(tours.getAll());
-console.log(prices.getAll());
-console.log(tours.getByNumber(1));
-tours.remove(1);
-console.log(tours.getAll());
-tours.clearCollection();
-console.log(tours.getAll());
