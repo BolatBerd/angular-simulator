@@ -35,8 +35,13 @@ export class AppComponent {
     this.tours.clearCollection();
   }
 
-  isColorEnum(color: string): boolean {
-    return color === Color.BLUE || color === Color.GREEN || color === Color.RED;
+  isColorEnum(color: Color): boolean {
+    const primaryColor: Color[] = [
+      Color.BLUE,
+      Color.GREEN,
+      Color.RED
+    ];
+    return primaryColor.includes(color);
   }
 
   saveLastVisitDate(): void {
