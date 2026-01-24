@@ -10,18 +10,17 @@ import './training';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-
 export class AppComponent {
 
-  companyName: string = 'РУМТИБЕТ';
+  companyName: string = 'румтибет';
 
-  tours = new Collection<string>([
+  tours: Collection<string> = new Collection<string>([
     'Поход в горы',
     'Прогулка по парку',
     'Поход к реке'
   ]);
 
-  prices = new Collection<number>([
+  prices: Collection<number> = new Collection<number>([
     500,
     600,
     700
@@ -35,7 +34,7 @@ export class AppComponent {
     this.tours.clearCollection();
   }
 
-  isColorEnum(color: Color): boolean {
+  isColorPrimary(color: Color): boolean {
     const primaryColor: Color[] = [
       Color.BLUE,
       Color.GREEN,
@@ -46,16 +45,16 @@ export class AppComponent {
 
   saveLastVisitDate(): void {
     const currentDate: string = new Date().toISOString();
-    localStorage.setItem('lastVisitDate', currentDate);
+    localStorage.setItem('last-visit-date', currentDate);
   }
 
   countVisit(): void {
-    const countString: string | null = localStorage.getItem('visitCount');
+    const countString: string | null = localStorage.getItem('visit-count');
     let count: number = countString ? parseInt(countString, 10) : 0;
 
     count++;
 
-    localStorage.setItem('visitCount', count.toString());
+    localStorage.setItem('visit-count', count.toString());
   }
 
 }

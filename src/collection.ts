@@ -3,7 +3,6 @@ export class Collection<T> {
   items: T[] = [];
 
   constructor(items: T[]) {
-
     this.items = items;
   }
 
