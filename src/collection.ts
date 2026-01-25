@@ -19,7 +19,7 @@ export class Collection<T> {
   }
 
   remove(index: number): void {
-    this.items.splice(index, 1)[0];
+    this.items.splice(index, 1);
   }
 
   replace(index: number, newValue: T): void {
