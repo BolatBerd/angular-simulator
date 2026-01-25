@@ -1,0 +1,92 @@
+.header {
+  color: var(--primary-color);
+  background-image: url("/images/header-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  height: 985px;
+}
+  div .padding-top-8 {
+     padding-top: 8px;
+  }
+
+.nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-weight: 600;
+}
+  a{
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+
+.consultation {
+  margin-left: 49px;
+  width: 157px;
+  height: 44px;
+  background-color: var(--bt-color);
+  color: var(--primary-color);
+  font-family: 'Nunito Sans';
+  border: none;
+}
+
+.logo-name{
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.header-text{
+  text-align: left;
+  margin-top: 463px;
+  height: 150px;
+  width: 1080px;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 50px;
+}
+
+  span {
+    display: block;
+  }
+
+.menu {
+  background: #FFFFFF33;
+  height: 161px;
+}
+
+.menu-item {
+  margin-left: 43px;
+  width: 1095px;
+  height: 81px;
+  padding-top: 40px;
+  align-items: start;
+  justify-self: start;
+}
+
+.button {
+  background-color: var(--white-color);
+  color: var(--bt-color);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.menu-field {
+  width: 270px;
+}
+
+.menu-title {
+  height: 52px;
+  border: 1px solid #fff;
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+}
+
+.menu-subtitle {
+  opacity: 0.7;
+  margin-top: 8px;
+}
