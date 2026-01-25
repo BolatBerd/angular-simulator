@@ -28,7 +28,7 @@ export class AppComponent {
 
   constructor() {
     this.saveLastVisitDate();
-    this.saveCountVisit();
+    this.saveVisitCount();
     this.prices.replace(2, 550);
     this.tours.remove(1);
     this.tours.clearCollection();
@@ -48,7 +48,7 @@ export class AppComponent {
     localStorage.setItem('last-visit-date', currentDate);
   }
 
-  saveCountVisit(): void {
+  saveVisitCount(): void {
     const countString: string | null = localStorage.getItem('visit-count');
     let count: number = countString ? parseInt(countString, 10) : 0;
 
