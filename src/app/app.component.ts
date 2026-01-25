@@ -11,6 +11,7 @@ import './training';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+
   companyName: string = 'румтибет';
 
   tours: Collection<string> = new Collection<string>([
@@ -27,7 +28,7 @@ export class AppComponent {
 
   constructor() {
     this.saveLastVisitDate();
-    this.getCountVisit();
+    this.saveCountVisit();
     this.prices.replace(2, 550);
     this.tours.remove(1);
     this.tours.clearCollection();
@@ -47,7 +48,7 @@ export class AppComponent {
     localStorage.setItem('last-visit-date', currentDate);
   }
 
-  getCountVisit(): void {
+  saveCountVisit(): void {
     const countString: string | null = localStorage.getItem('visit-count');
     let count: number = countString ? parseInt(countString, 10) : 0;
 
