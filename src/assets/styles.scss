@@ -3,6 +3,9 @@
 
 * {
   font-family: 'Nunito Sans', sans-serif;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
 :root {
@@ -12,6 +15,14 @@
   --white-color: #FFFFFF;
   --footer-header-color: #F3F5F4;
   --bt-color: #1A3E3E;
+}
+
+.color-yellow {
+  color:var(--yellow-color);
+}
+
+.color-black {
+  color: var(--black-color);
 }
 
 .container {
@@ -68,6 +79,15 @@ label {
   font-size: 18px;
 }
 
+.font-24 {
+  font-size: 24px;
+}
+
+.font-32 {
+  font-size: 32px;
+}
+
+
 .border {
   border: 1px solid #FFFFFF;
   border-radius: 8px;
@@ -84,3 +104,53 @@ label {
 .padding-right-16 {
   padding-right: 16px;
 }
+
+.height-526 {
+  height: 526px;
+}
+
+.width-480 {
+  width: 480px;
+}
+
+.margin-top-182 {
+  margin-top: 182px;
+}
+
+.margin-top-36 {
+  margin-top: 36px;
+}
+
+.margin-left-250 {
+  margin-left: 250px;
+}
+
+.margin-bottom-8 {
+  margin-bottom: 8px;
+}
+
+// .margin-top-0 {
+
+// }
+
+.index-0 {
+  z-index: 0;
+}
+
+.index-1 {
+  z-index: 1;
+}
+
+.index-2 {
+  z-index: 12;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+

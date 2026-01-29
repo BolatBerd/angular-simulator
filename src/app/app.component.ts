@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Color } from '../enums/Color';
 import { Collection } from '../collection';
 import './training';
+import { IImeges } from '../interfaces/IImeges';
 
 
 @Component({
@@ -13,6 +14,43 @@ import './training';
 export class AppComponent {
 
   companyName: string = 'румтибет';
+  history: string = 'Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur"и занялся его поисками в классической латинской литературе.';
+
+  selectImeges!: IImeges;
+
+  imeges: IImeges[] = [
+    {
+      id: 1,
+      src: "/images/mountains.png"
+    },
+    {
+      id: 2,
+      src: "/images/mountains.png"
+    },
+    {
+      id: 3,
+      src: "/images/mountains.png"
+    },
+    {
+      id: 4,
+      src: "/images/mountains.png"
+    }
+  ]
+
+  getImageRadiusClass(id: number): string {
+  switch (id) {
+    case 1:
+      return 'radius-top-left';
+    case 2:
+      return 'radius-top-right';
+    case 3:
+      return 'radius-bottom-left';
+    case 4:
+      return 'radius-bottom-right';
+    default:
+      return '';
+  }
+}
 
   tours: Collection<string> = new Collection<string>([
     'Поход в горы',
