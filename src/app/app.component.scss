@@ -32,6 +32,15 @@
   border: none;
 }
 
+.bt-consultation {
+  width: 200px;
+  height: 52px;
+  background-color: var(--bt-color);
+  color: var(--primary-color);
+  font-family: 'Nunito Sans';
+  border: none;
+}
+
 .logo-name{
   font-size: 24px;
   font-weight: 700;
@@ -90,3 +99,58 @@
   opacity: 0.7;
   margin-top: 8px;
 }
+
+.images-house {
+  left: 130px;
+  top: 126px;
+}
+
+.svg-play {
+  left: 280px;
+  top: 300px;
+  cursor: pointer;
+}
+
+.wrapper-text {
+  left: 600px;
+  top: 64px;
+}
+
+.about {
+  align-items: flex-start;
+}
+
+.about-images {
+  width: 480px;
+  height: 526px;
+  position: relative;
+}
+
+.about-text {
+  width: 580px;
+  height: 398px;
+}
+
+.section-label {
+  padding: 6px 0 2px 0;
+}
+
+.images-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 250px);
+  gap: 16px;
+}
+
+.image {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+}
+
+  .radius-top-left {
+    border-radius: 0 80px 0 80px;
+  }
+
+  .radius-top-right {
+    border-radius:  80px 0 80px 0;
+  }
