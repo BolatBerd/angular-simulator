@@ -59,21 +59,44 @@
       </div>
       <div class="about-text">
         <h2 class="section-label color-yellow font-24">о нашем походе</h2>
-        <h1 class="section-title color-black font-32">Исследуйте все горные массивы мира вместе с нами</h1>
-        <p class="section-text color-black font-18">{{history}}</p>
+        <h1 class="section-title color-black font-32 margin-bottom-40px">Исследуйте все горные массивы мира вместе с нами</h1>
+        <p class="section-text color-black font-18 margin-bottom-40px line-height-150">{{history}}</p>
         <button class="bt-consultation font-16 border-radius-8" aria-label="Заказать консультацию">Программа тура</button>
       </div>
     </div>
-    <div class="images-grid">
-      @for (imege of imeges; track imege.id){
-        <img
-          [src]="imege.src"
-          class="image"
-          [class.radius-top-left]="imege.id === 1 || imege.id === 4"
-          [class.radius-top-right]="imege.id === 2 || imege.id === 3"
-          [alt]=""
-        />
-      }
-    </div>
+    <section class="offer-section">
+      <div class="container">
+        <div class="container-second-block flex-space-between">
+          <div class="container-offer">
+            <h2 class="subtitle color-yellow font-24">наше предложение</h2>
+            <h1 class="subtitle-title color-black font-32">Лучшие программы для тебя</h1>
+            <p class="desc color-black font-18 margin-top-30 line-height-150">{{historySecondBlock}}</p>
+            <div class="features margin-top-40">
+              @for (list of lists; track list.id){
+                <div class="feature-item  margin-top-20">
+                  <img [src]="list.src" class="icons" />
+                  <div class="feature-text">
+                    <h3>{{list.h3}}</h3>
+                    <p>{{list.p}}</p>
+                  </div>
+                </div>
+              }
+            </div>
+            <button class="bt-consultation font-16 border-radius-8  margin-top-40" aria-label="Заказать консультацию">Стоимость программ</button>
+          </div>
+          <div class="images-grid">
+            @for (imege of imeges; track imege.id){
+              <img
+                [src]="imege.src"
+                class="image"
+                [class.radius-top-left]="imege.id === 1 || imege.id === 4"
+                [class.radius-top-right]="imege.id === 2 || imege.id === 3"
+                [alt]=""
+              />
+            }
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </header>
