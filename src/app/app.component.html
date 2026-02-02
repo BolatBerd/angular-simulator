@@ -14,8 +14,31 @@
           <a href="">Блог</a>
           <a href="">Контакты</a>
         </ul>
-        <button class="consultation font-16 border-radius-8" aria-label="Заказать консультацию">Консультация</button>
+        <button
+          class="consultation font-16 border-radius-8"
+          aria-label="Заказать консультацию">Консультация
+        </button>
       </div>
+    </div>
+    <div class="content flex-space-between">
+      @if (showDate) {
+        <span class="timer">
+          {{ currentDate  | date:'dd.MM.yyyy HH:mm:ss'}}
+        </span>
+      } @else {
+        <div class="clicker flex-space-between">
+          @if (count > 0) {
+            <button class="switcher cursor-pointer" (click)="decrement()">-</button>
+          } @else {
+            <button class="switcher cursor-pointer">-</button>
+          }
+          <span>{{count}}</span>
+          <button class="switcher cursor-pointer" (click)="increment()">+</button>
+        </div>
+      }
+      <button class="consultation font-16 border-radius-8"
+        (click)="toggleView()">{{ showDate ? 'Показать кликер' : 'Показать дату' }}
+      </button>
     </div>
     <div class="header-text">
       <span>насладись прогулкой в горах</span>
@@ -24,34 +47,75 @@
     <div class="menu border-radius-8 margin-top-36">
       <div class="flex-space-between gap-24 menu-item ">
         <div class="menu-field">
-          <div class="flex-space-between menu-title border-radius-8 font-16">
-            <span>Локация для тура</span>
+          <div class="flex-space-between menu-title border-radius-8 font-16 position-relative"
+            (click)="openList(locationImput)"
+          >
+            <select class="select select-location-person" #locationImput [(ngModel)]="form.location">
+              <option value="" disabled selected>Локация для тура</option>
+              <option value="altai">Алтай</option>
+              <option value="caucasus">Кавказ</option>
+              <option value="baikal">Байкал</option>
+            </select>
             <img class="padding-right-16" src="/images/arrow-left-icon.svg" alt="arrow-left">
           </div>
           <span class="menu-subtitle font-14">выберите из списка</span>
         </div>
         <div class="menu-field">
-          <div class="flex-space-between menu-title border-radius-8 font-16">
-            <span>Дата похода</span>
-            <img class="padding-right-16" src="/images/formkit_date.svg" alt="arrow-left">
+          <div class="
+          flex-space-between
+          menu-title position-relative
+          border-radius-8 font-16"
+          (click)="openDatePicker(dateInput)"
+          >
+            <input
+              #dateInput
+              class="select position-relative"
+              type="date"
+              [(ngModel)]="form.date"
+              placeholder="Дата похода"
+            />
+            <label class="date-label cursor-pointer position-absolute">
+              <img
+                class="padding-right-16 date-icon cursor-pointer"
+                src="/images/formkit_date.svg"
+                alt='calendar'
+
+              />
+            </label>
         </div>
           <span class="menu-subtitle font-14">укажите диапазон</span>
         </div>
         <div class="menu-field">
-          <div class="flex-space-between menu-title border-radius-8 font-16">
-            <span>Участники</span>
+          <div class="flex-space-between menu-title border-radius-8 font-16" (click)="openList(personImput)">
+            <select class="select select-location-person" #personImput [(ngModel)]="form.persons" >
+              <option value="" disabled selected>выберите из списка</option>
+              <option value="1">1 человек</option>
+              <option value="2">2 человека</option>
+              <option value="3">3 человека</option>
+              <option value="4+">4+ человека</option>
+            </select>
             <img class="padding-right-16" src="/images/arrow-left-icon.svg" alt="arrow-left">
           </div>
-          <span class="menu-subtitle font-14">минимум 4 человека</span>
+          <span class="menu-subtitle font-14">выберите из списка</span>
         </div>
-        <button class="button size-270-52 border font-16 align-items border-radius-8" type="submit">Найти программу</button>
+        <button
+          [disabled]="!isFormValid"
+          class="button size-270-52 border font-16 align-items border-radius-8"
+          (click)="info()"
+          >{{ isFormValid ? 'Найти программу' : 'Заполните все поля' }}
+        </button>
       </div>
     </div>
     <div class="about flex-space-between margin-top-182">
       <div class="about-images position-relative">
         <img class="index-0" src="/images/mountains.png" alt="Горы" width="350" height="400">
         <div>
-          <img class="index-1 position-absolute images-house" src="/images/house-in-mountains.png" alt="Горы" width="350px" height="400px">
+          <img
+            class="index-1 position-absolute images-house"
+            src="/images/house-in-mountains.png"
+            alt="Горы"
+            width="350px"
+            height="400px">
           <button>
             <img class="index-2 position-absolute svg-play" src="/images/play.svg" alt="">
           </button>
@@ -61,7 +125,11 @@
         <h2 class="section-label color-yellow font-24">о нашем походе</h2>
         <h1 class="section-title color-black font-32 margin-bottom-40px">Исследуйте все горные массивы мира вместе с нами</h1>
         <p class="section-text color-black font-18 margin-bottom-40px line-height-150">{{history}}</p>
-        <button class="bt-consultation font-16 border-radius-8" aria-label="Заказать консультацию">Программа тура</button>
+        <button
+          class="bt-consultation font-16 border-radius-8"
+          aria-label="Заказать консультацию"
+          >Программа тура
+        </button>
       </div>
     </div>
     <section class="offer-section">
