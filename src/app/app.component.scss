@@ -326,3 +326,23 @@
   border: none;
   color: var(--primary-color);
 }
+
+.spinner {
+  line-height: 150%;
+  width: 394px;
+  height: 90px;
+  color: #101010;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  padding: 0 80px 0 80px;
+  font-size: 20px;
+  width: 685px;
+  height: 152px;
+  background-color: #D9D9D9;
+}
+

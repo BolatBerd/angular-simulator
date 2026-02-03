@@ -7,7 +7,7 @@ import { ILists } from '../interfaces/Lists';
 import { FormsModule } from '@angular/forms';
 import { HeroComponent }  from '../classes/HeroComponent';
 import { interval, Subscription } from 'rxjs';
-import { DatePipe, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -31,6 +31,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.sub = interval(1000).subscribe(() => {
       this.currentDate = new Date();
     });
+    this.onInit();
   }
 
   public ngOnDestroy() {
@@ -47,14 +48,26 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  public text: string = '';
+
+  protected isLoading: boolean = true;
+
+  private onInit() {
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 2000);
+  }
+
   public count: number = 0;
 
   public increment(): void {
-    this.count++;
+      this.count++;
   }
 
   public decrement(): void {
-    this.count--;
+
+      this.count--;
+
   }
 
   private heroComponent: HeroComponent = new HeroComponent();

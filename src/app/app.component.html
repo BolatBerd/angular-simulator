@@ -1,3 +1,9 @@
+@if (isLoading) {
+      <div class="loading-overlay flex-space-between">
+        <img src="/images/loading.svg" alt="">
+        <span class="spinner">Иконка загрузки, которую мы должны отобразить. Добавить анимацию прокрутки</span>
+      </div>
+    } @else {
 <header class="header">
   <div class="container">
     <div class="flex-space-between padding-top-8" >
@@ -50,13 +56,21 @@
           <div class="flex-space-between menu-title border-radius-8 font-16 position-relative"
             (click)="openList(locationImput)"
           >
-            <select class="select select-location-person" #locationImput [(ngModel)]="form.location">
+            <select
+              class="select select-location-person"
+              #locationImput
+              [(ngModel)]="form.location"
+            >
               <option value="" disabled selected>Локация для тура</option>
               <option value="altai">Алтай</option>
               <option value="caucasus">Кавказ</option>
               <option value="baikal">Байкал</option>
             </select>
-            <img class="padding-right-16" src="/images/arrow-left-icon.svg" alt="arrow-left">
+            <img
+              class="padding-right-16"
+              src="/images/arrow-left-icon.svg"
+              alt="arrow-left"
+            >
           </div>
           <span class="menu-subtitle font-14">выберите из списка</span>
         </div>
@@ -79,15 +93,21 @@
                 class="padding-right-16 date-icon cursor-pointer"
                 src="/images/formkit_date.svg"
                 alt='calendar'
-
               />
             </label>
         </div>
           <span class="menu-subtitle font-14">укажите диапазон</span>
         </div>
         <div class="menu-field">
-          <div class="flex-space-between menu-title border-radius-8 font-16" (click)="openList(personImput)">
-            <select class="select select-location-person" #personImput [(ngModel)]="form.persons" >
+          <div
+            class="flex-space-between menu-title border-radius-8 font-16"
+            (click)="openList(personImput)"
+          >
+            <select
+              class="select select-location-person"
+              #personImput
+              [(ngModel)]="form.persons"
+            >
               <option value="" disabled selected>выберите из списка</option>
               <option value="1">1 человек</option>
               <option value="2">2 человека</option>
@@ -105,6 +125,13 @@
           >{{ isFormValid ? 'Найти программу' : 'Заполните все поля' }}
         </button>
       </div>
+    </div>
+    <div class="flex-space-between">
+      <input
+        type="text"
+        placeholder="Введите текст..."
+        [(ngModel)]="text">
+      <span class="result">{{text}}</span>
     </div>
     <div class="about flex-space-between margin-top-182">
       <div class="about-images position-relative">
@@ -168,3 +195,4 @@
     </section>
   </div>
 </header>
+}
