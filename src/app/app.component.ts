@@ -31,7 +31,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.sub = interval(1000).subscribe(() => {
       this.currentDate = new Date();
     });
-    // this.onInit();
+    this.onInit();
   }
 
   public ngOnDestroy() {
