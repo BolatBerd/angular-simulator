@@ -8,6 +8,6 @@ export class HeroComponent {
 
   get isFormsValid(): boolean {
     return !!(this.form.location && this.form.date && this.form.persons);
-    // return this.form.location !== '' && this.form.date !== '' && this.form.persons !== '';
   }
+
 }

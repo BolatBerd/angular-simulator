@@ -65,9 +65,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public decrement(): void {
-
       this.count--;
-
   }
 
   private heroComponent: HeroComponent = new HeroComponent();
@@ -75,6 +73,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public get isFormValid(): boolean {
     return this.heroComponent.isFormsValid;
   }
+
   public get form() {
     return this.heroComponent.form;
   }
@@ -97,7 +96,7 @@ export class AppComponent implements OnInit, OnDestroy {
     select.click();
   }
 
-  public info(): void {
+  public showInfo(): void {
     console.log('Программа выбрана');
   }
 
@@ -198,5 +197,4 @@ export class AppComponent implements OnInit, OnDestroy {
 
     localStorage.setItem('visit-count', count.toString());
   }
-
 }
