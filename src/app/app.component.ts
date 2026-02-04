@@ -18,29 +18,29 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  public companyName: string = 'румтибет';
-  public history: string = 'Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur"и занялся его поисками в классической латинской литературе.';
-  public historySecondBlock: string = 'Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа.';
-  public selectImeges!: IImeges;
-  public selectLists!: ILists;
+  companyName: string = 'румтибет';
+  history: string = 'Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur"и занялся его поисками в классической латинской литературе.';
+  historySecondBlock: string = 'Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа.';
+  selectImeges!: IImeges;
+  selectLists!: ILists;
 
-  public currentDate: Date = new Date();
+  currentDate: Date = new Date();
   private sub!: Subscription;
 
-  public ngOnInit() {
+  ngOnInit() {
     this.sub = interval(1000).subscribe(() => {
       this.currentDate = new Date();
     });
     this.onInit();
   }
 
-  public ngOnDestroy() {
+  ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
-  public showDate: boolean = false;
+  showDate: boolean = false;
 
-  public toggleView(): void {
+  toggleView(): void {
     this.showDate = !this.showDate;
 
     if (this.showDate) {
@@ -48,7 +48,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  public text: string = '';
+  text: string = '';
 
   protected isLoading: boolean = true;
 
@@ -58,27 +58,27 @@ export class AppComponent implements OnInit, OnDestroy {
     }, 2000);
   }
 
-  public count: number = 0;
+  count: number = 0;
 
-  public increment(): void {
+  increment(): void {
       this.count++;
   }
 
-  public decrement(): void {
+  decrement(): void {
       this.count--;
   }
 
   private heroComponent: HeroComponent = new HeroComponent();
 
-  public get isFormValid(): boolean {
+  get isFormValid(): boolean {
     return this.heroComponent.isFormsValid;
   }
 
-  public get form() {
+  get form() {
     return this.heroComponent.form;
   }
 
-  public openDatePicker(input: HTMLInputElement) {
+  openDatePicker(input: HTMLInputElement) {
   input.showPicker();
   }
 
@@ -96,7 +96,7 @@ export class AppComponent implements OnInit, OnDestroy {
     select.click();
   }
 
-  public showInfo(): void {
+  showInfo(): void {
     console.log('Программа выбрана');
   }
 
@@ -140,7 +140,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   ]
 
-  public getImageRadiusClass(id: number): string {
+  getImageRadiusClass(id: number): string {
   switch (id) {
     case 1:
       return 'radius-top-left';
@@ -167,7 +167,7 @@ export class AppComponent implements OnInit, OnDestroy {
     700
   ]);
 
-  public constructor() {
+  constructor() {
     this.saveLastVisitDate();
     this.saveVisitCount();
     this.prices.replace(2, 550);
