@@ -122,7 +122,7 @@
             [disabled]="!isFormValid"
             class="button size-270-52 border font-16 align-items border-radius-8"
             (click)="showInfo()"
-            >{{ isFormValid ? 'Найти программу' : 'Заполните все поля' }}
+          >{{ isFormValid ? 'Найти программу' : 'Заполните все поля' }}
           </button>
         </div>
       </div>
@@ -130,7 +130,8 @@
         <input
           type="text"
           placeholder="Введите текст..."
-          [(ngModel)]="text">
+          [(ngModel)]="text"
+        >
         <span class="result">{{text}}</span>
       </div>
       <div class="about flex-space-between margin-top-182">
@@ -142,7 +143,8 @@
               src="/images/house-in-mountains.png"
               alt="Горы"
               width="350px"
-              height="400px">
+              height="400px"
+            >
             <button>
               <img class="index-2 position-absolute svg-play" src="/images/play.svg" alt="">
             </button>
@@ -196,4 +198,3 @@
     </div>
   </header>
 }
-
