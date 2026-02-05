@@ -2,11 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Color } from '../enums/Color';
 import { Collection } from '../collection';
 import './training';
-import { IImeges } from '../interfaces/IImeges';
-import { ILists } from '../interfaces/Lists';
 import { FormsModule } from '@angular/forms';
-import { HeroComponent }  from '../classes/HeroComponent';
-import { interval, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 
@@ -21,21 +17,18 @@ export class AppComponent implements OnInit, OnDestroy {
   companyName: string = 'румтибет';
   history: string = 'Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur"и занялся его поисками в классической латинской литературе.';
   historySecondBlock: string = 'Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа.';
-  selectImeges!: IImeges;
-  selectLists!: ILists;
-
+  selectImeges!: { id: number; src: string};
+  selectLists!: { id: number; src: string; h3: string; p: string };
   currentDate: Date = new Date();
-  private sub!: Subscription;
+  private timer!: number;
 
   ngOnInit() {
-    this.sub = interval(1000).subscribe(() => {
-      this.currentDate = new Date();
-    });
+    this.timer = setInterval(() => this.currentDate = new Date(), 1000)
     this.onInit();
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    clearInterval(this.timer);
   }
 
   showDate: boolean = false;
@@ -60,22 +53,22 @@ export class AppComponent implements OnInit, OnDestroy {
 
   count: number = 0;
 
-  increment(): void {
+  incrementCount(): void {
       this.count++;
   }
 
-  decrement(): void {
+  decrementCount(): void {
       this.count--;
   }
 
-  private heroComponent: HeroComponent = new HeroComponent();
+  form = {
+    location: '',
+    date: '',
+    persons: ''
+  };
 
   get isFormValid(): boolean {
-    return this.heroComponent.isFormsValid;
-  }
-
-  get form() {
-    return this.heroComponent.form;
+    return !!(this.form.location && this.form.date && this.form.persons);
   }
 
   openDatePicker(input: HTMLInputElement) {
@@ -100,7 +93,7 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log('Программа выбрана');
   }
 
-  protected imeges: IImeges[] = [
+  protected imeges: { id: number;  src: string;}[] = [
     {
       id: 1,
       src: "/images/cup-coffee.png"
@@ -119,7 +112,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   ]
 
-  protected lists: ILists[] = [
+  protected lists: { id: number; src: string; h3: string; p: string }[] = [
     {
       id: 1,
       src: "/images/people.png",

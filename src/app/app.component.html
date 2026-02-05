@@ -1,6 +1,6 @@
 @if (isLoading) {
   <div class="loading-overlay flex-space-between">
-    <img class="rotate" src="/images/loading.svg" alt="loading">
+    <img class="rotate" src="/images/loading-icon.svg" alt="loading">
     <span class="spinner">Иконка загрузки, которую мы должны отобразить. Добавить анимацию прокрутки</span>
   </div>
 } @else {
@@ -29,17 +29,17 @@
       <div class="content flex-space-between">
         @if (showDate) {
           <span class="timer">
-            {{ currentDate  | date:'dd.MM.yyyy HH:mm:ss'}}
+            {{ currentDate  | date:'dd.MM.yyyy HH:mm:ss' }}
           </span>
         } @else {
           <div class="clicker flex-space-between">
             @if (count > 0) {
-              <button class="switcher cursor-pointer" (click)="decrement()">-</button>
+              <button class="switcher cursor-pointer" (click)="decrementCount()">-</button>
             } @else {
               <button class="switcher cursor-pointer">-</button>
             }
-            <span>{{count}}</span>
-            <button class="switcher cursor-pointer" (click)="increment()">+</button>
+            <span>{{ count }}</span>
+            <button class="switcher cursor-pointer" (click)="incrementCount()">+</button>
           </div>
         }
         <button class="consultation font-16 border-radius-8"
@@ -146,7 +146,11 @@
               height="400px"
             >
             <button>
-              <img class="index-2 position-absolute svg-play" src="/images/play.svg" alt="">
+              <img
+                class="index-2 position-absolute svg-play"
+                src="/images/play-icon.svg"
+                alt="play-icon"
+              >
             </button>
           </div>
         </div>
