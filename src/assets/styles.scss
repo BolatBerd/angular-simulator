@@ -42,7 +42,7 @@ label {
   flex-direction: column;
 }
 
-.flex-space-between {
+.flex-s-b {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -53,18 +53,11 @@ label {
   flex-direction: column;
 }
 
-.size-270-52 {
-  width: 270px;
-  height: 52px;
-  padding-top: 0px;
-}
-
-.gap-24 {
-  gap: 24px;
-}
-
-.gap-9 {
-  gap: 9px;
+.flex-col-cen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .font-14 {
@@ -87,56 +80,20 @@ label {
   font-size: 32px;
 }
 
-.border {
-  border: 1px solid #FFFFFF;
+.bor-r-8 {
   border-radius: 8px;
 }
 
-.border-radius-8 {
-  border-radius: 8px;
-}
-
-.padding-top-8 {
-  padding-top: 8px;
-}
-
-.padding-right-16 {
+.pad-r-16 {
   padding-right: 16px;
 }
 
-.height-526 {
-  height: 526px;
-}
-
-.width-480 {
-  width: 480px;
-}
-
-.margin-top-182 {
-  margin-top: 182px;
-}
-
-.margin-bottom-20 {
-  margin-bottom: 20px;
-}
-
-.margin-top-36 {
-  margin-top: 36px;
-}
-
-.margin-top-40 {
+.mrg-t-40 {
   margin-top: 40px;
 }
 
-.margin-left-250 {
-  margin-left: 250px;
-}
-
-.margin-bottom-8 {
-  margin-bottom: 8px;
-}
-.margin-bottom-40px {
-  margin-bottom: 40px;
+.mrg-t-80 {
+  margin-top: 80px;
 }
 
 .index-0 {
@@ -148,21 +105,21 @@ label {
 }
 
 .index-2 {
-  z-index: 12;
+  z-index: 2;
 }
 
-.position-relative {
+.pos-rel {
   position: relative;
 }
 
-.position-absolute {
+.pos-abs {
   position: absolute;
 }
 
-.line-height-150 {
+.lh-150 {
   line-height: 150%;
 }
 
-.cursor-pointer {
+.cur-p {
   cursor: pointer;
 }

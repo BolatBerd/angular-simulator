@@ -4,8 +4,15 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
   height: 985px;
+
+  &-menu {
+    padding-top: 8px;
+
+    &-logo {
+      gap: 9px;
+    }
+  }
 }
 
 div .padding-top-8 {
@@ -17,6 +24,7 @@ div .padding-top-8 {
   padding: 0;
   margin: 0;
   font-weight: 600;
+  gap: 24px;
 }
 
 a{
@@ -66,15 +74,17 @@ span {
 .menu {
   background: #FFFFFF33;
   height: 161px;
-}
+  margin-top: 36px;
 
-.menu-item {
-  margin-left: 43px;
-  width: 1095px;
-  height: 81px;
-  padding-top: 40px;
-  align-items: start;
-  justify-self: start;
+  &-item {
+    margin-left: 43px;
+    width: 1095px;
+    height: 81px;
+    padding-top: 40px;
+    align-items: start;
+    justify-self: start;
+    gap: 24px;
+  }
 }
 
 .button {
@@ -83,6 +93,10 @@ span {
   font-weight: 600;
   cursor: pointer;
   border: none;
+  border: 1px solid #FFFFFF;
+  width: 270px;
+  height: 52px;
+  padding-top: 0px;
 }
 
 .menu-field {
@@ -123,6 +137,7 @@ span {
 .about {
   align-items: flex-start;
   margin-bottom: 100px;
+  margin-top: 182px;
 }
 
 .about-images {
@@ -236,6 +251,11 @@ span {
 .subtitle-title {
   margin-top: 8px;
   padding: 14px 0 2px 0;
+  margin-bottom: 40px;
+}
+
+.section-text {
+  margin-bottom: 40px;
 }
 
 .desc {

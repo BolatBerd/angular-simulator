@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Color } from '../enums/Color';
-import { Collection } from '../collection';
-import './training';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { Collection } from '../collection';
+import { IService } from '../interfaces/IService';
+import { IImages } from '../interfaces/Images';
 
 @Component({
   selector: 'app-root',
@@ -12,54 +11,17 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
 
   companyName: string = 'румтибет';
   history: string = 'Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur"и занялся его поисками в классической латинской литературе.';
   historySecondBlock: string = 'Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа.';
-  selectImeges!: { id: number; src: string};
-  selectLists!: { id: number; src: string; h3: string; p: string };
-  currentDate: Date = new Date();
-  private timer!: number;
 
-  ngOnInit() {
-    this.timer = setInterval(() => this.currentDate = new Date(), 1000)
-    this.onInit();
-  }
-
-  ngOnDestroy() {
-    clearInterval(this.timer);
-  }
-
-  showDate: boolean = false;
-
-  toggleView(): void {
-    this.showDate = !this.showDate;
-
-    if (this.showDate) {
-      this.currentDate = new Date();
-    }
-  }
-
+  currentDateAndTime: string = new Date().toLocaleString();
+  isDateView: boolean = true;
+  isLoading: boolean = true;
   text: string = '';
-
-  protected isLoading: boolean = true;
-
-  private onInit() {
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 2000);
-  }
-
   count: number = 0;
-
-  incrementCount(): void {
-      this.count++;
-  }
-
-  decrementCount(): void {
-      this.count--;
-  }
 
   form = {
     location: '',
@@ -67,12 +29,92 @@ export class AppComponent implements OnInit, OnDestroy {
     persons: ''
   };
 
-  get isFormValid(): boolean {
-    return !!(this.form.location && this.form.date && this.form.persons);
+  protected tours: Collection<string> = new Collection<string>([
+    'Поход в горы',
+    'Прогулка по парку',
+    'Поход к реке'
+  ]);
+
+  protected prices: Collection<number> = new Collection<number>([
+    500,
+    600,
+    700
+  ]);
+
+  protected tourImages: IImages[] = [
+    { id: 1, src: "/images/cup-coffee.png" },
+    { id: 2, src: "/images/man-on-mountain.png" },
+    { id: 3, src: "/images/man-on-snowmobile.png" },
+    { id: 4, src: "/images/river.png" }
+  ];
+
+  protected services: IService[] = [
+    {
+      id: 1,
+      icon: "/images/people.svg",
+      title: "Опытный гид",
+      description: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации."
+    },
+    {
+      id: 2,
+      icon: "/images/shield.svg",
+      title: "Безопасный поход",
+      description: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации."
+    },
+    {
+      id: 3,
+      icon: "/images/tag.svg",
+      title: "Лояльные цены",
+      description: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации."
+    }
+  ];
+
+  constructor() {
+    this.saveLastVisitDate();
+    this.saveVisitCount();
+    this.prices.replace(2, 550);
+    this.tours.remove(1);
+    this.tours.clearCollection();
+
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 2000);
+
+    setInterval(() => {
+      this.currentDateAndTime = new Date().toLocaleString();
+    }, 1000);
+    this.insertCountFromStorage();
+  }
+
+  toggleBlock(): void {
+    this.isDateView = !this.isDateView;
+  }
+
+  incrementCount(): void {
+    this.count++;
+    this.saveCount();
+  }
+
+  decrementCount(): void {
+    this.count--;
+    this.saveCount();
+  }
+
+  private saveCount(): void {
+    localStorage.setItem('count', this.count.toString());
+  }
+
+  private insertCountFromStorage(): void {
+    const storedCount = localStorage.getItem('count');
+    this.count = storedCount ? Number(storedCount) : 0;
   }
 
   openDatePicker(input: HTMLInputElement) {
-  input.showPicker();
+    input.showPicker();
+  }
+
+  get isFormValid(): boolean {
+    return !!(this.form.location && this.form.date && this.form.persons);
   }
 
   protected openList(select: HTMLSelectElement | null) {
@@ -89,105 +131,12 @@ export class AppComponent implements OnInit, OnDestroy {
     select.click();
   }
 
-  showInfo(): void {
-    console.log('Программа выбрана');
-  }
-
-  protected imeges: { id: number;  src: string;}[] = [
-    {
-      id: 1,
-      src: "/images/cup-coffee.png"
-    },
-    {
-      id: 2,
-      src: "/images/man-on-mountain.png"
-    },
-    {
-      id: 3,
-      src: "/images/man-on-snowmobile.png"
-    },
-    {
-      id: 4,
-      src: "/images/river.png"
-    }
-  ]
-
-  protected lists: { id: number; src: string; h3: string; p: string }[] = [
-    {
-      id: 1,
-      src: "/images/people.png",
-      h3: "Опытный гид",
-      p: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации."
-    },
-    {
-      id: 2,
-      src: "/images/shield.png",
-      h3: "Безопасный поход",
-      p: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации."
-    },
-    {
-      id: 3,
-      src: "/images/tag.png",
-      h3: "Лояльные цены",
-      p: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации."
-    }
-  ]
-
-  getImageRadiusClass(id: number): string {
-  switch (id) {
-    case 1:
-      return 'radius-top-left';
-    case 2:
-      return 'radius-top-right';
-    case 3:
-      return 'radius-bottom-left';
-    case 4:
-      return 'radius-bottom-right';
-    default:
-      return '';
-  }
-}
-
-  protected tours: Collection<string> = new Collection<string>([
-    'Поход в горы',
-    'Прогулка по парку',
-    'Поход к реке'
-  ]);
-
-  protected prices: Collection<number> = new Collection<number>([
-    500,
-    600,
-    700
-  ]);
-
-  constructor() {
-    this.saveLastVisitDate();
-    this.saveVisitCount();
-    this.prices.replace(2, 550);
-    this.tours.remove(1);
-    this.tours.clearCollection();
-  }
-
-  private isColorPrimary(color: Color): boolean {
-    const primaryColor: Color[] = [
-      Color.BLUE,
-      Color.GREEN,
-      Color.RED
-    ];
-    return primaryColor.includes(color);
-  }
-
   private saveLastVisitDate(): void {
-    const currentDate: string = new Date().toISOString();
-    localStorage.setItem('last-visit-date', currentDate);
+    localStorage.setItem('last-visit', new Date().toISOString());
   }
 
   private saveVisitCount(): void {
-    const countString: string | null = localStorage.getItem('visit-count');
-    let count: number = countString ? parseInt(countString, 10) : 0;
-
-    count++;
-
-    localStorage.setItem('visit-count', count.toString());
+    const current: number = Number(localStorage.getItem('visit-count') || 0);
+    localStorage.setItem('visit-count', String(current + 1));
   }
 }
