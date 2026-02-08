@@ -3,6 +3,9 @@
 
 * {
   font-family: 'Nunito Sans', sans-serif;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
 :root {
@@ -14,8 +17,16 @@
   --bt-color: #1A3E3E;
 }
 
+.color-yellow {
+  color:var(--yellow-color);
+}
+
+.color-black {
+  color: var(--black-color);
+}
+
 .container {
-  max-width: 1180px;
+  max-width: 1220px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -31,7 +42,7 @@ label {
   flex-direction: column;
 }
 
-.flex-space-between {
+.flex-s-b {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -42,45 +53,73 @@ label {
   flex-direction: column;
 }
 
-.size-270-52 {
-  width: 270px;
-  height: 52px;
-  padding-top: 0px;
+.flex-col-cen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.gap-24 {
-  gap: 24px;
-}
-
-.gap-9 {
-  gap: 9px;
-}
-
-.font-14 {
+.fs-14 {
   font-size: 14px;
 }
 
-.font-16 {
+.fs-16 {
   font-size: 16px;
 }
 
-.font-18 {
+.fs-18 {
   font-size: 18px;
 }
 
-.border {
-  border: 1px solid #FFFFFF;
+.fs-24 {
+  font-size: 24px;
+}
+
+.fs-32 {
+  font-size: 32px;
+}
+
+.br-8 {
   border-radius: 8px;
 }
 
-.border-radius-8 {
-  border-radius: 8px;
-}
-
-.padding-top-8 {
-  padding-top: 8px;
-}
-
-.padding-right-16 {
+.pr-16 {
   padding-right: 16px;
+}
+
+.mt-40 {
+  margin-top: 40px;
+}
+
+.mt-80 {
+  margin-top: 80px;
+}
+
+.index-0 {
+  z-index: 0;
+}
+
+.index-1 {
+  z-index: 1;
+}
+
+.index-2 {
+  z-index: 2;
+}
+
+.pos-rel {
+  position: relative;
+}
+
+.pos-abs {
+  position: absolute;
+}
+
+.lh-150 {
+  line-height: 150%;
+}
+
+.cur-p {
+  cursor: pointer;
 }
