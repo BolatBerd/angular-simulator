@@ -12,14 +12,14 @@
           <span class="logo-name">{{ companyName }}</span>
         </div>
         <div class="flex-center">
-          <ul class="nav flex-s-b fs-18">
-            <a id="nav-home" href="">Главная</a>
-            <a id="nav-about-guide" href="">Про гида</a>
-            <a id="nav-tour-program" href="">Программа тура</a>
-            <a id="nav-pricing" href="">Стоимость</a>
-            <a id="nav-blog" href="">Блог</a>
-            <a id="nav-contacts" href="">Контакты</a>
-          </ul>
+          <nav class="nav flex-s-b fs-18">
+            <a id="nav-home">Главная</a>
+            <a id="nav-about-guide">Про гида</a>
+            <a id="nav-tour-program">Программа тура</a>
+            <a id="nav-pricing">Стоимость</a>
+            <a id="nav-blog">Блог</a>
+            <a id="nav-contacts">Контакты</a>
+          </nav>
           <button
             id="btn-consultation-header"
             class="consultation fs-16 br-8"
@@ -74,12 +74,12 @@
         <div class="menu-item flex-s-b gap-24">
           <div class="menu-field">
             <div class="flex-s-b menu-title br-8 fs-16 pos-rel"
-              (click)="openSelect(locationImput)"
+              (click)="openSelect(locationInput)"
             >
               <select
                 id="select-tour-location"
                 class="select select-location-person"
-                #locationImput
+                #locationInput
                 [(ngModel)]="form.location"
               >
                 <option value="" disabled selected>Локация для тура</option>
@@ -156,9 +156,9 @@
           id="input-live-text"
           type="text"
           placeholder="Введите текст..."
-          [(ngModel)]="inputLivetText"
+          [(ngModel)]="liveInputValue"
         >
-        <span class="result">{{ inputLivetText }}</span>
+        <span class="result">{{ liveInputValue }}</span>
       </div>
 
       <div class="about flex-s-b">
@@ -211,7 +211,7 @@
 
                 @for (service of services; track service.id) {
                   <div class="feature-item  margin-top-20">
-                    <img [src]="service.icon" class="icons"/>
+                    <img [src]="'/images/' + service.icon + '.svg'" class="icons"/>
                     <div class="feature-text">
                       <h3>{{ service.title }}</h3>
                       <p>{{ service.description }}</p>
@@ -228,21 +228,55 @@
               </button>
             </div>
             <div class="images-grid">
-
-              @for (image of tourImages; track image.id) {
-                <img
-                  [src]="image.src"
-                  class="image"
-                  [class.radius-top-left]="image.id === 1 || image.id === 4"
-                  [class.radius-top-right]="image.id === 2 || image.id === 3"
-                  [alt]="image.alt"
-                />
-              }
-
+              <img
+                src="images/cup-coffee.png"
+                alt="Кружка с кофе"
+                class="image radius-top-left"
+              />
+              <img
+                src="images/man-on-mountain.png"
+                alt="Человек на горе"
+                class="image radius-top-right"
+              />
+              <img
+                src="images/man-on-snowmobile.png"
+                alt="Человек на снегоходе"
+                class="image radius-top-right"
+              />
+              <img
+                src="images/river.png"
+                alt="Река"
+                class="image radius-top-left"
+              />
             </div>
           </div>
         </div>
       </section>
+
+      <div class="flex-col-cen mt-80">
+        <div class="flex-col-cen">
+          <h2 class="subtitle color-yellow fs-24">фото-отчет</h2>
+          <h1 class="subtitle-title color-black fs-32">Делимся впечатлениями</h1>
+        </div>
+        <div>
+          <img
+            src="images/cup-coffee.png"
+            alt="Кружка с кофе"
+            class="image radius-top-left"
+          />
+          <img
+            src="images/man-on-mountain.png"
+            alt="Человек на горе"
+            class="image radius-top-right"
+          />
+          <img
+            src="images/man-on-snowmobile.png"
+            alt="Человек на снегоходе"
+            class="image radius-top-right"
+          />
+        </div>
+        <button id="btn-tour-rating" class="bt-consultation fs-16 br-8  mt-40 cur-p">Рейтинг направлений</button>
+      </div>
     </div>
   </header>
 }
