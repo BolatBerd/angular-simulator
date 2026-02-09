@@ -14,7 +14,6 @@ import { ITourForm } from '../interfaces/ITourForm';
 export class AppComponent {
 
   companyName: string = 'румтибет';
-
   currentDateAndTime: string = new Date().toLocaleString();
   isDateView: boolean = true;
   isLoading: boolean = true;
@@ -80,6 +79,24 @@ export class AppComponent {
     this.initializeCountFromStorage();
   }
 
+  private saveCount(): void {
+    localStorage.setItem('count', this.count.toString());
+  }
+
+  private initializeCountFromStorage(): void {
+    const storedCount: string | null = localStorage.getItem('count');
+    this.count = storedCount ? Number(storedCount) : 0;
+  }
+
+  private saveLastVisitDate(): void {
+    localStorage.setItem('last-visit', new Date().toISOString());
+  };
+
+  private saveVisitCount(): void {
+    const current: number = Number(localStorage.getItem('visit-count') || 0);
+    localStorage.setItem('visit-count', String(current + 1));
+  }
+
   toggleBlock(): void {
     this.isDateView = !this.isDateView;
   }
@@ -94,15 +111,6 @@ export class AppComponent {
     this.saveCount();
   }
 
-  private saveCount(): void {
-    localStorage.setItem('count', this.count.toString());
-  }
-
-  private initializeCountFromStorage(): void {
-    const storedCount: string | null = localStorage.getItem('count');
-    this.count = storedCount ? Number(storedCount) : 0;
-  }
-
   openDatePicker(input: HTMLInputElement): void {
     input.showPicker();
   }
@@ -112,34 +120,7 @@ export class AppComponent {
   }
 
   openSelect(select: HTMLSelectElement | null): void {
-  if (!select) {
-    return;
+    select?.click();
   }
 
-  select.focus();
-
-  const picker = select as HTMLSelectElement & {
-    showPicker?: () => void;
-  };
-
-  if (typeof picker.showPicker === 'function') {
-    picker.showPicker();
-    return;
-  }
-
-  select.dispatchEvent(
-    new MouseEvent('mousedown', { bubbles: true })
-  );
-  select.click();
-}
-
-
-  private saveLastVisitDate(): void {
-    localStorage.setItem('last-visit', new Date().toISOString());
-  }
-
-  private saveVisitCount(): void {
-    const current: number = Number(localStorage.getItem('visit-count') || 0);
-    localStorage.setItem('visit-count', String(current + 1));
-  }
 }
