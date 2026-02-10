@@ -1,5 +1,5 @@
 export interface ITourForm {
-  location: string;
-  date: string;
-  persons: string;
+  location?: string;
+  date?: string;
+  persons?: string;
 };

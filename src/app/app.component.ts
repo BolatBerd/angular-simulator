@@ -19,6 +19,7 @@ export class AppComponent {
   isLoading: boolean = true;
   liveInputValue: string = '';
   count: number = 0;
+  form: ITourForm = {};
 
   tours: Collection<string> = new Collection<string>([
     'Поход в горы',
@@ -53,20 +54,12 @@ export class AppComponent {
     }
   ];
 
-  form!: ITourForm;
-
   constructor() {
     this.saveLastVisitDate();
     this.saveVisitCount();
     this.prices.replace(2, 550);
     this.tours.remove(1);
     this.tours.clearCollection();
-
-    this.form = {
-      location: '',
-      date: '',
-      persons: ''
-    };
 
     setTimeout(() => {
       this.isLoading = false;

@@ -27,7 +27,7 @@ div .padding-top-8 {
   gap: 24px;
 }
 
-a{
+a {
   color: var(--primary-color);
   text-decoration: none;
 }
@@ -367,4 +367,9 @@ select option {
   to {
     transform: rotate(360deg);
   }
+}
+
+.tour-prices {
+  display: flex;
+  gap: 20px;
 }
