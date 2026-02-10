@@ -1,51 +1,295 @@
-<header class="header">
-  <div class="container">
-    <div class="flex-space-between padding-top-8" >
-      <div class="gap-9 flex-column">
-        <img src="/images/logo.svg" alt="logo" width="137px" height="48px"/>
-        <span class="logo-name">{{ companyName }}</span>
-      </div>
-      <div class="flex-center">
-        <ul class="nav flex-space-between gap-24 font-18">
-          <a href="">Главная</a>
-          <a href="">Про гида</a>
-          <a href="">Программа тура</a>
-          <a href="">Стоимость</a>
-          <a href="">Блог</a>
-          <a href="">Контакты</a>
-        </ul>
-        <button class="consultation font-16 border-radius-8" aria-label="Заказать консультацию">Консультация</button>
-      </div>
-    </div>
-    <div class="header-text">
-      <span>Насладись прогулкой в горах</span>
-      <span>с командой единомышленников</span>
-    </div>
-    <div class="menu border-radius-8">
-      <div class="flex-space-between gap-24 menu-item ">
-        <div class="menu-field">
-          <div class="flex-space-between menu-title border-radius-8 font-16">
-            <span>Локация для тура</span>
-            <img class="padding-right-16" src="/images/arrow-left-icon.svg" alt="arrow-left">
-          </div>
-          <span class="menu-subtitle font-14">выберите из списка</span>
-        </div>
-        <div class="menu-field">
-          <div class="flex-space-between menu-title border-radius-8 font-16">
-            <span>Дата похода</span>
-            <img class="padding-right-16" src="/images/formkit_date.svg" alt="arrow-left">
-        </div>
-          <span class="menu-subtitle font-14">укажите диапазон</span>
-        </div>
-        <div class="menu-field">
-          <div class="flex-space-between menu-title border-radius-8 font-16">
-            <span>Участники</span>
-            <img class="padding-right-16" src="/images/arrow-left-icon.svg" alt="arrow-left">
-          </div>
-          <span class="menu-subtitle font-14">минимум 4 человека</span>
-        </div>
-        <button class="button size-270-52 border font-16 align-items border-radius-8" type="submit">Найти программу</button>
-      </div>
-    </div>
+@if (isLoading) {
+  <div id="loader-overlay" class="loading-overlay flex-s-b">
+    <img class="rotate" src="/images/loading-icon.svg" alt="loading">
+    <span class="spinner">Иконка загрузки, которую мы должны отобразить. Добавить анимацию прокрутки</span>
   </div>
-</header>
+} @else {
+  <header class="header">
+    <div class="container">
+      <div class="header-menu flex-s-b" >
+        <div class="header-menu-logo flex-column">
+          <img src="/images/logo.svg" alt="logo" width="137px" height="48px"/>
+          <span class="logo-name">{{ companyName }}</span>
+        </div>
+        <div class="flex-center">
+          <nav class="nav flex-s-b fs-18">
+            <a id="nav-home">Главная</a>
+            <a id="nav-about-guide">Про гида</a>
+            <a id="nav-tour-program">Программа тура</a>
+            <a id="nav-pricing">Стоимость</a>
+            <a id="nav-blog">Блог</a>
+            <a id="nav-contacts">Контакты</a>
+          </nav>
+          <button
+            id="btn-consultation-header"
+            class="consultation fs-16 br-8"
+            aria-label="Заказать консультацию"
+          >
+            Консультация
+          </button>
+        </div>
+      </div>
+
+      <div class="content flex-s-b">
+
+        @if (isDateView) {
+          <span class="timer">
+            {{ currentDateAndTime }}
+          </span>
+        } @else {
+          <div class="clicker flex-s-b">
+            <button
+              id="btn-counter-decrement"
+              class="switcher cur-p"
+              (click)="decrementCount()"
+              [disabled]="count <= 0"
+            >
+              -
+            </button>
+            <span>{{ count }}</span>
+            <button
+              id="btn-counter-increment"
+              class="switcher cur-p"
+              (click)="incrementCount()"
+            >
+              +
+            </button>
+          </div>
+        }
+
+        <button
+          id="btn-toggle-date-counter"
+          class="consultation fs-16 br-8"
+          (click)="toggleBlock()"
+        >
+          {{ isDateView ? 'Показать кликер' : 'Показать дату' }}
+        </button>
+      </div>
+
+      <div class="header-text">
+        <span>насладись прогулкой в горах</span>
+        <span>с командой единомышленников</span>
+      </div>
+      <div class="menu br-8">
+        <div class="menu-item flex-s-b gap-24">
+          <div class="menu-field">
+            <div class="flex-s-b menu-title br-8 fs-16 pos-rel"
+              (click)="openSelect(locationInput)"
+            >
+              <select
+                id="select-tour-location"
+                class="select select-location-person"
+                #locationInput
+                [(ngModel)]="form.location"
+              >
+                <option value="" disabled selected>Локация для тура</option>
+                <option value="altai">Алтай</option>
+                <option value="caucasus">Кавказ</option>
+                <option value="baikal">Байкал</option>
+              </select>
+              <img
+                class="pr-16"
+                src="/images/arrow-left-icon.svg"
+                alt="arrow-left"
+              >
+            </div>
+            <span class="menu-subtitle fs-14">выберите из списка</span>
+          </div>
+          <div class="menu-field">
+            <div class="
+              flex-s-b
+              menu-title pos-rel
+              br-8 fs-16"
+              (click)="openDatePicker(dateInput)"
+            >
+              <input
+                #dateInput
+                id="input-tour-date"
+                class="select pos-rel"
+                type="date"
+                [(ngModel)]="form.date"
+                placeholder="Дата похода"
+              />
+              <label class="date-label cur-p pos-abs">
+                <img
+                  class="date-icon pr-16 cur-p"
+                  src="/images/formkit_date.svg"
+                  alt='calendar'
+                />
+              </label>
+            </div>
+            <span class="menu-subtitle fs-14">укажите диапазон</span>
+          </div>
+          <div class="menu-field">
+            <div
+              class="flex-s-b menu-title br-8 fs-16"
+              (click)="openSelect(personImput)"
+            >
+              <select
+                id="select-tour-persons"
+                type="text"
+                class="select select-location-person"
+                #personImput
+                [(ngModel)]="form.persons"
+              >
+                <option value="" disabled selected>выберите из списка</option>
+                <option value="1">1 человек</option>
+                <option value="2">2 человека</option>
+                <option value="3">3 человека</option>
+                <option value="4+">4+ человека</option>
+              </select>
+              <img class="pr-16" src="/images/arrow-left-icon.svg" alt="arrow-left">
+            </div>
+            <span class="menu-subtitle fs-14">выберите из списка</span>
+          </div>
+          <button
+            id="btn-search-tour"
+            [disabled]="!isFormValid()"
+            class="button size-270-52 border fs-16 align-items br-8"
+          >
+            {{ isFormValid() ? 'Найти программу' : 'Заполните все поля' }}
+          </button>
+        </div>
+      </div>
+      <div class="flex-s-b">
+        <input
+          id="input-live-text"
+          type="text"
+          placeholder="Введите текст..."
+          [(ngModel)]="liveInputValue"
+        >
+        <span class="result">{{ liveInputValue }}</span>
+      </div>
+
+      <div class="about flex-s-b">
+        <div class="about-images pos-rel">
+          <img
+            class="index-0"
+            src="/images/mountains.png"
+            alt="Горы"
+            width="350"
+            height="400"
+          >
+          <div>
+            <img
+              class="index-1 pos-abs images-house"
+              src="/images/house-in-mountains.png"
+              alt="Горы"
+              width="350px"
+              height="400px"
+            >
+            <button id="btn-video-play">
+              <img
+                class="index-2 pos-abs svg-play"
+                src="/images/play-icon.svg"
+                alt="play-icon"
+              >
+            </button>
+          </div>
+        </div>
+        <div class="about-text">
+          <h2 class="section-label color-yellow fs-24">о нашем походе</h2>
+          <h1 class="section-title color-black fs-32">Исследуйте все горные массивы мира вместе с нами</h1>
+          <p class="section-text color-black fs-18 lh-150">Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur"и занялся его поисками в классической латинской литературе.</p>
+          <button
+            id="btn-tour-program"
+            class="bt-consultation fs-16 br-8 cur-p"
+            aria-label="Заказать консультацию"
+            >Программа тура
+          </button>
+        </div>
+      </div>
+
+      <section class="offer-section">
+        <div class="container">
+          <div class="container-second-block flex-s-b">
+            <div class="container-offer">
+              <h2 class="subtitle color-yellow fs-24">наше предложение</h2>
+              <h1 class="subtitle-title color-black fs-32">Лучшие программы для тебя</h1>
+              <p class="desc color-black fs-18 margin-top-30 lh-150">Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа.</p>
+              <div class="features mt-40">
+
+                @for (service of services; track service.id) {
+                  <div class="feature-item  margin-top-20">
+                    <img [src]="'/images/' + service.icon + '.svg'" class="icons"/>
+                    <div class="feature-text">
+                      <h3>{{ service.title }}</h3>
+                      <p>{{ service.description }}</p>
+                    </div>
+                  </div>
+                }
+
+              </div>
+              <button
+                id="btn-tour-pricing"
+                class="bt-consultation fs-16 br-8 mt-40 cur-p"
+                aria-label="Заказать консультацию"
+                >Стоимость программ
+              </button>
+            </div>
+            <div class="images-grid">
+              <img
+                src="images/cup-coffee.png"
+                alt="Кружка с кофе"
+                class="image radius-top-left"
+              />
+              <img
+                src="images/man-on-mountain.png"
+                alt="Человек на горе"
+                class="image radius-top-right"
+              />
+              <img
+                src="images/man-on-snowmobile.png"
+                alt="Человек на снегоходе"
+                class="image radius-top-right"
+              />
+              <img
+                src="images/river.png"
+                alt="Река"
+                class="image radius-top-left"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="flex-col-cen mt-80">
+        <div class="flex-col-cen">
+          <h2 class="subtitle color-yellow fs-24">фото-отчет</h2>
+          <h1 class="subtitle-title color-black fs-32">Делимся впечатлениями</h1>
+        </div>
+        <div class="tour-prices">
+          <img
+            src="images/boat-on-lake.png"
+            alt="Озеро возле гор"
+            width="380"
+            height="500"
+          />
+          <img
+            src="images/night-in-mountains.png"
+            alt="Ночь в горах"
+            width="380"
+            height="500"
+          />
+          <img
+            src="images/yoga-in-mountains.png"
+            alt="Йога в горах"
+            width="380"
+            height="500"
+            class="pos-rel"
+          />
+          <div class="pos-abs flex-center">
+            <div>
+              <h2>Йога в горах</h2>
+              <p>для тех, кто забоится о себе</p>
+            </div>
+              <div>
+                <span>230 $</span>
+              </div>
+          </div>
+        </div>
+        <button id="btn-tour-rating" class="bt-consultation fs-16 br-8  mt-40 cur-p">Рейтинг направлений</button>
+      </div>
+    </div>
+  </header>
+}
