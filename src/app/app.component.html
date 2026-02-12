@@ -253,43 +253,39 @@
         </div>
       </section>
 
-      <div class="flex-col-cen mt-80">
+      <section class="popular-section flex-col-cen mt-80">
         <div class="flex-col-cen">
-          <h2 class="subtitle color-yellow fs-24">фото-отчет</h2>
-          <h1 class="subtitle-title color-black fs-32">Делимся впечатлениями</h1>
+          <h2 class="subtitle color-yellow fs-24">по версии отдыхающих</h2>
+          <h1 class="subtitle-title color-black fs-32">Популярные направления</h1>
         </div>
-        <div class="tour-prices">
-          <img
-            src="images/boat-on-lake.png"
-            alt="Озеро возле гор"
-            width="380"
-            height="500"
-          />
-          <img
-            src="images/night-in-mountains.png"
-            alt="Ночь в горах"
-            width="380"
-            height="500"
-          />
-          <img
-            src="images/yoga-in-mountains.png"
-            alt="Йога в горах"
-            width="380"
-            height="500"
-            class="pos-rel"
-          />
-          <div class="pos-abs flex-center">
-            <div>
-              <h2>Йога в горах</h2>
-              <p>для тех, кто забоится о себе</p>
-            </div>
-              <div>
-                <span>230 $</span>
+
+        <div class="container-price mt-40">
+          @for (destination of popularDestination; track destination.id) {
+            <div class="card">
+              <img
+                [src]="'/images/' + destination.image + '.png'"
+                alt={{ destination.image }}
+                width="380"
+                height="500"
+              />
+              <div class="rating">
+                <img src="/images/star.svg" alt="star">
+                {{ destination.tourEvaluation | number:'1.1-1' }}
               </div>
-          </div>
+              <div class="card-info flex-s-b pos-abs">
+                <div>
+                  <h2 class="fs-24">{{ destination.nameTour }}</h2>
+                  <p class="fs-14">{{ destination.tourDescription }}</p>
+                </div>
+                <div class="price fs-20">
+                  <span>{{ destination.tourPrice }} &#36;</span>
+                </div>
+              </div>
+            </div>
+          }
         </div>
         <button id="btn-tour-rating" class="bt-consultation fs-16 br-8  mt-40 cur-p">Рейтинг направлений</button>
-      </div>
+      </section>
     </div>
   </header>
 }

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Collection } from '../collection';
 import { IService } from '../interfaces/IService';
 import { ITourForm } from '../interfaces/ITourForm';
+import { IPopularDestination } from '../interfaces/IPopularDestination';
 
 @Component({
   selector: 'app-root',
@@ -53,6 +54,33 @@ export class AppComponent {
       description: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации."
     }
   ];
+
+  popularDestination: IPopularDestination[] = [
+    {
+      id: 1,
+      image: "boat-on-lake",
+      nameTour: "Озеро возле гор",
+      tourDescription: "романтическое приключение",
+      tourPrice: "480",
+      tourEvaluation: 4.9,
+    },
+    {
+      id: 2,
+      image: "night-in-mountains",
+      nameTour: "Ночь в горах",
+      tourDescription: "в компании друзей",
+      tourPrice: "500",
+      tourEvaluation: 4.5,
+    },
+    {
+      id: 3,
+      image: "yoga-in-mountains",
+      nameTour: "Йога в горах",
+      tourDescription: "для тех, кто забоится о себе",
+      tourPrice: "230",
+      tourEvaluation: 5.0,
+    },
+  ]
 
   constructor() {
     this.saveLastVisitDate();
