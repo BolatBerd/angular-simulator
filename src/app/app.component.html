@@ -195,7 +195,9 @@
             id="btn-tour-program"
             class="bt-consultation fs-16 br-8 cur-p"
             aria-label="Заказать консультацию"
-            >Программа тура
+            (click)="showMessage(MessageType.Error, 'Произошла ошибка')"
+          >
+            Программа тура
           </button>
         </div>
       </div>
@@ -224,7 +226,9 @@
                 id="btn-tour-pricing"
                 class="bt-consultation fs-16 br-8 mt-40 cur-p"
                 aria-label="Заказать консультацию"
-                >Стоимость программ
+                (click)="showMessage(MessageType.Warn, 'Предупреждение')"
+              >
+                Стоимость программ
               </button>
             </div>
             <div class="images-grid">
@@ -285,7 +289,13 @@
           }
 
         </div>
-        <button id="btn-tour-rating" class="bt-consultation fs-16 br-8 mt-40 cur-p">Рейтинг направлений</button>
+        <button
+          id="btn-tour-rating"
+          class="bt-consultation fs-16 br-8 mt-40 cur-p"
+          (click)="showMessage(MessageType.Info, 'Информация для пользователя')"
+        >
+          Рейтинг направлений
+        </button>
       </section>
 
       <section class="blog-tour flex-col-cen">
@@ -317,8 +327,39 @@
           }
 
         </div>
-        <button id="btn-other materials" class="bt-consultation fs-16 br-8 mt-40 cur-p">Другие материалы</button>
+        <button
+          id="btn-other materials"
+          class="bt-consultation fs-16 br-8 mt-40 cur-p"
+          (click)="showMessage(MessageType.Success, 'Успешная операция')"
+          >
+            Другие материалы
+          </button>
       </section>
+
+      <div class="toast-container">
+        <ng-container *ngFor="let message of messages">
+          <ng-container
+            *ngTemplateOutlet="toastTemplate; context: {
+              $implicit: message.type,
+              message: message
+            }">
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <ng-template #toastTemplate let-type let-message="message">
+        <div class="toast" [ngClass]="type">
+          <img src="/images/message-icon.svg" alt="message">
+          <div class="toast-content">
+            <strong>{{ type | titlecase }}</strong>
+            <div>{{ message.text | titlecase}}</div>
+          </div>
+
+          <button class="close-btn" (click)="removeMessage(message)">
+            <img src="/images/close-icon.svg" alt="close">
+          </button>
+        </div>
+      </ng-template>
 
     </div>
   </header>

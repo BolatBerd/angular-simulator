@@ -6,6 +6,8 @@ import { IService } from '../interfaces/IService';
 import { ITourForm } from '../interfaces/ITourForm';
 import { IPopularDestination } from '../interfaces/IPopularDestination';
 import { ITravelBlog } from '../interfaces/ITravelBlog';
+import { IMessage } from '../interfaces/IMessage';
+import { MessageType } from '../enums/MessageType';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +24,7 @@ export class AppComponent {
   liveInputValue: string = '';
   count: number = 0;
   form: ITourForm = {};
+  messages: IMessage[] = [];
 
   tours: Collection<string> = new Collection<string>([
     'Поход в горы',
@@ -126,6 +129,7 @@ export class AppComponent {
     }, 1000);
 
     this.initializeCountFromStorage();
+
   }
 
   private saveCount(): void {
@@ -170,6 +174,21 @@ export class AppComponent {
 
   openSelect(select: HTMLSelectElement | null): void {
     select?.click();
+  }
+
+  MessageType = MessageType;
+
+  showMessage(type: MessageType, text: string): void {
+    const message: IMessage = { type, text };
+    this.messages.push(message);
+
+    setTimeout(() => {
+      this.removeMessage(message);
+    }, 3000);
+  }
+
+  removeMessage(message: IMessage): void {
+    this.messages = this.messages.filter(m => m !== message);
   }
 
 }
