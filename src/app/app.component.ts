@@ -5,6 +5,7 @@ import { Collection } from '../collection';
 import { IService } from '../interfaces/IService';
 import { ITourForm } from '../interfaces/ITourForm';
 import { IPopularDestination } from '../interfaces/IPopularDestination';
+import { ITravelBlog } from '../interfaces/ITravelBlog';
 
 @Component({
   selector: 'app-root',
@@ -79,6 +80,33 @@ export class AppComponent {
       tourDescription: "для тех, кто забоится о себе",
       tourPrice: "230",
       tourEvaluation: 5.0,
+    },
+  ]
+
+  travelBlog: ITravelBlog[] = [
+    {
+      id: 1,
+      title: "Красивая Италия, какая она в реальности?",
+      content: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации.",
+      imege: "italy",
+    },
+    {
+      id: 2,
+      title: "Долой сомнения! Весь мир открыт для вас!",
+      content: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации ... независимые способы реализации соответствующих",
+      imege: "pallet",
+    },
+    {
+      id: 3,
+      title: "Как подготовиться к путешествию в одиночку? ",
+      content: "Для современного мира базовый вектор развития предполагает.",
+      imege: "traveling-alone",
+    },
+    {
+      id: 4,
+      title: "Индия ... летим?",
+      content: "Для современного мира базовый.",
+      imege: "india",
     },
   ]
 

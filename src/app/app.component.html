@@ -253,13 +253,13 @@
         </div>
       </section>
 
-      <section class="popular-section flex-col-cen mt-80">
+      <section class="popular-section flex-col-cen mt-85">
         <div class="flex-col-cen">
           <h2 class="subtitle color-yellow fs-24">по версии отдыхающих</h2>
           <h1 class="subtitle-title color-black fs-32">Популярные направления</h1>
         </div>
-
         <div class="container-price mt-40">
+
           @for (destination of popularDestination; track destination.id) {
             <div class="card">
               <img
@@ -283,9 +283,43 @@
               </div>
             </div>
           }
+
         </div>
-        <button id="btn-tour-rating" class="bt-consultation fs-16 br-8  mt-40 cur-p">Рейтинг направлений</button>
+        <button id="btn-tour-rating" class="bt-consultation fs-16 br-8 mt-40 cur-p">Рейтинг направлений</button>
       </section>
+
+      <section class="blog-tour flex-col-cen">
+        <div class="flex-col-cen mt-85">
+          <h2 class="subtitle color-yellow fs-24">делимся впечатлениями</h2>
+          <h1 class="subtitle-title color-black fs-32">Блог о путешествиях</h1>
+        </div>
+        <div class="blog-container">
+
+          @for (item of travelBlog; track item.id) {
+            <div class="blog-card">
+              <div class="blog-image">
+                <img
+                  [src]="'/images/' + item.imege + '.png'"
+                  [alt]="item.title"
+                />
+              </div>
+
+              <div class="blog-info">
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.content }}</p>
+
+                <div class="blog-bottom">
+                  <span class="blog-date fs-14">01/04/2023</span>
+                  <a [id]="'blog-' + item.id" class="read-more cur-p">читать статью</a>
+                </div>
+              </div>
+            </div>
+          }
+
+        </div>
+        <button id="btn-other materials" class="bt-consultation fs-16 br-8 mt-40 cur-p">Другие материалы</button>
+      </section>
+
     </div>
   </header>
 }
