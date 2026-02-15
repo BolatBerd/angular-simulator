@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Collection } from '../collection';
@@ -8,6 +8,7 @@ import { IPopularDestination } from '../interfaces/IPopularDestination';
 import { ITravelBlog } from '../interfaces/ITravelBlog';
 import { IMessage } from '../interfaces/IMessage';
 import { MessageType } from '../enums/MessageType';
+import { LocalStorageService } from '../classes/LocalStorageService';
 
 @Component({
   selector: 'app-root',
@@ -21,10 +22,12 @@ export class AppComponent {
   currentDateAndTime: string = new Date().toLocaleString();
   isDateView: boolean = true;
   isLoading: boolean = true;
-  liveInputValue: string = '';
+  liveInputValue!: string;
   count: number = 0;
   form: ITourForm = {};
   messages: IMessage[] = [];
+  messageType = MessageType;
+  private localStorageService: LocalStorageService = inject(LocalStorageService);
 
   tours: Collection<string> = new Collection<string>([
     'Поход в горы',
@@ -176,18 +179,18 @@ export class AppComponent {
     select?.click();
   }
 
-  MessageType = MessageType;
 
-  showMessage(type: MessageType, text: string): void {
+
+  addMessage(type: MessageType, text: string): void {
     const message: IMessage = { type, text };
-    this.messages.push(message);
+    this.messages = [message, ...this.messages];
 
     setTimeout(() => {
-      this.removeMessage(message);
-    }, 3000);
+      this.closeMessage(message);
+    }, 5000);
   }
 
-  removeMessage(message: IMessage): void {
+  closeMessage(message: IMessage): void {
     this.messages = this.messages.filter(m => m !== message);
   }
 
