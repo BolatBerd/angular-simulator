@@ -8,7 +8,8 @@ import { IPopularDestination } from '../interfaces/IPopularDestination';
 import { ITravelBlog } from '../interfaces/ITravelBlog';
 import { IMessage } from '../interfaces/IMessage';
 import { MessageType } from '../enums/MessageType';
-import { LocalStorageService } from '../classes/LocalStorageService';
+import { LocalStorageService } from '../classes/localStorage.service';
+import { MessageService } from '../classes/message.service';
 
 @Component({
   selector: 'app-root',
@@ -25,9 +26,10 @@ export class AppComponent {
   liveInputValue!: string;
   count: number = 0;
   form: ITourForm = {};
-  messages: IMessage[] = [];
   messageType = MessageType;
   private localStorageService: LocalStorageService = inject(LocalStorageService);
+  private messageService: MessageService = inject(MessageService);
+
 
   tours: Collection<string> = new Collection<string>([
     'Поход в горы',
@@ -179,19 +181,44 @@ export class AppComponent {
     select?.click();
   }
 
+  showSuccess(): void {
+    this.messageService.addMessage(
+      MessageType.Success,
+      'операция выполнена успешно'
+    );
+  }
 
+  showInfo(): void {
+    this.messageService.addMessage(
+      MessageType.Info,
+      'Информация для пользователя'
+    );
+  }
+
+  showWarn(): void {
+    this.messageService.addMessage(
+      MessageType.Warn,
+      'Предупреждение'
+    );
+  }
+
+  showError(): void {
+    this.messageService.addMessage(
+      MessageType.Error,
+      'Произошла ошибка'
+    );
+  }
+
+  get messages(): IMessage[] {
+    return this.messageService.getMessages();
+  }
 
   addMessage(type: MessageType, text: string): void {
-    const message: IMessage = { type, text };
-    this.messages = [message, ...this.messages];
-
-    setTimeout(() => {
-      this.closeMessage(message);
-    }, 5000);
+    this.messageService.addMessage(type, text);
   }
 
   closeMessage(message: IMessage): void {
-    this.messages = this.messages.filter(m => m !== message);
+    this.messageService.closeMessage(message);
   }
 
 }
