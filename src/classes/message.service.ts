@@ -6,6 +6,7 @@ import { MessageType } from '../enums/MessageType';
   providedIn: 'root'
 })
 export class MessageService {
+
   private messages: IMessage[] = [];
 
   getMessages(): IMessage[] {
@@ -21,8 +22,8 @@ export class MessageService {
     }, 5000);
   }
 
-  closeMessage(message: IMessage): void {
-    this.messages = this.messages.filter(m => m !== message);
+  closeMessage(message: IMessage): IMessage[] {
+    return this.messages = this.messages.filter(m => m !== message);
   }
 
 }

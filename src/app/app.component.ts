@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Collection } from '../collection';
 import { IService } from '../interfaces/IService';
 import { ITourForm } from '../interfaces/ITourForm';
-import { IPopularDestination } from '../interfaces/IPopularDestination';
+import { IDestination } from '../interfaces/IDestination';
 import { ITravelBlog } from '../interfaces/ITravelBlog';
 import { IMessage } from '../interfaces/IMessage';
 import { MessageType } from '../enums/MessageType';
@@ -64,7 +64,7 @@ export class AppComponent {
     }
   ];
 
-  popularDestination: IPopularDestination[] = [
+  popularDestination: IDestination[] = [
     {
       id: 1,
       image: "boat-on-lake",
@@ -183,28 +183,28 @@ export class AppComponent {
 
   showSuccess(): void {
     this.messageService.addMessage(
-      MessageType.Success,
+      MessageType.SUCCESS,
       'операция выполнена успешно'
     );
   }
 
   showInfo(): void {
     this.messageService.addMessage(
-      MessageType.Info,
+      MessageType.INFO,
       'Информация для пользователя'
     );
   }
 
   showWarn(): void {
     this.messageService.addMessage(
-      MessageType.Warn,
+      MessageType.WARN,
       'Предупреждение'
     );
   }
 
   showError(): void {
     this.messageService.addMessage(
-      MessageType.Error,
+      MessageType.ERROR,
       'Произошла ошибка'
     );
   }
