@@ -22,8 +22,8 @@ export class MessageService {
     }, 5000);
   }
 
-  closeMessage(message: IMessage): IMessage[] {
-    return this.messages = this.messages.filter(m => m !== message);
+  closeMessage(message: IMessage): void {
+    this.messages = this.messages.filter((m: IMessage) => m !== message);
   }
 
 }
