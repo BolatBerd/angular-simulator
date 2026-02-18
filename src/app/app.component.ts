@@ -134,7 +134,6 @@ export class AppComponent {
     }, 1000);
 
     this.initializeCountFromStorage();
-
   }
 
   private saveCount(): void {
