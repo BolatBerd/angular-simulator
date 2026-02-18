@@ -28,7 +28,7 @@ export class AppComponent {
   form: ITourForm = {};
   messageType = MessageType;
   private localStorageService: LocalStorageService = inject(LocalStorageService);
-  private messageService: MessageService = inject(MessageService);
+  messageService: MessageService = inject(MessageService);
 
 
   tours: Collection<string> = new Collection<string>([
@@ -181,40 +181,8 @@ export class AppComponent {
     select?.click();
   }
 
-  showSuccess(): void {
-    this.messageService.addMessage(
-      MessageType.SUCCESS,
-      'операция выполнена успешно'
-    );
-  }
-
-  showInfo(): void {
-    this.messageService.addMessage(
-      MessageType.INFO,
-      'Информация для пользователя'
-    );
-  }
-
-  showWarn(): void {
-    this.messageService.addMessage(
-      MessageType.WARN,
-      'Предупреждение'
-    );
-  }
-
-  showError(): void {
-    this.messageService.addMessage(
-      MessageType.ERROR,
-      'Произошла ошибка'
-    );
-  }
-
   get messages(): IMessage[] {
     return this.messageService.getMessages();
-  }
-
-  addMessage(type: MessageType, text: string): void {
-    this.messageService.addMessage(type, text);
   }
 
   closeMessage(message: IMessage): void {
