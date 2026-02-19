@@ -8,7 +8,6 @@ import { MessageType } from '../enums/MessageType';
 export class MessageService {
 
   private messages: IMessage[] = [];
-  messageType = MessageType;
 
   getMessages(): IMessage[] {
     return this.messages;
@@ -16,39 +15,27 @@ export class MessageService {
 
   private addMessage(type: MessageType, text: string): void {
     const message: IMessage = { type, text };
-    this.messages = [message, ...this.messages];//this.messages = [...this.messages, message]; вот так у меня буден снизу , а у меня сейчас сверху добавляются, могу видео отправить
+    this.messages = [message, ...this.messages];
 
     setTimeout(() => {
       this.closeMessage(message);
     }, 5000);
   }
 
-  showInfo(): void {
-    this.addMessage(
-      MessageType.INFO,
-      'Информация для пользователя'
-    );
+  showInfo(message: string = 'Информация для пользователя'): void {
+    this.addMessage(MessageType.INFO, message);
   }
 
-  showWarn(): void {
-    this.addMessage(
-      MessageType.WARN,
-      'Предупреждение'
-    );
+  showWarn(message: string = 'Предупреждение'): void {
+    this.addMessage(MessageType.WARN, message);
   }
 
-  showError(): void {
-    this.addMessage(
-      MessageType.ERROR,
-      'Произошла ошибка'
-    );
+  showError(message: string = 'Произошла ошибка'): void {
+    this.addMessage(MessageType.ERROR, message);
   }
 
-  showSuccess(): void {
-    this.addMessage(
-      MessageType.SUCCESS,
-      'операция выполнена успешно'
-    );
+  showSuccess(message: string = 'операция выполнена успешно'): void {
+    this.addMessage(MessageType.SUCCESS, message);
   }
 
   closeMessage(message: IMessage): void {

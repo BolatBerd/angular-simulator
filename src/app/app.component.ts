@@ -26,7 +26,7 @@ export class AppComponent {
   liveInputValue!: string;
   count: number = 0;
   form: ITourForm = {};
-  messageType = MessageType;
+  // messageType: typeof MessageType = MessageType;
   private localStorageService: LocalStorageService = inject(LocalStorageService);
   messageService: MessageService = inject(MessageService);
 
@@ -89,7 +89,7 @@ export class AppComponent {
       tourPrice: "230",
       tourEvaluation: 5.0,
     },
-  ]
+  ];
 
   travelBlog: ITravelBlog[] = [
     {
@@ -116,7 +116,7 @@ export class AppComponent {
       content: "Для современного мира базовый.",
       imege: "india",
     },
-  ]
+  ];
 
   constructor() {
     this.saveLastVisitDate();

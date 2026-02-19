@@ -337,11 +337,11 @@
       </section>
 
       <div class="toast-container">
-        <ng-container *ngFor="let message of messages">
+        @for (message of messages; track message) {
           <ng-container
             *ngTemplateOutlet="toastTemplate; context: { $implicit: message }">
           </ng-container>
-        </ng-container>
+        }
       </div>
 
       <ng-template #toastTemplate let-message>
