@@ -7,6 +7,7 @@ import { ITourForm } from '../interfaces/ITourForm';
 import { IDestination } from '../interfaces/IDestination';
 import { ITravelBlog } from '../interfaces/ITravelBlog';
 import { IMessage } from '../interfaces/IMessage';
+import { IPhotoReport } from '../interfaces/IPhotoReport';
 import { MessageType } from '../enums/MessageType';
 import { LocalStorageService } from '../classes/localStorage.service';
 import { MessageService } from '../classes/message.service';
@@ -26,7 +27,6 @@ export class AppComponent {
   liveInputValue!: string;
   count: number = 0;
   form: ITourForm = {};
-  // messageType: typeof MessageType = MessageType;
   private localStorageService: LocalStorageService = inject(LocalStorageService);
   messageService: MessageService = inject(MessageService);
 
@@ -118,6 +118,15 @@ export class AppComponent {
     },
   ];
 
+  photoReport: IPhotoReport[] = [
+    { id: 1, img: 'balloons'},
+    { id: 2, img: 'travel-map' },
+    { id: 3, img: 'skyscraper' },
+    { id: 4, img: 'coastal-zone' },
+    { id: 5, img: 'canyon'},
+    { id: 6, img: 'thing-for-travel' }
+  ];
+
   constructor() {
     this.saveLastVisitDate();
     this.saveVisitCount();
@@ -147,7 +156,7 @@ export class AppComponent {
 
   private saveLastVisitDate(): void {
     localStorage.setItem('last-visit', new Date().toISOString());
-  };
+  }
 
   private saveVisitCount(): void {
     const current: number = Number(localStorage.getItem('visit-count') || 0);

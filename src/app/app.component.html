@@ -4,7 +4,7 @@
     <span class="spinner">Иконка загрузки, которую мы должны отобразить. Добавить анимацию прокрутки</span>
   </div>
 } @else {
-  <header class="header">
+  <header id="main-header" class="header">
     <div class="container">
       <div class="header-menu flex-s-b" >
         <div class="header-menu-logo flex-column">
@@ -96,10 +96,8 @@
             <span class="menu-subtitle fs-14">выберите из списка</span>
           </div>
           <div class="menu-field">
-            <div class="
-              flex-s-b
-              menu-title pos-rel
-              br-8 fs-16"
+            <div
+              class="flex-s-b menu-title pos-rel br-8 fs-16"
               (click)="openDatePicker(dateInput)"
             >
               <input
@@ -127,7 +125,6 @@
             >
               <select
                 id="select-tour-persons"
-                type="text"
                 class="select select-location-person"
                 #personImput
                 [(ngModel)]="form.persons"
@@ -190,7 +187,7 @@
         <div class="about-text">
           <h2 class="section-label color-yellow fs-24">о нашем походе</h2>
           <h1 class="section-title color-black fs-32">Исследуйте все горные массивы мира вместе с нами</h1>
-          <p class="section-text color-black fs-18 lh-150">Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur"и занялся его поисками в классической латинской литературе.</p>
+          <p class="section-text color-black fs-18 lh-150">Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur" и занялся его поисками в классической латинской литературе.</p>
           <button
             id="btn-tour-program"
             class="bt-consultation fs-16 br-8 cur-p"
@@ -202,7 +199,7 @@
         </div>
       </div>
 
-      <section class="offer-section">
+      <section id="about-guide" class="offer-section">
         <div class="container">
           <div class="container-second-block flex-s-b">
             <div class="container-offer">
@@ -257,7 +254,7 @@
         </div>
       </section>
 
-      <section class="popular-section flex-col-cen mt-85">
+      <section id="tour-program" class="popular-section flex-col-cen mt-85">
         <div class="flex-col-cen">
           <h2 class="subtitle color-yellow fs-24">по версии отдыхающих</h2>
           <h1 class="subtitle-title color-black fs-32">Популярные направления</h1>
@@ -298,7 +295,7 @@
         </button>
       </section>
 
-      <section class="blog-tour flex-col-cen">
+      <section id="pricing" class="blog-tour flex-col-cen">
         <div class="flex-col-cen mt-85">
           <h2 class="subtitle color-yellow fs-24">делимся впечатлениями</h2>
           <h1 class="subtitle-title color-black fs-32">Блог о путешествиях</h1>
@@ -328,7 +325,7 @@
 
         </div>
         <button
-          id="btn-other materials"
+          id="btn-other-materials"
           class="bt-consultation fs-16 br-8 mt-40 cur-p"
           (click)="messageService.showSuccess()"
           >
@@ -336,7 +333,50 @@
           </button>
       </section>
 
-      <div class="toast-container">
+      <section id="blog" class="travel-blog flex-col-cen">
+        <div class="flex-col-cen mt-85">
+          <h2 class="subtitle color-yellow fs-24">фото-отчет</h2>
+          <h1 class="subtitle-title color-black fs-32">Делимся впечатлениями</h1>
+        </div>
+
+          <div class="travel">
+            @for (item of photoReport; track item.id) {
+              <div
+                class="travel-grid-img"
+                [ngClass]="'item-' + item.id"
+              >
+                <img [src]="'/images/' + item.img + '.png'" [alt]="item.img">
+              </div>
+            }
+          </div>
+
+        <button
+          id="btn-pinterest"
+          class="bt-consultation fs-16 br-8 mt-40 cur-p"
+          (click)="messageService.showSuccess()"
+        >
+          Наш pinterest
+        </button>
+      </section>
+
+      <section id="contacts" class="footer">
+        <div class="company">
+          <h2>Компания «РумТибет»</h2>
+          <p>Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney.</p>
+          <div class="cur-p">
+            <a href="#">info@domain.com</a>
+            <a href="#">+7 (123) 456-78-90</a>
+          </div>
+        </div>
+        <div class="services">
+
+        </div>
+        <div class="trips">
+
+        </div>
+      </section>
+
+      <div id="toast-container" class="toast-container">
         @for (message of messages; track message) {
           <ng-container
             *ngTemplateOutlet="toastTemplate; context: { $implicit: message }">
@@ -345,7 +385,7 @@
       </div>
 
       <ng-template #toastTemplate let-message>
-        <div class="toast" [ngClass]="message.type">
+        <div id="toast-message" class="toast" [ngClass]="message.type">
 
           <img src="/images/message-icon.svg" alt="message">
           <div class="toast-content">
