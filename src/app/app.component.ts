@@ -30,7 +30,6 @@ export class AppComponent {
   private localStorageService: LocalStorageService = inject(LocalStorageService);
   messageService: MessageService = inject(MessageService);
 
-
   tours: Collection<string> = new Collection<string>([
     'Поход в горы',
     'Прогулка по парку',
