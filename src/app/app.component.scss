@@ -523,9 +523,9 @@ select option {
 }
 
 .toast.success { border-left: 4px solid #22c55e; }
-.toast.info    { border-left: 4px solid #3b82f6; }
-.toast.warn    { border-left: 4px solid #f59e0b; }
-.toast.error   { border-left: 4px solid #ef4444; }
+.toast.info { border-left: 4px solid #3b82f6; }
+.toast.warn { border-left: 4px solid #f59e0b; }
+.toast.error { border-left: 4px solid #ef4444; }
 
 .close-btn {
   background: transparent;
@@ -535,7 +535,7 @@ select option {
 
 @keyframes slideIn {
   from { transform: translateX(100%); opacity: 0; }
-  to   { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(0); opacity: 1; }
 }
 
 .toast-content {
