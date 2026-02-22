@@ -9,7 +9,7 @@ import { ITravelBlog } from '../interfaces/ITravelBlog';
 import { IMessage } from '../interfaces/IMessage';
 import { IPhotoReport } from '../interfaces/IPhotoReport';
 import { MessageType } from '../enums/MessageType';
-import { LocalStorageService } from '../classes/localStorage.service';
+import { LocalStorageService } from '../classes/local-storage.service';
 import { MessageService } from '../classes/message.service';
 
 @Component({
@@ -20,15 +20,16 @@ import { MessageService } from '../classes/message.service';
 })
 export class AppComponent {
 
+  private localStorageService: LocalStorageService = inject(LocalStorageService);
+  messageService: MessageService = inject(MessageService);
   companyName: string = 'румтибет';
+  companyIP: string = 'ИП Константинопольский К.К., 2023';
   currentDateAndTime: string = new Date().toLocaleString();
   isDateView: boolean = true;
   isLoading: boolean = true;
   liveInputValue!: string;
   count: number = 0;
   form: ITourForm = {};
-  private localStorageService: LocalStorageService = inject(LocalStorageService);
-  messageService: MessageService = inject(MessageService);
 
   tours: Collection<string> = new Collection<string>([
     'Поход в горы',
