@@ -4,7 +4,7 @@
     <span class="spinner">Иконка загрузки, которую мы должны отобразить. Добавить анимацию прокрутки</span>
   </div>
 } @else {
-  <header class="header">
+  <header id="main-header" class="header">
     <div class="container">
       <div class="header-menu flex-s-b" >
         <div class="header-menu-logo flex-column">
@@ -96,10 +96,8 @@
             <span class="menu-subtitle fs-14">выберите из списка</span>
           </div>
           <div class="menu-field">
-            <div class="
-              flex-s-b
-              menu-title pos-rel
-              br-8 fs-16"
+            <div
+              class="flex-s-b menu-title pos-rel br-8 fs-16"
               (click)="openDatePicker(dateInput)"
             >
               <input
@@ -127,7 +125,6 @@
             >
               <select
                 id="select-tour-persons"
-                type="text"
                 class="select select-location-person"
                 #personImput
                 [(ngModel)]="form.persons"
@@ -190,17 +187,19 @@
         <div class="about-text">
           <h2 class="section-label color-yellow fs-24">о нашем походе</h2>
           <h1 class="section-title color-black fs-32">Исследуйте все горные массивы мира вместе с нами</h1>
-          <p class="section-text color-black fs-18 lh-150">Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur"и занялся его поисками в классической латинской литературе.</p>
+          <p class="section-text color-black fs-18 lh-150">Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur" и занялся его поисками в классической латинской литературе.</p>
           <button
             id="btn-tour-program"
             class="bt-consultation fs-16 br-8 cur-p"
             aria-label="Заказать консультацию"
-            >Программа тура
+            (click)="messageService.showInfo()"
+          >
+            Программа тура
           </button>
         </div>
       </div>
 
-      <section class="offer-section">
+      <section id="about-guide" class="offer-section">
         <div class="container">
           <div class="container-second-block flex-s-b">
             <div class="container-offer">
@@ -224,7 +223,9 @@
                 id="btn-tour-pricing"
                 class="bt-consultation fs-16 br-8 mt-40 cur-p"
                 aria-label="Заказать консультацию"
-                >Стоимость программ
+                (click)="messageService.showWarn()"
+              >
+                Стоимость программ
               </button>
             </div>
             <div class="images-grid">
@@ -253,43 +254,113 @@
         </div>
       </section>
 
-      <div class="flex-col-cen mt-80">
+      <section id="tour-program" class="popular-section flex-col-cen mt-85">
         <div class="flex-col-cen">
-          <h2 class="subtitle color-yellow fs-24">фото-отчет</h2>
-          <h1 class="subtitle-title color-black fs-32">Делимся впечатлениями</h1>
+          <h2 class="subtitle color-yellow fs-24">по версии отдыхающих</h2>
+          <h1 class="subtitle-title color-black fs-32">Популярные направления</h1>
         </div>
-        <div class="tour-prices">
-          <img
-            src="images/boat-on-lake.png"
-            alt="Озеро возле гор"
-            width="380"
-            height="500"
-          />
-          <img
-            src="images/night-in-mountains.png"
-            alt="Ночь в горах"
-            width="380"
-            height="500"
-          />
-          <img
-            src="images/yoga-in-mountains.png"
-            alt="Йога в горах"
-            width="380"
-            height="500"
-            class="pos-rel"
-          />
-          <div class="pos-abs flex-center">
-            <div>
-              <h2>Йога в горах</h2>
-              <p>для тех, кто забоится о себе</p>
-            </div>
-              <div>
-                <span>230 $</span>
+        <div class="container-price mt-40">
+
+          @for (destination of popularDestination; track destination.id) {
+            <div class="card">
+              <img
+                [src]="'/images/' + destination.image + '.png'"
+                alt={{ destination.image }}
+                width="380"
+                height="500"
+              />
+              <div class="rating">
+                <img src="/images/star-icon.svg" alt="star">
+                {{ destination.tourEvaluation | number:'1.1-1' }}
               </div>
-          </div>
+              <div class="card-info flex-s-b pos-abs">
+                <div>
+                  <h2 class="fs-24">{{ destination.nameTour }}</h2>
+                  <p class="fs-14">{{ destination.tourDescription }}</p>
+                </div>
+                <div class="price fs-20">
+                  <span>{{ destination.tourPrice }} &#36;</span>
+                </div>
+              </div>
+            </div>
+          }
+
         </div>
-        <button id="btn-tour-rating" class="bt-consultation fs-16 br-8  mt-40 cur-p">Рейтинг направлений</button>
+        <button
+          id="btn-tour-rating"
+          class="bt-consultation fs-16 br-8 mt-40 cur-p"
+          (click)="messageService.showError()"
+        >
+          Рейтинг направлений
+        </button>
+      </section>
+
+      <section id="pricing" class="blog-tour flex-col-cen">
+        <div class="flex-col-cen mt-85">
+          <h2 class="subtitle color-yellow fs-24">делимся впечатлениями</h2>
+          <h1 class="subtitle-title color-black fs-32">Блог о путешествиях</h1>
+        </div>
+        <div class="blog-container">
+
+          @for (item of travelBlog; track item.id) {
+            <div class="blog-card">
+              <div class="blog-image">
+                <img
+                  [src]="'/images/' + item.imege + '.png'"
+                  [alt]="item.title"
+                />
+              </div>
+
+              <div class="blog-info">
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.content }}</p>
+
+                <div class="blog-bottom">
+                  <span class="blog-date fs-14">01/04/2023</span>
+                  <a [id]="'blog-' + item.id" class="read-more cur-p">читать статью</a>
+                </div>
+              </div>
+            </div>
+          }
+
+        </div>
+        <button
+          id="btn-other-materials"
+          class="bt-consultation fs-16 br-8 mt-40 cur-p"
+          (click)="messageService.showSuccess()"
+          >
+            Другие материалы
+          </button>
+      </section>
+
+
+
+      <div id="toast-container" class="toast-container">
+        @for (message of messages; track message) {
+          <ng-container
+            *ngTemplateOutlet="toastTemplate; context: { $implicit: message }">
+          </ng-container>
+        }
       </div>
+
+      <ng-template #toastTemplate let-message>
+        <div id="toast-message" class="toast" [ngClass]="message.type">
+
+          <img src="/images/message-icon.svg" alt="message">
+          <div class="toast-content">
+            <strong>{{ message.type | titlecase }}</strong>
+            <div>{{ message.text }}</div>
+          </div>
+
+          <button
+            class="close-btn"
+            (click)="closeMessage(message)">
+            <img src="/images/close-icon.svg" alt="close">
+          </button>
+
+        </div>
+      </ng-template>
+
     </div>
   </header>
 }
