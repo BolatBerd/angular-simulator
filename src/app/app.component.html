@@ -344,33 +344,6 @@
 
       <app-message></app-message>
 
-      <!-- <div id="toast-container" class="toast-container">
-        @for (message of messages; track message) {
-          <ng-container
-            *ngTemplateOutlet="toastTemplate; context: { $implicit: message }">
-          </ng-container>
-        }
-      </div>
-
-      <ng-template #toastTemplate let-message>
-        <div id="toast-message" class="toast" [ngClass]="message.type">
-
-          <img src="/images/message-icon.svg" alt="message">
-          <div class="toast-content">
-            <strong>{{ message.type | titlecase }}</strong>
-            <div>{{ message.text }}</div>
-          </div>
-
-          <button
-            id="close-btn"
-            class="close-btn"
-            (click)="closeMessage(message)">
-            <img src="/images/close-icon.svg" alt="close">
-          </button>
-
-        </div>
-      </ng-template> -->
-
     </div>
   </header>
 }
