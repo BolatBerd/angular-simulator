@@ -1,0 +1,115 @@
+* {
+  font-family: 'Nunito Sans', sans-serif;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #FDFDFD;
+  --black-color: #18121E;
+  --yellow-color: #F2BE22;
+  --white-color: #FFFFFF;
+  --footer-header-color: #F3F5F4;
+  --bt-color: #1A3E3E;
+  --container-width: 1200px;
+}
+
+.header {
+  color: var(--primary-color);
+  background-image: url("/images/header-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 985px;
+
+  &-menu {
+    padding-top: 8px;
+
+    &-logo {
+      gap: 9px;
+    }
+  }
+}
+
+.fs-16 {
+  font-size: 16px;
+}
+
+.fs-18 {
+  font-size: 18px;
+}
+
+.br-8 {
+  border-radius: 8px;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-s-b {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+div .padding-top-8 {
+  padding-top: 8px;
+}
+
+.nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-weight: 600;
+  gap: 24px;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.consultation {
+  margin-left: 49px;
+  width: 157px;
+  height: 44px;
+  background-color: var(--bt-color);
+  color: var(--primary-color);
+  font-family: 'Nunito Sans';
+  border: none;
+}
+
+.logo-name {
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+span {
+  display: block;
+}
+
+.button {
+  background-color: var(--white-color);
+  color: var(--bt-color);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  border: 1px solid #FFFFFF;
+  width: 270px;
+  height: 52px;
+  padding-top: 0px;
+}
+
+.active-link {
+  text-decoration: underline;
+}

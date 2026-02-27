@@ -14,14 +14,31 @@ import { MessageService } from '../classes/message.service';
 import { IOurService } from '../interfaces/IOurService';
 import { ITravelEssential} from '../interfaces/ITravelEssential';
 import { IMessenger } from '../interfaces/IMessenger';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
+import { HeaderComponent } from '../header/header.component';
+import { FooterComponent } from '../footer/footer.component';
+import { MessageComponent } from '../message/message.component';
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule, CommonModule],
+  standalone: true,
+  imports: [
+    FormsModule,
+    CommonModule,
+    RouterOutlet,
+    // RouterLink,
+    // RouterLinkActive,
+    HeaderComponent,
+    FooterComponent,
+    MessageComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+
+  router: Router = inject(Router);
 
   private localStorageService: LocalStorageService = inject(LocalStorageService);
   messageService: MessageService = inject(MessageService);

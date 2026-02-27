@@ -1,0 +1,24 @@
+<div class="header-menu flex-s-b" >
+  <div class="header-menu-logo flex-column">
+    <img src="/images/logo.svg" alt="logo" width="137px" height="48px"/>
+    <span class="logo-name">{{ companyName }}</span>
+  </div>
+  <div class="flex-center">
+    <nav class="nav flex-s-b fs-18">
+      <a routerLink="" id="nav-home">Главная</a>
+      <a routerLink="user" routerLinkActive="active-link" id="nav-about-guide">Про гида</a>
+      <a routerLink="sdad" id="nav-tour-program">Программа тура</a>
+      <a id="nav-pricing">Стоимость</a>
+      <a id="nav-blog">Блог</a>
+      <a id="nav-contacts">Контакты</a>
+    </nav>
+    <button
+      (click)="redirect()"
+      id="btn-consultation-header"
+      class="consultation fs-16 br-8"
+      aria-label="Заказать консультацию"
+    >
+      Консультация redirect
+    </button>
+  </div>
+</div>
