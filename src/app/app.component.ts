@@ -19,6 +19,8 @@ import { Router } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { MessageComponent } from '../message/message.component';
+import { HomeComponent } from '../home/home.component';
+import { UserComponent } from '../user/user.component';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +33,9 @@ import { MessageComponent } from '../message/message.component';
     // RouterLinkActive,
     HeaderComponent,
     FooterComponent,
-    MessageComponent
+    MessageComponent,
+    HomeComponent,
+    // UserComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
