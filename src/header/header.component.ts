@@ -12,7 +12,7 @@ import { INavItem } from '../interfaces/INavItem';
     RouterLinkActive,
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
 

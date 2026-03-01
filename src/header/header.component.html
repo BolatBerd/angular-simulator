@@ -11,17 +11,12 @@
           <a
             [routerLink]="item.path"
             routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: item.path === ''}"
+            [routerLinkActiveOptions]="{ exact: item.path === '' }"
           >
             {{ item.label }}
           </a>
         }
 
-        <a routerLink="user" routerLinkActive="active-link" id="nav-about-guide">Про гида</a>
-        <a routerLink="sdad" id="nav-tour-program">Программа тура</a>
-        <!-- <a id="nav-pricing">Стоимость</a> -->
-        <a id="nav-blog">Блог</a>
-        <a id="nav-contacts">Контакты</a>
       </nav>
       <button
         id="btn-consultation-header"
