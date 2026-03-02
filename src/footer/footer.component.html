@@ -13,9 +13,9 @@
 
       <div class="social cur-p">
 
-        @for (item of   messengers; track item.id) {
-          <a [id]="item.title">
-            <img [src]="'/images/' + item.title + '-icon.svg'" [alt]="item.title">
+        @for (item of messengers; track item) {
+          <a [id]="item">
+            <img [src]="'/images/' + item + '-icon.svg'" [alt]="item">
           </a>
         }
 
@@ -26,10 +26,10 @@
       <h3>Наши услуги</h3>
       <ul>
 
-        @for (item of ourServices; track item.id) {
+        @for (item of routes; track item) {
           <li>
             <a id="service">
-              <img src="/images/pointer-icon.svg" alt="pointer">{{ item.title }}
+              <img src="/images/pointer-icon.svg" alt="pointer">{{ item }}
             </a>
           </li>
         }
@@ -41,10 +41,10 @@
       <h3>Важно для путешествий</h3>
       <ul>
 
-        @for (item of travelEssentials; track $index) {
+        @for (item of travelEssentials; track item) {
           <li>
             <a id="essential">
-              <img src="/images/pointer-icon.svg" alt="pointer">{{ item.title }}
+              <img src="/images/pointer-icon.svg" alt="pointer">{{ item }}
             </a>
           </li>
         }

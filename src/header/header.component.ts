@@ -1,6 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { INavItem } from '../interfaces/INavItem';
 
 @Component({
@@ -16,17 +15,11 @@ import { INavItem } from '../interfaces/INavItem';
 })
 export class HeaderComponent {
 
-  router: Router = inject(Router);
-
   companyName: string = 'румтибет';
 
   navItems: INavItem[] = [
     { label: 'Главная', path: '' },
     { label: 'Пользователи', path: 'user' }
   ];
-
-  redirect(){
-    this.router.navigate(['/user']);
-  }
 
 }

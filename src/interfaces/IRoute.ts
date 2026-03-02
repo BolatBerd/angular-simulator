@@ -1,4 +1,4 @@
-export interface IOurService {
+export interface IRoute {
   id: number;
   title: string;
 }

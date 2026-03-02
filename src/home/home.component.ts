@@ -10,10 +10,7 @@ import { IMessage } from '../interfaces/IMessage';
 import { IPhotoReport } from '../interfaces/IPhotoReport';
 import { LocalStorageService } from '../classes/local-storage.service';
 import { MessageService } from '../classes/message.service';
-import { IOurService } from '../interfaces/IOurService';
 import { ITravelEssential} from '../interfaces/ITravelEssential';
-import { IMessenger } from '../interfaces/IMessenger';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -25,8 +22,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-
- router: Router = inject(Router);
 
   private localStorageService: LocalStorageService = inject(LocalStorageService);
   messageService: MessageService = inject(MessageService);
@@ -135,27 +130,11 @@ export class HomeComponent {
     { id: 6, img: 'thing-for-travel' }
   ];
 
-  ourServices: IOurService[] = [
-    { id: 1, title: "Прогулки в горы летом" },
-    { id: 2, title: "Зимние походы в горы" },
-    { id: 3, title: "Посещение храмов в горах" },
-    { id: 4, title: "Экстремальные виды туризма" },
-    { id: 5, title: "Походы в джунглях Амазонии" },
-    { id: 6, title: "Поездка в Африку" }
-  ];
-
   travelEssentials: ITravelEssential[] = [
     { title: "Как собрать в долгий поход?" },
     { title: "Жизненно важные предметы для похода" },
     { title: "Медицинская страховка, гарантии безопасности" },
     { title: "Если вы врач - загляните сюда" }
-  ];
-
-  messengers: IMessenger[] = [
-    { id: 1, title: 'telegram'},
-    { id: 2, title: 'vk'},
-    { id: 3, title: 'pinterest'},
-    { id: 4, title: 'skype'},
   ];
 
   constructor() {

@@ -1,7 +1,6 @@
 <div id="toast-container" class="toast-container">
   @for (message of messages; track message) {
-    <ng-container
-      *ngTemplateOutlet="toastTemplate; context: { $implicit: message }">
+    <ng-container *ngTemplateOutlet="toastTemplate; context: { $implicit: message }">
     </ng-container>
   }
 </div>
@@ -11,7 +10,7 @@
 
     <img src="/images/message-icon.svg" alt="message">
     <div class="toast-content">
-      <strong>{{ message.type}}</strong>
+      <strong>{{ message.type }}</strong>
       <div>{{ message.text }}</div>
     </div>
 
