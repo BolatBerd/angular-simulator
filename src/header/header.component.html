@@ -1,0 +1,31 @@
+<div class="header-conteiner">
+  <div class="header-menu flex-s-b" >
+    <div class="header-menu-logo flex-column">
+      <img src="/images/logo.svg" alt="logo" width="137px" height="48px"/>
+      <span class="logo-name">{{ companyName }}</span>
+    </div>
+    <div class="flex-center">
+      <nav class="nav flex-s-b fs-18">
+
+        @for (item of navItems; track item.path) {
+          <a
+            [routerLink]="item.path"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: item.path === '' }"
+          >
+            {{ item.label }}
+          </a>
+        }
+
+      </nav>
+      <button
+        id="btn-consultation-header"
+        class="consultation fs-16 br-8"
+        aria-label="Заказать консультацию"
+      >
+        Консультация
+      </button>
+    </div>
+  </div>
+
+</div>
