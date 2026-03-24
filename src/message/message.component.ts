@@ -12,11 +12,9 @@ import { CommonModule } from '@angular/common';
 })
 export class MessageComponent {
 
-  messageService: MessageService = inject(MessageService);
+  private messageService: MessageService = inject(MessageService);
 
-  get messages(): IMessage[] {
-    return this.messageService.getMessages();
-  }
+  messages$ = this.messageService.messages$;
 
   closeMessage(message: IMessage): void {
     this.messageService.closeMessage(message);

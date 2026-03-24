@@ -199,10 +199,6 @@ export class HomeComponent {
     select?.click();
   }
 
-  get messages(): IMessage[] {
-    return this.messageService.getMessages();
-  }
-
   closeMessage(message: IMessage): void {
     this.messageService.closeMessage(message);
   }
