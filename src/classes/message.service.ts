@@ -14,8 +14,8 @@ export class MessageService {
   private addMessage(type: MessageType, text: string): void {
     const message: IMessage = { type, text };
 
-    const current = this.messagesSubject.getValue();
-    const updated = [message, ...current];
+    const current: IMessage[] = this.messagesSubject.getValue();
+    const updated: IMessage[] = [message, ...current];
 
     this.messagesSubject.next(updated);
 
@@ -41,8 +41,8 @@ export class MessageService {
   }
 
   closeMessage(message: IMessage): void {
-    const current = this.messagesSubject.getValue();
-    const updated = current.filter((m: IMessage) => m !== message);
+    const current: IMessage[] = this.messagesSubject.getValue();
+    const updated: IMessage[] = current.filter((m: IMessage) => m !== message);
 
     this.messagesSubject.next(updated);
   }
