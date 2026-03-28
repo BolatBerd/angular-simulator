@@ -5,6 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { MessageComponent } from '../message/message.component';
+import { LoaderComponent } from '../loader/loader.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ import { MessageComponent } from '../message/message.component';
     RouterOutlet,
     HeaderComponent,
     FooterComponent,
-    MessageComponent
+    MessageComponent,
+    LoaderComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
