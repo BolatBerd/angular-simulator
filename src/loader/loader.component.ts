@@ -16,12 +16,12 @@ export class LoaderComponent {
 
   constructor(private loaderService: LoaderService) {
 
-    this.loaderService.show();
+    this.loaderService.showLoader();
 
     setTimeout(() => {
       console.log('Данные загружены');
-      this.loaderService.hide();
+      this.loaderService.hideLoader();
     }, 2000);
-
   }
+
 }
