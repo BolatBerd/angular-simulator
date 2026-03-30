@@ -1,7 +1,7 @@
 @if (users$ | async; as users) {
   @if (users.length > 0) {
-    @for (item of users$ | async; track item.id) {
-      <div class="cards">
+    <div class="cards">
+      @for (item of users$ | async; track item.id) {
         <div class="card" >
           <h2 class="name">{{ item.name }}</h2>
           <p class="username">{{ item.username }}</p>
@@ -33,7 +33,12 @@
             <p><span>Сфера:</span> {{ item.company.bs }}</p>
           </div>
         </div>
-      </div>
-    }
+      }
+      @empty {
+        <div class="empty-state">
+          <p>Нет данных для отображения</p>
+        </div>
+      }
+    </div>
   }
 }

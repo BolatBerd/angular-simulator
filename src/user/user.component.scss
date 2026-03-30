@@ -1,12 +1,10 @@
 .cards {
-  // max-width: 1440px;
+  max-width: 1440px;
   margin: 0 auto;
-  // display: grid;
-  // grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));3
-  display: flex;
-  justify-content: space-between;
-  grid-gap: 30px;
-  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+  gap: 50px 70px;
+  padding: 30px 30px;
 }
 
 .card {
@@ -34,9 +32,9 @@
 }
 
 .section {
+  position: relative;
   margin-top: 25px;
   padding-top: 15px;
-  border-top: 1px solid #eee;
 }
 
 .section h3 {
@@ -47,18 +45,37 @@
   letter-spacing: 1.2px;
   vertical-align: middle;
   text-transform: uppercase;
+  position: relative;
+}
+
+.section h3::after {  /* ← линия ПОСЛЕ текста */
+  content: '';
+  position: absolute;
+  bottom: 7px;        /* ← чуть ниже текста */
+  left: 0;
+  right: 0;            /* ← до конца строки */
+  height: 1px;
+  background: #eee;
 }
 
 .section p {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   margin: 6px 0;
   font-size: 14px;
   color: #D4A373;
+  width: 100%;
 }
 
 .section span {
   font-weight: 600;
   color: #667C7C;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #667C7C;
+  font-size: 16px;
 }
