@@ -48,12 +48,12 @@
   position: relative;
 }
 
-.section h3::after {  /* ← линия ПОСЛЕ текста */
+.section h3::after {
   content: '';
   position: absolute;
-  bottom: 7px;        /* ← чуть ниже текста */
+  bottom: 7px;
   left: 0;
-  right: 0;            /* ← до конца строки */
+  right: 0;
   height: 1px;
   background: #eee;
 }

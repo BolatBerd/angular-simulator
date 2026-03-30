@@ -1,6 +1,7 @@
 import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component,inject } from '@angular/core';
 import { LoaderService } from '../classes/loader.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-loader',
@@ -10,18 +11,12 @@ import { LoaderService } from '../classes/loader.service';
 })
 export class LoaderComponent {
 
-  get loading$() {
-    return this.loaderService.loading$;
-  }
+  private loaderService: LoaderService = inject(LoaderService)
 
-  constructor(private loaderService: LoaderService) {
+  loading$: Observable<boolean>  = this.loaderService.isLoading$;
 
+  constructor() {
     this.loaderService.showLoader();
-
-    setTimeout(() => {
-      console.log('Данные загружены');
-      this.loaderService.hideLoader();
-    }, 2000);
   }
 
 }

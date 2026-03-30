@@ -10,15 +10,14 @@ import { MessageService } from './message.service';
   providedIn: 'root'
 })
 
-export class UserService {
+export class UserSubject {
 
   private apiService: UserApiService = inject(UserApiService);
-  private loader: LoaderService = inject(LoaderService);
+  private loaderService: LoaderService = inject(LoaderService);
   private messageService: MessageService = inject(MessageService);
 
-  private usersSubject: BehaviorSubject<IUser[]> = new BehaviorSubject<IUser[]>([])
-
-  public users$: Observable<IUser[]> = this.usersSubject.asObservable();
+  private usersSubject: BehaviorSubject<IUser[]> = new BehaviorSubject<IUser[]>([]);
+  users$: Observable<IUser[]> = this.usersSubject.asObservable();
 
   setUsers(users: IUser[]): void {
     this.usersSubject.next(users);
@@ -28,20 +27,17 @@ export class UserService {
     return this.usersSubject.getValue();
   }
 
-  loadUsers(): void {
-    this.loader. showLoader();
+  loadUsers(): Observable<IUser[]> {
+    this.loaderService.showLoader();
 
-    this.apiService.fetchUsers()
+    return this.apiService.getUsers()
       .pipe(
         catchError((error) => {
           this.messageService.showError('Ошибка при загрузке пользователей');
           return of([]);
         }),
-        finalize(() => {
-          this.loader.hideLoader();
-        })
-      ).subscribe((users: IUser[]) => {
-        this.setUsers(users);
-    });
+        finalize(() => this.loaderService.hideLoader())
+      );
   }
+
 }

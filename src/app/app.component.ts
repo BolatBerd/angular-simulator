@@ -16,8 +16,7 @@ import { LoaderComponent } from '../loader/loader.component';
     RouterOutlet,
     HeaderComponent,
     FooterComponent,
-    MessageComponent,
-    LoaderComponent
+    MessageComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']

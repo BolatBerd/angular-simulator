@@ -12,7 +12,7 @@ export class UserApiService {
 
   private apiUrl: string = 'https://jsonplaceholder.typicode.com/users';
 
-  fetchUsers(): Observable<IUser[]> {
+  getUsers(): Observable<IUser[]> {
     return this.http.get<IUser[]>(this.apiUrl);
   }
 
