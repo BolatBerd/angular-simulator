@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,inject  } from '@angular/core';
 import { BehaviorSubject, catchError, finalize, of } from 'rxjs';
 import { Observable } from 'rxjs';
 import { IUser } from '../interfaces/IUser';
@@ -12,15 +12,13 @@ import { MessageService } from './message.service';
 
 export class UserService {
 
+  private apiService: UserApiService = inject(UserApiService);
+  private loader: LoaderService = inject(LoaderService);
+  private messageService: MessageService = inject(MessageService);
+
   private usersSubject: BehaviorSubject<IUser[]> = new BehaviorSubject<IUser[]>([])
 
   public users$: Observable<IUser[]> = this.usersSubject.asObservable();
-
-  constructor(
-    private apiService: UserApiService,
-    private loader: LoaderService,
-    private messageService: MessageService
-  ) {}
 
   setUsers(users: IUser[]): void {
     this.usersSubject.next(users);
@@ -33,7 +31,7 @@ export class UserService {
   loadUsers(): void {
     this.loader. showLoader();
 
-    this.apiService.getUsers()
+    this.apiService.fetchUsers()
       .pipe(
         catchError((error) => {
           this.messageService.showError('Ошибка при загрузке пользователей');

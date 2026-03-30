@@ -1,6 +1,18 @@
+.cards {
+  // max-width: 1440px;
+  margin: 0 auto;
+  // display: grid;
+  // grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));3
+  display: flex;
+  justify-content: space-between;
+  grid-gap: 30px;
+  padding: 40px 20px;
+}
+
 .card {
-  max-width: 600px;
-  margin: 40px auto;
+  max-width: 440px;
+  max-height: 630px;
+  margin: 0;
   padding: 25px;
   border-radius: 12px;
   background: #ffffff;
@@ -11,13 +23,14 @@
 .name {
   margin: 0;
   font-size: 26px;
-  color: #2c3e50;
+  color: #1D3939;
 }
 
 .username {
   margin-top: 5px;
-  color: #e67e22;
+  color: #D4A373;
   font-weight: 500;
+  font-size: 15px;
 }
 
 .section {
@@ -28,17 +41,24 @@
 
 .section h3 {
   margin-bottom: 10px;
-  color: #34495e;
-  font-size: 16px;
+  color: #1D3939;
+  font-size: 12px;
+  line-height: 13.8px;
+  letter-spacing: 1.2px;
+  vertical-align: middle;
   text-transform: uppercase;
 }
 
 .section p {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   margin: 6px 0;
   font-size: 14px;
+  color: #D4A373;
 }
 
 .section span {
   font-weight: 600;
-  color: #555;
+  color: #667C7C;
 }

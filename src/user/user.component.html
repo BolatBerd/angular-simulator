@@ -1,34 +1,39 @@
-@for (item of users$ | async; track item.id) {
-  <div class="card" >
-    <h2 class="name">{{ item.name }}</h2>
-    <p class="username">{{ item.username }}</p>
+@if (users$ | async; as users) {
+  @if (users.length > 0) {
+    @for (item of users$ | async; track item.id) {
+      <div class="cards">
+        <div class="card" >
+          <h2 class="name">{{ item.name }}</h2>
+          <p class="username">{{ item.username }}</p>
 
-    <div class="section">
-      <h3>Контакты</h3>
-      <p><span>Почта:</span> {{ item.email }}</p>
-      <p><span>Телефон:</span> {{ item.phone }}</p>
-      <p><span>Сайт:</span> {{ item.website }}</p>
-    </div>
+          <div class="section">
+            <h3>Контакты</h3>
+            <p><span>Почта:</span> {{ item.email }}</p>
+            <p><span>Телефон:</span> {{ item.phone }}</p>
+            <p><span>Сайт:</span> {{ item.website }}</p>
+          </div>
 
-    <div class="section">
-      <h3>Адрес</h3>
-      <p><span>Город:</span> {{ item.address.city }}</p>
-      <p><span>Улица:</span> {{ item.address.street }}</p>
-      <p><span>Офис:</span> {{ item.address.suite }}</p>
-      <p><span>Индекс:</span> {{ item.address.zipcode }}</p>
-      <p>
-        <span>Координаты:</span>
-        {{ item.address.geo.lat }},
-        {{ item.address.geo.lng }}
-      </p>
-    </div>
+          <div class="section">
+            <h3>Адрес</h3>
+            <p><span>Город:</span> {{ item.address.city }}</p>
+            <p><span>Улица:</span> {{ item.address.street }}</p>
+            <p><span>Офис:</span> {{ item.address.suite }}</p>
+            <p><span>Индекс:</span> {{ item.address.zipcode }}</p>
+            <p>
+              <span>Координаты:</span>
+              {{ item.address.geo.lat }},
+              {{ item.address.geo.lng }}
+            </p>
+          </div>
 
-    <div class="section">
-      <h3>Компания</h3>
-      <p><span>Название:</span> {{ item.company.name }}</p>
-      <p><span>Миссия:</span> {{ item.company.catchPhrase }}</p>
-      <p><span>Сфера:</span> {{ item.company.bs }}</p>
-    </div>
-  </div>
+          <div class="section">
+            <h3>Компания</h3>
+            <p><span>Название:</span> {{ item.company.name }}</p>
+            <p><span>Миссия:</span> {{ item.company.catchPhrase }}</p>
+            <p><span>Сфера:</span> {{ item.company.bs }}</p>
+          </div>
+        </div>
+      </div>
+    }
+  }
 }
-
