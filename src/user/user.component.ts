@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { UserSubject } from '../classes/user.service';
+import { UserService } from '../classes/user.service';
 import { inject } from '@angular/core';
 import { LoaderComponent } from '../loader/loader.component';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { IUser } from '../interfaces/IUser';
 
 @Component({
@@ -12,13 +12,16 @@ import { IUser } from '../interfaces/IUser';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
 })
-export class UserComponent implements OnInit {
+export class UserComponent {
 
-  private usersApi: UserSubject = inject(UserSubject);
-  users$: Observable<IUser[]> = this.usersApi.users$;
+  private usersService: UserService = inject(UserService);
+  users$: Observable<IUser[]> = this.usersService.users$;
 
-  ngOnInit(): void {
-    this.usersApi.loadUsers().subscribe(users => this.usersApi.setUsers(users));
+  constructor() {
+    this.usersService.loadUsers()
+      .pipe(
+        tap((users: IUser[]) => this.usersService.setUsers(users))
+      ).subscribe();
   }
 
 }

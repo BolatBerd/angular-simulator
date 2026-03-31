@@ -10,9 +10,9 @@ import { MessageService } from './message.service';
   providedIn: 'root'
 })
 
-export class UserSubject {
+export class UserService {
 
-  private apiService: UserApiService = inject(UserApiService);
+  private userApiService: UserApiService = inject(UserApiService);
   private loaderService: LoaderService = inject(LoaderService);
   private messageService: MessageService = inject(MessageService);
 
@@ -30,9 +30,9 @@ export class UserSubject {
   loadUsers(): Observable<IUser[]> {
     this.loaderService.showLoader();
 
-    return this.apiService.getUsers()
+    return this.userApiService.getUsers()
       .pipe(
-        catchError((error) => {
+        catchError(() => {
           this.messageService.showError('Ошибка при загрузке пользователей');
           return of([]);
         }),

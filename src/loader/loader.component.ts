@@ -13,10 +13,6 @@ export class LoaderComponent {
 
   private loaderService: LoaderService = inject(LoaderService)
 
-  isLoading$: Observable<boolean>  = this.loaderService.isLoading$;
-
-  constructor() {
-    this.loaderService.showLoader();
-  }
+  isLoading$: Observable<boolean> = this.loaderService.isLoading$;
 
 }
