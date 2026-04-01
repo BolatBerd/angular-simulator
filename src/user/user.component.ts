@@ -14,13 +14,13 @@ import { IUser } from '../interfaces/IUser';
 })
 export class UserComponent {
 
-  private usersService: UserService = inject(UserService);
-  users$: Observable<IUser[]> = this.usersService.users$;
+  private userService: UserService = inject(UserService);
+  users$: Observable<IUser[]> = this.userService.users$;
 
   constructor() {
-    this.usersService.loadUsers()
+    this.userService.loadUsers()
       .pipe(
-        tap((users: IUser[]) => this.usersService.setUsers(users))
+        tap((users: IUser[]) => this.userService.setUsers(users))
       ).subscribe();
   }
 
