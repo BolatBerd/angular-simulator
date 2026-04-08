@@ -3,12 +3,13 @@ import { AsyncPipe } from '@angular/common';
 import { UserService } from '../classes/user.service';
 import { inject } from '@angular/core';
 import { LoaderComponent } from '../loader/loader.component';
+import { UserCardComponent } from '../user-card/user-card.component';
 import { Observable, tap } from 'rxjs';
 import { IUser } from '../interfaces/IUser';
 
 @Component({
   selector: 'app-user',
-  imports: [AsyncPipe, LoaderComponent],
+  imports: [AsyncPipe, LoaderComponent, UserCardComponent],
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
 })
