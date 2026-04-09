@@ -25,4 +25,10 @@ export class UserComponent {
       ).subscribe();
   }
 
+  onDeleteUser(user: IUser) {
+    const currentUsers = this.userService.getUsers();
+    const updatedUsers = currentUsers.filter(u => u.id !== user.id);
+    this.userService.setUsers(updatedUsers);
+  }
+
 }
