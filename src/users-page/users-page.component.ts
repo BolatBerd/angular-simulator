@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { IUser } from '../interfaces/IUser';
 import { UserService } from '../classes/user.service';
+import { UserCardComponent } from '../user-card/user-card.component';
 
 @Component({
   selector: 'app-users-page',
@@ -21,9 +22,17 @@ export class UsersPageComponent {
  }
 
   onCreateUser(user: IUser): void{
-    const updated = [...this.users, user];
-    this.users = updated;
-    this.userService.setUsers(updated);
+    this.userService.addUser(user);
+    // const updated = [...this.users, user];
+    // this.users = updated;
+    // this.userService.setUsers(updated);
+  }
+
+  onDeleteUser(user: IUser): void {
+    // const updated = this.users.filter(u => u.id !== user.id);
+    // this.users = updated;
+    // this.userService.setUsers(updated);
+    this.userService.deleteUser(user);
   }
 
 }

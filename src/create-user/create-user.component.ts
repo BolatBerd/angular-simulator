@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { IUser } from '../interfaces/IUser';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
+import { MessageService } from '../classes/message.service';
 
 @Component({
   selector: 'app-create-user',
@@ -14,6 +15,7 @@ export class CreateUserComponent {
 
   form: FormGroup;
   private nextId = 1;
+  private messageService: MessageService = inject(MessageService);
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -120,6 +122,8 @@ export class CreateUserComponent {
     };
 
     this.createUser.emit(user);
+    this.messageService.showSuccess('Пользователь создан успешно');
+    this.form.reset();
   }
 
   private withUnknown(value: string | null | undefined): string {

@@ -20,16 +20,9 @@ export class UserComponent {
   users$: Observable<IUser[]> = this.userService.users$;
 
   constructor() {
-    this.userService.loadUsers()
-      .pipe(
-        tap((users: IUser[]) => this.userService.setUsers(users))
-      ).subscribe();
   }
 
   onDeleteUser(user: IUser) {
-    const currentUsers = this.userService.getUsers();
-    const updatedUsers = currentUsers.filter(u => u.id !== user.id);
-    this.userService.setUsers(updatedUsers);
+    this.userService.deleteUser(user);
   }
-
 }
