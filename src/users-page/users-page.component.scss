@@ -2,7 +2,6 @@
   padding: 20px;
 }
 
-// 📝 Форма создания
 .form-section {
   margin-bottom: 30px;
   padding: 20px;
@@ -11,7 +10,6 @@
   border: 1px solid #e0e0e0;
 }
 
-// 🔄 Управление
 .controls {
   display: flex;
   justify-content: flex-end;
@@ -52,7 +50,34 @@
   }
 }
 
-// 🔍 Фильтр по имени
+// 🗑️ Кнопка очистки (удалить все данные)
+.clear-btn {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff4848 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 75, 75, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  img {
+    height: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+}
+
 .filter-section {
   display: flex;
   align-items: center;
@@ -93,7 +118,6 @@
   white-space: nowrap;
 }
 
-// 📇 Сетка карточек
 .cards-section {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -105,7 +129,6 @@
   }
 }
 
-// 📭 Пустой список
 .empty-state {
   grid-column: 1 / -1;
   padding: 60px 20px;

@@ -47,24 +47,13 @@ export class UserService {
     return this.userApiService.getUsers()
       .pipe(
         tap((serverUsers: IUser[]) => {
-          // 🔄 Мержим локально добавленных пользователей с данными с сервера
           const currentUsers = this.usersSubject.getValue();
-          
-          // 📌 Находим максимальный ID с сервера
-          const maxServerID = serverUsers.length > 0 
+          const maxServerID = serverUsers.length > 0
             ? Math.max(...serverUsers.map(u => u.id))
             : 0;
-          
-          // 🔍 Выделяем локально добавленных (их ID > maxServerID)
           const locallyAdded = currentUsers.filter(u => u.id > maxServerID);
-          
-          // ✨ Мержим: данные с сервера + локально добавленные
           const mergedUsers = [...serverUsers, ...locallyAdded];
-          
-          // 💾 Обновляем localStorage и BehaviorSubject
           this.setUsers(mergedUsers);
-          
-          // ✅ Показываем сообщение об успехе
           this.messageService.showSuccess(`Загружено ${serverUsers.length} пользователей`);
         }),
         catchError(() => {
@@ -85,5 +74,11 @@ export class UserService {
     const currentUsers = this.getUsers();
     const updatedUsers = [...currentUsers, user];
     this.setUsers(updatedUsers);
+  }
+
+  clearAll(): void {
+    this.usersSubject.next([]); 
+    localStorage.removeItem('users');
+    this.messageService.showSuccess('Данные очищены');
   }
 }

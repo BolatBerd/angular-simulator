@@ -11,12 +11,11 @@ import { MessageService } from '../classes/message.service';
 })
 export class CreateUserComponent implements OnInit {
 
-  @Input() existingUsers: IUser[] = [];  // 📥 Получаем существующих пользователей
-
+  @Input() existingUsers: IUser[] = [];
   @Output() createUser = new EventEmitter<IUser>();
 
   form: FormGroup;
-  private nextId = 1;  // 🔢 Начальное значение
+  private nextId = 1;
   private messageService: MessageService = inject(MessageService);
 
   constructor(private fb: FormBuilder) {
@@ -88,10 +87,9 @@ export class CreateUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // 🔍 Находим максимальный ID среди существующих пользователей
     if (this.existingUsers && this.existingUsers.length > 0) {
       const maxId = Math.max(...this.existingUsers.map(u => u.id));
-      this.nextId = maxId + 1;  // ✅ Следующий ID будет на 1 больше максимального
+      this.nextId = maxId + 1;
     }
   }
 
@@ -102,9 +100,7 @@ export class CreateUserComponent implements OnInit {
     }
 
     const rawValue = this.form.getRawValue();
-
     const id = this.nextId++;
-
     const user: IUser = {
       id,
       name: rawValue.name,
@@ -138,10 +134,6 @@ export class CreateUserComponent implements OnInit {
 
   private withUnknown(value: string | null | undefined): string {
     return value && value.trim().length > 0 ? value : 'Неизвестно';
-  }
-
-  reload(): void {
-    window.location.reload();
   }
 
 }

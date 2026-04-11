@@ -16,21 +16,17 @@ export class UsersPageComponent implements OnInit {
   private userService: UserService = inject(UserService);
 
   users: IUser[] = [];
-  filterQuery: string = '';  // 🔍 Хранит значение фильтра
+  filterQuery: string = '';
 
   ngOnInit(): void {
-    // 📡 Подписываемся на изменения пользователей из сервиса
-    // Когда данные меняются в localStorage/API, обновляем локальный список
     this.userService.users$.subscribe((updatedUsers: IUser[]) => {
       this.users = updatedUsers;
     });
   }
 
-  // ✨ Getter для фильтрованного списка
-  // Автоматически пересчитывается когда меняется filterQuery или users
   get filteredUsers(): IUser[] {
     if (!this.filterQuery.trim()) {
-      return this.users;  // Если фильтр пуст - показываем всех
+      return this.users;
     }
 
     const query = this.filterQuery.toLowerCase();
@@ -41,22 +37,22 @@ export class UsersPageComponent implements OnInit {
 
   onCreateUser(user: IUser): void {
     this.userService.addUser(user);
-    // ✅ Данные обновляются в localStorage автоматически
-    // ✅ users$ Observable уведомит нас через subscribe
   }
 
   onDeleteUser(user: IUser): void {
     this.userService.deleteUser(user);
-    // ✅ Данные обновляются в localStorage автоматически
-    // ✅ users$ Observable уведомит нас через subscribe
   }
 
   refreshUsers(): void {
-    // 🔄 Загружает с сервера (перезаписывает localStorage)
     this.userService.loadUsers().subscribe(() => {
-      // После загрузки сервис автоматически уведомит us$ Observable
-      // Спасибо finalize() в loadUsers()
     });
+  }
+
+  clearAllUsers(): void {
+    if (confirm('⚠️ Вы уверены? Это удалит всех пользователей!')) {
+      this.userService.clearAll();
+      this.filterQuery = '';
+    }
   }
 
 }
