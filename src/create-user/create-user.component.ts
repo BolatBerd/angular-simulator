@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { IUser } from '../interfaces/IUser';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
 import { MessageService } from '../classes/message.service';
@@ -9,12 +9,14 @@ import { MessageService } from '../classes/message.service';
   templateUrl: './create-user.component.html',
   styleUrl: './create-user.component.scss',
 })
-export class CreateUserComponent {
+export class CreateUserComponent implements OnInit {
+
+  @Input() existingUsers: IUser[] = [];  // 📥 Получаем существующих пользователей
 
   @Output() createUser = new EventEmitter<IUser>();
 
   form: FormGroup;
-  private nextId = 1;
+  private nextId = 1;  // 🔢 Начальное значение
   private messageService: MessageService = inject(MessageService);
 
   constructor(private fb: FormBuilder) {
@@ -83,6 +85,14 @@ export class CreateUserComponent {
         ]
       })
     })
+  }
+
+  ngOnInit(): void {
+    // 🔍 Находим максимальный ID среди существующих пользователей
+    if (this.existingUsers && this.existingUsers.length > 0) {
+      const maxId = Math.max(...this.existingUsers.map(u => u.id));
+      this.nextId = maxId + 1;  // ✅ Следующий ID будет на 1 больше максимального
+    }
   }
 
   onSubmit(): void {
