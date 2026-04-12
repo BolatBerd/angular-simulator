@@ -29,8 +29,8 @@ export class UsersPageComponent implements OnInit {
       return this.users;
     }
 
-    const query = this.filterQuery.toLowerCase();
-    return this.users.filter(user =>
+    const query: string = this.filterQuery.toLowerCase();
+    return this.users.filter((user: IUser) =>
       user.name.toLowerCase().includes(query)
     );
   }

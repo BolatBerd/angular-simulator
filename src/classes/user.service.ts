@@ -1,5 +1,5 @@
 import { Injectable,inject  } from '@angular/core';
-import { BehaviorSubject, catchError, finalize, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, finalize, iif, of, tap } from 'rxjs';
 import { Observable } from 'rxjs';
 import { IUser } from '../interfaces/IUser';
 import { UserApiService } from './user-api.service';
@@ -10,7 +10,6 @@ import { users } from '../app/training';
 @Injectable({
   providedIn: 'root'
 })
-
 export class UserService {
 
   private userApiService: UserApiService = inject(UserApiService);
@@ -47,12 +46,12 @@ export class UserService {
     return this.userApiService.getUsers()
       .pipe(
         tap((serverUsers: IUser[]) => {
-          const currentUsers = this.usersSubject.getValue();
-          const maxServerID = serverUsers.length > 0
-            ? Math.max(...serverUsers.map(u => u.id))
+          const currentUsers: IUser[] = this.usersSubject.getValue();
+          const maxServerID: number = serverUsers.length > 0
+            ? Math.max(...serverUsers.map((u: IUser) => u.id))
             : 0;
-          const locallyAdded = currentUsers.filter(u => u.id > maxServerID);
-          const mergedUsers = [...serverUsers, ...locallyAdded];
+          const locallyAdded: IUser[] = currentUsers.filter((u: IUser) => u.id > maxServerID);
+          const mergedUsers: IUser[] = [...serverUsers, ...locallyAdded];
           this.setUsers(mergedUsers);
           this.messageService.showSuccess(`Загружено ${serverUsers.length} пользователей`);
         }),
@@ -65,19 +64,19 @@ export class UserService {
   }
 
   deleteUser(user: IUser): void {
-    const currentUsers = this.usersSubject.getValue();
-    const updatedUsers = currentUsers.filter(u => u.id !== user.id);
+    const currentUsers: IUser[] = this.usersSubject.getValue();
+    const updatedUsers: IUser[] = currentUsers.filter((u: IUser) => u.id !== user.id);
     this.setUsers(updatedUsers);
   }
 
   addUser(user: IUser): void {
-    const currentUsers = this.getUsers();
-    const updatedUsers = [...currentUsers, user];
+    const currentUsers: IUser[] = this.getUsers();
+    const updatedUsers: IUser[] = [...currentUsers, user];
     this.setUsers(updatedUsers);
   }
 
   clearAll(): void {
-    this.usersSubject.next([]); 
+    this.usersSubject.next([]);
     localStorage.removeItem('users');
     this.messageService.showSuccess('Данные очищены');
   }

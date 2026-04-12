@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { IUser } from '../interfaces/IUser';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, Form } from '@angular/forms';
 import { MessageService } from '../classes/message.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class CreateUserComponent implements OnInit {
   @Output() createUser = new EventEmitter<IUser>();
 
   form: FormGroup;
-  private nextId = 1;
+  private nextId: number = 1;
   private messageService: MessageService = inject(MessageService);
 
   constructor(private fb: FormBuilder) {
@@ -88,7 +88,7 @@ export class CreateUserComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.existingUsers && this.existingUsers.length > 0) {
-      const maxId = Math.max(...this.existingUsers.map(u => u.id));
+      const maxId: number = Math.max(...this.existingUsers.map((u: IUser) => u.id));
       this.nextId = maxId + 1;
     }
   }
@@ -100,7 +100,7 @@ export class CreateUserComponent implements OnInit {
     }
 
     const rawValue = this.form.getRawValue();
-    const id = this.nextId++;
+    const id: number = this.nextId++;
     const user: IUser = {
       id,
       name: rawValue.name,
