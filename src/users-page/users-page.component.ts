@@ -1,19 +1,23 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { IUser } from '../interfaces/IUser';
 import { UserService } from '../classes/user.service';
 import { UserCardComponent } from '../user-card/user-card.component';
 import { FormsModule } from '@angular/forms';
+import { take, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { UsersFilterComponent } from '../users-filter/users-filter.component';
 
 @Component({
   selector: 'app-users-page',
-  imports: [CreateUserComponent, UserCardComponent, FormsModule],
+  imports: [CreateUserComponent, UserCardComponent, FormsModule, UsersFilterComponent],
   templateUrl: './users-page.component.html',
   styleUrl: './users-page.component.scss',
 })
 export class UsersPageComponent implements OnInit {
 
   private userService: UserService = inject(UserService);
+  private destroyRef = inject(DestroyRef);
 
   users: IUser[] = [];
   filterQuery: string = '';
@@ -44,15 +48,10 @@ export class UsersPageComponent implements OnInit {
   }
 
   refreshUsers(): void {
-    this.userService.loadUsers().subscribe(() => {
-    });
-  }
-
-  clearAllUsers(): void {
-    if (confirm('⚠️ Вы уверены? Это удалит всех пользователей!')) {
-      this.userService.clearAll();
-      this.filterQuery = '';
-    }
+    this.userService.loadUsers(true).pipe(
+      tap((user: IUser[]) => this.userService.setUsers(user)),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe();
   }
 
 }

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IUser } from '../interfaces/IUser';
-import { OutletContext } from '@angular/router';
 
 @Component({
   selector: 'app-user-card',

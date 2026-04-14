@@ -15,11 +15,7 @@ export class UserApiService {
   private apiUrl: string = 'https://jsonplaceholder.typicode.com/users';
 
   getUsers(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.apiUrl).pipe(
-      tap(users => {
-        localStorage.setItem('users', JSON.stringify(users));
-      })
-    );
+    return this.http.get<IUser[]>(this.apiUrl);
   }
 
 }

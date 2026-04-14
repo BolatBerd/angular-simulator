@@ -89,9 +89,8 @@
     </div>
   </fieldset>
 
-  <button id="create-user-submit" type="submit" class="form-submit" [disabled]="form.invalid">
-    Создать пользователя
-  </button>
-
 </form>
 
+<button id="create-user-submit" type="button" (click)="onSubmit()" class="form-submit"[disabled]="form.invalid">
+  Создать пользователя
+</button>

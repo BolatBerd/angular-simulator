@@ -9,17 +9,10 @@
 
   <div class="controls">
     <button id="refresh-btn" class="refresh-btn" (click)="refreshUsers()" title="Загрузить данные с сервера">
-      <img class="bg" src="/images/bg-button-refresh-users.png" alt="">
-      <img class="icon" src="/images/button-refresh-users-icons.svg" alt="">
-    </button>
-
-    <button id="clear-btn" class="clear-btn" (click)="clearAllUsers()" title="Очистить всех пользователей">
-      <img class="bg" src="/images/bg-button-clear-users.png" alt="">
-      <img class="icon" src="/images/button-clear-users-icons.svg" alt="">
-      Очистить всех пользователей
+      <img class="icon" src="/images/refresh-users-icon.svg" alt="">
     </button>
   </div>
-
+  <!-- <app-users-filter  (filterUsers)="filteredUsers($event)"> </app-users-filter> -->
   <div class="filter-section">
     <input
       id="filter-input"

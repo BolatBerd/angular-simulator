@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { IUser } from '../interfaces/IUser';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, Form } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, Form, FormControl } from '@angular/forms';
 import { MessageService } from '../classes/message.service';
+import { UserService } from '../classes/user.service';
+import { users } from '../app/training';
 
 @Component({
   selector: 'app-create-user',
@@ -14,126 +16,99 @@ export class CreateUserComponent implements OnInit {
   @Input() existingUsers: IUser[] = [];
   @Output() createUser = new EventEmitter<IUser>();
 
-  form: FormGroup;
+  private fb: FormBuilder = inject(FormBuilder)
+  private userService: UserService = inject(UserService);
+
   private nextId: number = 1;
   private messageService: MessageService = inject(MessageService);
 
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
+  form = this.fb.nonNullable.group({
       id: [{value: null, disabled: true}],
-      name: [
-        '',
-        [Validators.required, Validators.minLength(2), Validators.maxLength(100)],
+      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)],
       ],
-      username: [
-        '',
-        [Validators.required, Validators.minLength(3), Validators.maxLength(30)]
+      username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]
       ],
-      email: [
-        '',
-        [Validators.required, Validators.email, Validators.maxLength(100)]
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]
       ],
-      phone: [
-        '',
-        [Validators.required, Validators.minLength(10), Validators.maxLength(25)]
+      phone: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(25)]
       ],
-      website: [
-        '',
-        [Validators.maxLength(100)]
+      website: ['', [Validators.maxLength(100)]
       ],
-      address: this.fb.group({
-        city: [
-          '',
-          [Validators.required, Validators.maxLength(50)]
+      address: this.fb.nonNullable.group({
+        city: ['', [Validators.required, Validators.maxLength(50)]
         ],
-        street:[
-          '',
-          [Validators.required, Validators.maxLength(100)]
+        street:['', [Validators.required, Validators.maxLength(100)]
         ],
-        suite: [
-          '',
-          [Validators.maxLength(50)]
+        suite: ['', [Validators.maxLength(50)]
         ],
-        zipcode: [
-          '',
-          [Validators.required, Validators.minLength(5), Validators.maxLength(10)]
+        zipcode: ['',[Validators.required, Validators.minLength(5), Validators.maxLength(10)]
         ],
-        geo: this.fb.group({
-          lat: [
-            '',
-            [Validators.required]
+        geo: this.fb.nonNullable.group({
+          lat: ['', [Validators.required]
           ],
-          lng: [
-            '',
-            [Validators.required]
+          lng: ['', [Validators.required]
           ]
         }),
       }),
-      company: this.fb.group({
-        name: [
-          '',
-          [Validators.required, Validators.maxLength(50)]
+      company: this.fb.nonNullable.group({
+        name: ['', [Validators.required, Validators.maxLength(50)]
         ],
-        catchPhrase: [
-          '',
-          [Validators.maxLength(200)]
+        catchPhrase: ['', [Validators.maxLength(200)]
         ],
-        bs: [
-          '',
-          [Validators.maxLength(100)]
+        bs: ['', [Validators.maxLength(100)]
         ]
       })
     })
-  }
 
   ngOnInit(): void {
     if (this.existingUsers && this.existingUsers.length > 0) {
       const maxId: number = Math.max(...this.existingUsers.map((u: IUser) => u.id));
       this.nextId = maxId + 1;
     }
+   this.userService.setDefault(this.form,'Неизвестно');
   }
 
-  onSubmit(): void {
-    if(this.form.invalid){
-      this.form.markAllAsTouched();
-      return;
-    }
+private buildUser(rawValue: IUser): IUser {
+  return {
+    ...rawValue,
+    id: this.nextId++,
+  };
+}
 
-    const rawValue = this.form.getRawValue();
-    const id: number = this.nextId++;
-    const user: IUser = {
-      id,
-      name: rawValue.name,
-      username: rawValue.username,
-      email: rawValue.email,
-      phone: rawValue.phone,
-      website: this.withUnknown(rawValue.website),
+  onSubmit(): void
+    {
+      const rawValue = this.form.getRawValue() ;
+      const id: number = this.nextId++;
+      const user: IUser = {
 
-      address: {
-        city: rawValue.address.city,
-        street: rawValue.address.street,
-        suite: this.withUnknown(rawValue.address.suite),
-        zipcode: rawValue.address.zipcode,
-        geo: {
-          lat: rawValue.address.geo.lat,
-          lng: rawValue.address.geo.lng
+        id,
+        name: rawValue.name,
+        username: rawValue.username,
+        email: rawValue.email,
+        phone: rawValue.phone,
+        website: rawValue.website,
+
+        address: {
+          city: rawValue.address.city,
+          street: rawValue.address.street,
+          suite: rawValue.address.suite,
+          zipcode: rawValue.address.zipcode,
+          geo: {
+            lat: rawValue.address.geo.lat,
+            lng: rawValue.address.geo.lng
+          },
         },
-      },
 
-      company: {
-        name: rawValue.company.name,
-        catchPhrase: this.withUnknown(rawValue.company.catchPhrase),
-        bs: this.withUnknown(rawValue.company.bs)
-      }
-    };
+        company: {
+          name: rawValue.company.name,
+          catchPhrase: rawValue.company.catchPhrase,
+          bs: rawValue.company.bs
+        }
+      };
 
-    this.createUser.emit(user);
-    this.messageService.showSuccess('Пользователь создан успешно');
-    this.form.reset();
-  }
-
-  private withUnknown(value: string | null | undefined): string {
-    return value && value.trim().length > 0 ? value : 'Неизвестно';
-  }
+      this.createUser.emit(user);
+      this.messageService.showSuccess('Пользователь создан успешно');
+      this.form.reset();
+    }
 
 }
