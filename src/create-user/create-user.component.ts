@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { IUser } from '../interfaces/IUser';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, Form, FormControl } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
 import { MessageService } from '../classes/message.service';
 import { UserService } from '../classes/user.service';
-import { users } from '../app/training';
 
 @Component({
   selector: 'app-create-user',
@@ -67,13 +66,6 @@ export class CreateUserComponent implements OnInit {
     }
    this.userService.setDefault(this.form,'Неизвестно');
   }
-
-private buildUser(rawValue: IUser): IUser {
-  return {
-    ...rawValue,
-    id: this.nextId++,
-  };
-}
 
   onSubmit(): void
     {

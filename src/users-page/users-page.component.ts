@@ -4,13 +4,19 @@ import { IUser } from '../interfaces/IUser';
 import { UserService } from '../classes/user.service';
 import { UserCardComponent } from '../user-card/user-card.component';
 import { FormsModule } from '@angular/forms';
-import { take, tap } from 'rxjs';
+import { Observable, take, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UsersFilterComponent } from '../users-filter/users-filter.component';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-users-page',
-  imports: [CreateUserComponent, UserCardComponent, FormsModule, UsersFilterComponent],
+  imports: [
+    CreateUserComponent,
+    UserCardComponent,
+    FormsModule,
+    UsersFilterComponent,
+    AsyncPipe],
   templateUrl: './users-page.component.html',
   styleUrl: './users-page.component.scss',
 })
@@ -19,24 +25,17 @@ export class UsersPageComponent implements OnInit {
   private userService: UserService = inject(UserService);
   private destroyRef = inject(DestroyRef);
 
+  filteredUsers$: Observable<IUser[]> = this.userService.filteredUsers$;
   users: IUser[] = [];
-  filterQuery: string = '';
+
+  onFilterUser(value: string): void {
+    this.userService.filterUsers(value);
+  }
 
   ngOnInit(): void {
     this.userService.users$.subscribe((updatedUsers: IUser[]) => {
       this.users = updatedUsers;
     });
-  }
-
-  get filteredUsers(): IUser[] {
-    if (!this.filterQuery.trim()) {
-      return this.users;
-    }
-
-    const query: string = this.filterQuery.toLowerCase();
-    return this.users.filter((user: IUser) =>
-      user.name.toLowerCase().includes(query)
-    );
   }
 
   onCreateUser(user: IUser): void {

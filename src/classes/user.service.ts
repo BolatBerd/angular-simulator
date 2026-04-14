@@ -1,12 +1,11 @@
 import { Injectable,inject  } from '@angular/core';
-import { BehaviorSubject, catchError, finalize, iif, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, combineLatest, finalize, map, of, tap } from 'rxjs';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IUser } from '../interfaces/IUser';
 import { UserApiService } from './user-api.service';
 import { LoaderService } from './loader.service';
 import { MessageService } from './message.service';
-import { users } from '../app/training';
 import { FormGroup, Validators } from '@angular/forms';
 
 @Injectable({
@@ -17,9 +16,9 @@ export class UserService {
   private userApiService: UserApiService = inject(UserApiService);
   private loaderService: LoaderService = inject(LoaderService);
   private messageService: MessageService = inject(MessageService);
-  private isUsersInLocalStorage: boolean = true;
   private readonly USERS_KEY: string = 'users';
 
+  private filterSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   private usersSubject: BehaviorSubject<IUser[]> = new BehaviorSubject<IUser[]>([]);
   users$: Observable<IUser[]> = this.usersSubject.asObservable();
 
@@ -30,6 +29,17 @@ export class UserService {
       const users: IUser[] = JSON.parse(usersFromStorage);
       this.usersSubject.next(users);
     }
+  }
+
+  filteredUsers$: Observable<IUser[]> = combineLatest([this.usersSubject, this.filterSubject])
+    .pipe(
+      map(([users, filter]) => users.filter((user: IUser) =>
+        user.name.toLowerCase().includes(filter.toLowerCase())
+      )),
+    );
+
+  filterUsers(value: string): void {
+    this.filterSubject.next(value);
   }
 
   setUsers(users: IUser[]): void {
