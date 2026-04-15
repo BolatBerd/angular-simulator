@@ -10,7 +10,6 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 })
 export class CreateUserComponent {
 
-  @Input() nextId: number = 1;
   @Input() onExistingUsers: IUser[] = [];
   @Output() onCreateUser = new EventEmitter<IUser>();
 
@@ -51,7 +50,6 @@ export class CreateUserComponent {
       const user: IUser = {
         ...rawValue,
         id: Date.now()
-        // id: this.nextId,
       };
 
       this.onCreateUser.emit(user);

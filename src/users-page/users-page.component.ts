@@ -27,7 +27,6 @@ export class UsersPageComponent implements OnInit {
 
   filteredUsers$: Observable<IUser[]> = this.userService.filteredUsers$;
   users: IUser[] = [];
-  // public nextId: number = 1;
 
   onFilterUser(value: string): void {
     this.userService.filterUsers(value);
@@ -35,19 +34,10 @@ export class UsersPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.loadUsers().subscribe();
-    // this.userService.users$.subscribe((updatedUsers: IUser[]) => {
-    // this.users = updatedUsers;
-    // this.nextId = this.getNextId();
-    // });
   }
-
-  // private getNextId(): number {
-  //   return this.users.length > 0 ? Math.max(...this.users.map((u: IUser) => u.id)) + 1 : 1;
-  // }
 
   onCreateUser(user: IUser): void {
     this.userService.addUser(user);
-    // this.nextId++;
     this.messageService.showSuccess('Пользователь создан успешно');
   }
 
