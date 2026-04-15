@@ -4,10 +4,10 @@ import { IUser } from '../interfaces/IUser';
 import { UserService } from '../classes/user.service';
 import { UserCardComponent } from '../user-card/user-card.component';
 import { FormsModule } from '@angular/forms';
-import { Observable, take, tap } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Observable, tap } from 'rxjs';
 import { UsersFilterComponent } from '../users-filter/users-filter.component';
 import { AsyncPipe } from '@angular/common';
+import { MessageService } from '../classes/message.service';
 
 @Component({
   selector: 'app-users-page',
@@ -23,33 +23,41 @@ import { AsyncPipe } from '@angular/common';
 export class UsersPageComponent implements OnInit {
 
   private userService: UserService = inject(UserService);
-  private destroyRef = inject(DestroyRef);
+  private messageService: MessageService = inject(MessageService);
 
   filteredUsers$: Observable<IUser[]> = this.userService.filteredUsers$;
   users: IUser[] = [];
+  // public nextId: number = 1;
 
   onFilterUser(value: string): void {
     this.userService.filterUsers(value);
   }
 
   ngOnInit(): void {
-    this.userService.users$.subscribe((updatedUsers: IUser[]) => {
-      this.users = updatedUsers;
-    });
+    this.userService.loadUsers().subscribe();
+    // this.userService.users$.subscribe((updatedUsers: IUser[]) => {
+    // this.users = updatedUsers;
+    // this.nextId = this.getNextId();
+    // });
   }
+
+  // private getNextId(): number {
+  //   return this.users.length > 0 ? Math.max(...this.users.map((u: IUser) => u.id)) + 1 : 1;
+  // }
 
   onCreateUser(user: IUser): void {
     this.userService.addUser(user);
+    // this.nextId++;
+    this.messageService.showSuccess('Пользователь создан успешно');
   }
 
-  onDeleteUser(user: IUser): void {
-    this.userService.deleteUser(user);
+  onDeleteUser(userId: number): void {
+    this.userService.deleteUserById(userId);
   }
 
   refreshUsers(): void {
     this.userService.loadUsers(true).pipe(
-      tap((user: IUser[]) => this.userService.setUsers(user)),
-      takeUntilDestroyed(this.destroyRef)
+      tap((user: IUser[]) => this.userService.setUsers(user))
     ).subscribe();
   }
 

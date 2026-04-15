@@ -7,19 +7,13 @@ import { IUser } from '../interfaces/IUser';
   templateUrl: './user-card.component.html',
   styleUrls: ['./user-card.component.scss'],
 })
-export class UserCardComponent implements OnInit {
+export class UserCardComponent {
 
   @Input({ required: true }) user!: IUser;
-  @Output() deleteUser = new EventEmitter;
+  @Output() onDeleteUser = new EventEmitter<number>;
 
-  ngOnInit(): void {
-    if (!this.user) {
-      throw new Error('Требует ввода данных пользователем');
-    }
-  }
-
-  onDeleteClick() {
-    this.deleteUser.emit(this.user);
+  onDeleteClick(): void {
+    this.onDeleteUser.emit(this.user.id);
   }
 
 }

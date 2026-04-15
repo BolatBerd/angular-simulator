@@ -11,10 +11,10 @@ import { delay, distinctUntilChanged, tap } from 'rxjs';
 })
 export class UsersFilterComponent {
 
-  @Output() filterUsers = new EventEmitter<string>();
+  @Output() onFilterUsers: EventEmitter<string> = new EventEmitter<string>();
 
-  private fb = inject(FormBuilder);
-  private destroyRef = inject(DestroyRef);
+  private fb: FormBuilder = inject(FormBuilder);
+  private destroyRef: DestroyRef = inject(DestroyRef);
 
   filterControl: FormControl<string> = this.fb.nonNullable.control('');
 
@@ -23,7 +23,7 @@ export class UsersFilterComponent {
       .pipe(
         delay(200),
         distinctUntilChanged(),
-        tap(value => this.filterUsers.emit(value)),
+        tap((value: string) => this.onFilterUsers.emit(value )),
         takeUntilDestroyed(this.destroyRef),
       ).subscribe();
   }

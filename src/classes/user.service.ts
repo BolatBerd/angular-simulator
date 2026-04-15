@@ -77,9 +77,9 @@ export class UserService {
       );
   }
 
-  deleteUser(user: IUser): void {
+  deleteUserById(id: number): void {
     const currentUsers: IUser[] = this.usersSubject.getValue();
-    const updatedUsers: IUser[] = currentUsers.filter((u: IUser) => u.id !== user.id);
+    const updatedUsers: IUser[] = currentUsers.filter((u: IUser) => u.id !== id);
     this.setUsers(updatedUsers);
   }
 
