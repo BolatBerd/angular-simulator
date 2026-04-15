@@ -28,7 +28,7 @@ export class UsersPageComponent implements OnInit {
   filteredUsers$: Observable<IUser[]> = this.userService.filteredUsers$;
   users: IUser[] = [];
 
-  onFilterUser(value: string): void {
+  filterUser(value: string): void {
     this.userService.filterUsers(value);
   }
 
@@ -36,12 +36,12 @@ export class UsersPageComponent implements OnInit {
     this.userService.loadUsers().subscribe();
   }
 
-  onCreateUser(user: IUser): void {
+  createUser(user: IUser): void {
     this.userService.addUser(user);
     this.messageService.showSuccess('Пользователь создан успешно');
   }
 
-  onDeleteUser(userId: number): void {
+  deleteUser(userId: number): void {
     this.userService.deleteUserById(userId);
   }
 

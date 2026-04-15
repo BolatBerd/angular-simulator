@@ -14,7 +14,7 @@ export class CreateUserComponent {
   @Output() onCreateUser = new EventEmitter<IUser>();
 
   private fb: FormBuilder = inject(FormBuilder)
-
+  
   form = this.fb.nonNullable.group({
     id: [{value: null, disabled: true}],
     name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],

@@ -23,7 +23,7 @@ export class UsersFilterComponent {
       .pipe(
         delay(200),
         distinctUntilChanged(),
-        tap((value: string) => this.onFilterUsers.emit(value )),
+        tap((value: string) => this.onFilterUsers.emit(value)),
         takeUntilDestroyed(this.destroyRef),
       ).subscribe();
   }
