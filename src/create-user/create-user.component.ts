@@ -39,21 +39,20 @@ export class CreateUserComponent {
     })
   })
 
-  onSubmit(): void
-    {
-      if (this.form.invalid) {
-        this.form.markAllAsTouched();
-        return;
-      }
-
-      const rawValue = this.form.getRawValue() ;
-      const user: IUser = {
-        ...rawValue,
-        id: Date.now()
-      };
-
-      this.onCreateUser.emit(user);
-      this.form.reset();
+  onSubmit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
     }
+
+    const rawValue = this.form.getRawValue() ;
+    const user: IUser = {
+      ...rawValue,
+      id: Date.now()
+    };
+
+    this.onCreateUser.emit(user);
+    this.form.reset();
+  }
 
 }
