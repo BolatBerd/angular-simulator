@@ -44,9 +44,8 @@ export class CreateUserComponent {
       return;
     }
 
-    const value = this.form.getRawValue(); // не зна. какой тип
     const user: IUser = {
-      ...value,
+      ...this.form.getRawValue(),
       id: Date.now()
     };
 
