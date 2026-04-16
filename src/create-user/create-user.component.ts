@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { IUser } from '../interfaces/IUser';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, FormGroupDirective, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-create-user',
@@ -10,12 +10,12 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 })
 export class CreateUserComponent {
 
-  @Output() onCreateUser = new EventEmitter<IUser>();
+  @Output() userCreated = new EventEmitter<IUser>();
 
   private fb: FormBuilder = inject(FormBuilder)
 
   form = this.fb.nonNullable.group({
-    id: [{value: null, disabled: true}],
+    id: [{ value: null, disabled: true }],
     name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
     username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
     email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
@@ -44,13 +44,13 @@ export class CreateUserComponent {
       return;
     }
 
-    const rawValue = this.form.getRawValue() ;
+    const value = this.form.getRawValue(); // не зна. какой тип
     const user: IUser = {
-      ...rawValue,
+      ...value,
       id: Date.now()
     };
 
-    this.onCreateUser.emit(user);
+    this.userCreated.emit(user);
     this.form.reset();
   }
 

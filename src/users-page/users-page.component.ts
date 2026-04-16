@@ -1,13 +1,14 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { IUser } from '../interfaces/IUser';
 import { UserService } from '../classes/user.service';
 import { UserCardComponent } from '../user-card/user-card.component';
 import { FormsModule } from '@angular/forms';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, tap } from 'rxjs';
 import { UsersFilterComponent } from '../users-filter/users-filter.component';
 import { AsyncPipe } from '@angular/common';
 import { MessageService } from '../classes/message.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-users-page',
@@ -24,16 +25,33 @@ export class UsersPageComponent implements OnInit {
 
   private userService: UserService = inject(UserService);
   private messageService: MessageService = inject(MessageService);
+  private destroyRef = inject(DestroyRef);
 
-  filteredUsers$: Observable<IUser[]> = this.userService.filteredUsers$;
+  private filterSubject : BehaviorSubject<string> = new BehaviorSubject<string>('');
+  users$: Observable<IUser[]> = this.userService.users$;
   users: IUser[] = [];
 
-  filterUser(value: string): void {
-    this.userService.filterUsers(value);
+  filteredUsers$: Observable<IUser[]> = combineLatest([this.users$, this.filterSubject])
+    .pipe(
+      map(([users, filter]) =>
+        users.filter((user: IUser) =>
+          user.name.toLowerCase().includes(filter.toLowerCase())
+      )),
+    );
+
+  OnFilterUser(value: string): void {
+    this.filterSubject.next(value);
   }
 
   ngOnInit(): void {
-    this.userService.loadUsers().subscribe();
+    this.userService.loadUsers(true)
+      .pipe(
+        tap((users: IUser[]) => {
+            this.userService.setUsers(users);
+            this.messageService.showSuccess(`Загружены пользователи (${users.length})`);
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      ).subscribe();
   }
 
   createUser(user: IUser): void {
@@ -46,9 +64,10 @@ export class UsersPageComponent implements OnInit {
   }
 
   refreshUsers(): void {
-    this.userService.loadUsers(true).pipe(
-      tap((user: IUser[]) => this.userService.setUsers(user))
-    ).subscribe();
+    this.userService.loadUsers(true)
+      .pipe(
+        tap((user: IUser[]) => this.userService.setUsers(user))
+      ).subscribe();
   }
 
 }

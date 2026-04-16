@@ -11,7 +11,7 @@ import { debounceTime, delay, distinctUntilChanged, tap } from 'rxjs';
 })
 export class UsersFilterComponent {
 
-  @Output() onFilterUsers: EventEmitter<string> = new EventEmitter<string>();
+  @Output() usersFiltered: EventEmitter<string> = new EventEmitter<string>();
 
   private destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -20,10 +20,9 @@ export class UsersFilterComponent {
   ngOnInit() {
     this.filterControl.valueChanges
       .pipe(
-        delay(200),
         debounceTime(200),
         distinctUntilChanged(),
-        tap((value: string) => this.onFilterUsers.emit(value)),
+        tap((value: string) => this.usersFiltered.emit(value)),
         takeUntilDestroyed(this.destroyRef),
       ).subscribe();
   }
