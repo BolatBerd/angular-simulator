@@ -14,7 +14,7 @@ export class CreateUserComponent {
 
   private fb: FormBuilder = inject(FormBuilder)
 
-  form = this.fb.nonNullable.group({
+  form: FormGroup = this.fb.nonNullable.group({
     id: [{ value: null, disabled: true }],
     name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
     username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
