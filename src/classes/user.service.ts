@@ -1,12 +1,11 @@
 import { Injectable,inject  } from '@angular/core';
-import { BehaviorSubject, catchError, finalize, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, finalize, of } from 'rxjs';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IUser } from '../interfaces/IUser';
 import { UserApiService } from './user-api.service';
 import { LoaderService } from './loader.service';
 import { MessageService } from './message.service';
-import { FormGroup, Validators } from '@angular/forms';
 import { LocalStorageService } from './local-storage.service';
 
 

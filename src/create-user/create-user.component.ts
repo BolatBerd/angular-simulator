@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { IUser } from '../interfaces/IUser';
-import { ReactiveFormsModule, FormBuilder, Validators, FormGroupDirective, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-create-user',

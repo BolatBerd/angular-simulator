@@ -27,7 +27,7 @@ export class UsersPageComponent implements OnInit {
   private messageService: MessageService = inject(MessageService);
   private destroyRef = inject(DestroyRef);
 
-  private filterSubject : BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private filterSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   users$: Observable<IUser[]> = this.userService.users$;
   users: IUser[] = [];
 
