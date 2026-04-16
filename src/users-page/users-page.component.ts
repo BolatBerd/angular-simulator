@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { IUser } from '../interfaces/IUser';
 import { UserService } from '../classes/user.service';

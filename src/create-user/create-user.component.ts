@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { IUser } from '../interfaces/IUser';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
@@ -10,11 +10,10 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 })
 export class CreateUserComponent {
 
-  @Input() onExistingUsers: IUser[] = [];
   @Output() onCreateUser = new EventEmitter<IUser>();
 
   private fb: FormBuilder = inject(FormBuilder)
-  
+
   form = this.fb.nonNullable.group({
     id: [{value: null, disabled: true}],
     name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
