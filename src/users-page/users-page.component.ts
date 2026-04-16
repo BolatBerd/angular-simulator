@@ -39,7 +39,7 @@ export class UsersPageComponent implements OnInit {
       )),
     );
 
-  OnFilterUser(value: string): void {
+  onFilterUser(value: string): void {
     this.filterSubject.next(value);
   }
 
@@ -54,12 +54,12 @@ export class UsersPageComponent implements OnInit {
       ).subscribe();
   }
 
-  createUser(user: IUser): void {
+  onCreateUser(user: IUser): void {
     this.userService.addUser(user);
     this.messageService.showSuccess('Пользователь создан успешно');
   }
 
-  deleteUser(userId: number): void {
+  onDeleteUser(userId: number): void {
     this.userService.deleteUserById(userId);
   }
 
