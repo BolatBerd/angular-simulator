@@ -34,11 +34,11 @@ export class UserService {
   }
 
   loadUsers(forceReload: boolean = false): Observable<IUser[]> {
-    const cachedUsers: string | null = localStorage.getItem(this.USERS_KEY);
-    if (!forceReload && cachedUsers) {
-      const users: IUser[] = JSON.parse(cachedUsers);
-      if (users.length > 0) {
-        return of(users);
+    if (!forceReload ){
+      const cachedUsers: IUser[] | null = this.localStorageService.getItem<IUser[]>(this.USERS_KEY);
+      if (cachedUsers && cachedUsers.length > 0) {
+        this.usersSubject.next(cachedUsers);
+        return of(cachedUsers);
       }
     }
 
@@ -48,7 +48,6 @@ export class UserService {
         catchError((error: HttpErrorResponse) => {
           const errorMessage: string = `Ошибка ${ error.status }: Не удалось загрузить данные`;
           this.messageService.showError(errorMessage);
-          this.setUsers([]);
           return of([]);
         }),
         finalize(() => this.loaderService.hideLoader())

@@ -10,7 +10,7 @@ import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angula
 })
 export class CreateUserComponent {
 
-  @Output() userCreated = new EventEmitter<IUser>();
+  @Output() userCreated: EventEmitter<IUser> = new EventEmitter<IUser>();
 
   private fb: FormBuilder = inject(FormBuilder)
 
