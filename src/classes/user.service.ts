@@ -20,7 +20,6 @@ export class UserService {
   private localStorageService: LocalStorageService = inject(LocalStorageService);
   private readonly USERS_KEY: string = 'users';
 
-  private filterSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   private usersSubject: BehaviorSubject<IUser[]> = new BehaviorSubject<IUser[]>([]);
   users$: Observable<IUser[]> = this.usersSubject.asObservable();
 
