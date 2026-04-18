@@ -1,16 +1,7 @@
-.cards {
-  max-width: 1460px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
-  gap: 70px 50px;
-  padding: 0 30px 50px;
-}
-
 .card {
   max-width: 440px;
-  height: 630px;
-  margin: 0;
+  width: 100%;
+  margin: 0 auto;
   padding: 0 30px 50px;
   border-radius: 4px;
   background: #ffffff;
@@ -33,13 +24,13 @@
 .name {
   margin: 25px 0 3px 0;
   font-size: 26px;
-  color: #1D3939;
+  color: #1d3939;
   font-weight: 800;
 }
 
 .username {
   margin: 0;
-  color: #D4A373;
+  color: #d4a373;
   font-weight: 700;
   font-size: 15px;
 }
@@ -51,7 +42,7 @@
 
 .section h3 {
   margin: 0 0 12px 0;
-  color: #1D3939;
+  color: #1d3939;
   font-size: 12px;
   line-height: 13.8px;
   letter-spacing: 1.2px;
@@ -67,7 +58,7 @@
   right: 0;
   transform: translateY(-50%);
   height: 1px;
-  background: #E2E8F0;
+  background: #e2e8f0;
 }
 
 .section p {
@@ -76,18 +67,11 @@
   justify-content: space-between;
   margin: 6px 0;
   font-size: 14px;
-  color: #D4A373;
+  color: #d4a373;
   width: 100%;
 }
 
 .section span {
   font-weight: 600;
-  color: #667C7C;
-}
-
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
-  color: #667C7C;
-  font-size: 16px;
+  color: #667c7c;
 }
