@@ -17,7 +17,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     UserCardComponent,
     FormsModule,
     UsersFilterComponent,
-    AsyncPipe],
+    AsyncPipe
+  ],
   templateUrl: './users-page.component.html',
   styleUrl: './users-page.component.scss',
 })
