@@ -36,7 +36,6 @@ export class UserService {
     if (!forceReload ){
       const cachedUsers: IUser[] | null = this.localStorageService.getItem<IUser[]>(this.USERS_KEY);
       if (cachedUsers && cachedUsers.length > 0) {
-        this.usersSubject.next(cachedUsers);
         return of(cachedUsers);
       }
     }
@@ -60,9 +59,17 @@ export class UserService {
   }
 
   addUser(user: IUser): void {
+    const nowUser: IUser | undefined = this.getUsers().find((u: IUser) => u.email === user.email);
+
+    if(nowUser) {
+      this.messageService.showWarn(`Пользователь с таким ${ user.email } уже существует`);
+      return;
+    } else {
     const currentUsers: IUser[] = this.getUsers();
     const updatedUsers: IUser[] = [...currentUsers, user];
     this.setUsers(updatedUsers);
+    this.messageService.showSuccess('Пользователь создан успешно');
+    }
   }
 
 }

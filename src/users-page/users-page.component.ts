@@ -33,9 +33,9 @@ export class UsersPageComponent implements OnInit {
 
   filteredUsers$: Observable<IUser[]> = combineLatest([this.users$, this.filterSubject])
     .pipe(
-      map(([users, filter]) =>
+      map(([users, filter]: [IUser[], string]) =>
         users.filter((user: IUser) =>
-          user.name.toLowerCase().includes(filter.toLowerCase())
+          user.name.trim().toLowerCase().includes(filter)
       )),
     );
 
@@ -48,7 +48,7 @@ export class UsersPageComponent implements OnInit {
       .pipe(
         tap((users: IUser[]) => {
             this.userService.setUsers(users);
-            this.messageService.showSuccess(`Загружены пользователи (${users.length})`);
+            this.messageService.showSuccess(`Загружены пользователи (${ users.length })`);
         }),
         takeUntilDestroyed(this.destroyRef)
       ).subscribe();
@@ -56,7 +56,6 @@ export class UsersPageComponent implements OnInit {
 
   onCreateUser(user: IUser): void {
     this.userService.addUser(user);
-    this.messageService.showSuccess('Пользователь создан успешно');
   }
 
   onDeleteUser(userId: number): void {
