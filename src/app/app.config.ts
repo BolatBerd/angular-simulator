@@ -15,7 +15,7 @@ export const appConfig: ApplicationConfig = {
             theme: {
                 preset: Nora,
                 options: {
-                  darkModeSelector: false // 👈 ключевой момент
+                  darkModeSelector: false
                 }
             }
         })

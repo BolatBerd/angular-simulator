@@ -32,6 +32,17 @@ export class UsersPageComponent implements OnInit {
   users$: Observable<IUser[]> = this.userService.users$;
   users: IUser[] = [];
 
+  ngOnInit(): void {
+    this.userService.loadUsers(true)
+      .pipe(
+        tap((users: IUser[]) => {
+            this.userService.setUsers(users);
+            this.messageService.showSuccess(`Загружены пользователи (${ users.length })`);
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      ).subscribe();
+  }
+
   filteredUsers$: Observable<IUser[]> = combineLatest([this.users$, this.filterSubject])
     .pipe(
       map(([users, filter]: [IUser[], string]) =>
@@ -42,17 +53,6 @@ export class UsersPageComponent implements OnInit {
 
   onFilterUser(value: string): void {
     this.filterSubject.next(value);
-  }
-
-  ngOnInit(): void {
-    this.userService.loadUsers(true)
-      .pipe(
-        tap((users: IUser[]) => {
-            this.userService.setUsers(users);
-            this.messageService.showSuccess(`Загружены пользователи (${ users.length })`);
-        }),
-        takeUntilDestroyed(this.destroyRef)
-      ).subscribe();
   }
 
   onCreateUser(user: IUser): void {
