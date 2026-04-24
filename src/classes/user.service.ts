@@ -32,12 +32,11 @@ export class UserService {
     return this.usersSubject.getValue();
   }
 
-  loadUsers(forceReload: boolean = false): Observable<IUser[]> {
-    if (!forceReload ){
-      const cachedUsers: IUser[] | null = this.localStorageService.getItem<IUser[]>(this.USERS_KEY);
-      if (cachedUsers && cachedUsers.length > 0) {
-        return of(cachedUsers);
-      }
+  loadUsers(): Observable<IUser[]> {
+    const cachedUsers: IUser[] | null = this.localStorageService.getItem<IUser[]>(this.USERS_KEY);
+
+    if (cachedUsers && cachedUsers.length > 0) {
+      return of(cachedUsers);
     }
 
     this.loaderService.showLoader();

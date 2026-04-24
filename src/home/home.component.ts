@@ -11,12 +11,15 @@ import { IPhotoReport } from '../interfaces/IPhotoReport';
 import { LocalStorageService } from '../classes/local-storage.service';
 import { MessageService } from '../classes/message.service';
 import { ITravelEssential} from '../interfaces/ITravelEssential';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faAnglesDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
   imports: [
     FormsModule,
     CommonModule,
+    FontAwesomeModule
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
@@ -33,6 +36,7 @@ export class HomeComponent {
   liveInputValue!: string;
   count: number = 0;
   form: ITourForm = {};
+  faAnglesDown: IconDefinition = faAnglesDown;
 
   tours: Collection<string> = new Collection<string>([
     'Поход в горы',

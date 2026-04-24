@@ -4,14 +4,19 @@ import { MessageService } from '../classes/message.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Observable } from "rxjs";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCircleXmark, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-message',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, FontAwesomeModule],
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss'],
 })
 export class MessageComponent {
+
+  faCircleXmark: IconDefinition = faCircleXmark;
 
   private messageService: MessageService = inject(MessageService);
 

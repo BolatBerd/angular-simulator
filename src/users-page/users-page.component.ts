@@ -33,7 +33,7 @@ export class UsersPageComponent implements OnInit {
   users: IUser[] = [];
 
   ngOnInit(): void {
-    this.userService.loadUsers(true)
+    this.userService.loadUsers()
       .pipe(
         tap((users: IUser[]) => {
             this.userService.setUsers(users);
@@ -64,7 +64,7 @@ export class UsersPageComponent implements OnInit {
   }
 
   refreshUsers(): void {
-    this.userService.loadUsers(true)
+    this.userService.loadUsers()
       .pipe(
         tap((user: IUser[]) => this.userService.setUsers(user))
       ).subscribe();
