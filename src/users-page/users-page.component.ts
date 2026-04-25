@@ -9,6 +9,9 @@ import { UsersFilterComponent } from '../users-filter/users-filter.component';
 import { AsyncPipe } from '@angular/common';
 import { MessageService } from '../classes/message.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faArrowsRotate, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-users-page',
@@ -17,7 +20,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     UserCardComponent,
     FormsModule,
     UsersFilterComponent,
-    AsyncPipe
+    AsyncPipe,
+    FontAwesomeModule
   ],
   templateUrl: './users-page.component.html',
   styleUrl: './users-page.component.scss',
@@ -28,6 +32,7 @@ export class UsersPageComponent implements OnInit {
   private messageService: MessageService = inject(MessageService);
   private destroyRef: DestroyRef = inject(DestroyRef);
 
+  faArrowsRotate: IconDefinition = faArrowsRotate;
   private filterSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   users$: Observable<IUser[]> = this.userService.users$;
   users: IUser[] = [];

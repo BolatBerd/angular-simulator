@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Observable } from "rxjs";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCircleXmark, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, IconDefinition, faEnvelope } from '@fortawesome/free-regular-svg-icons';
 
 
 @Component({
@@ -17,6 +17,7 @@ import { faCircleXmark, IconDefinition } from '@fortawesome/free-solid-svg-icons
 export class MessageComponent {
 
   faCircleXmark: IconDefinition = faCircleXmark;
+  faEnvelope: IconDefinition = faEnvelope;
 
   private messageService: MessageService = inject(MessageService);
 

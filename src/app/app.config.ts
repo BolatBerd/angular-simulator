@@ -12,12 +12,12 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideZoneChangeDetection(),
     providePrimeNG({
-            theme: {
-                preset: Nora,
-                options: {
-                  darkModeSelector: false
-                }
-            }
-        })
+      theme: {
+        preset: Nora,
+        options: {
+          darkModeSelector: false
+        }
+      }
+    })
   ]
 };

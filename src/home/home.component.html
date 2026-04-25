@@ -1,6 +1,6 @@
 @if (isLoading) {
     <div id="loader-overlay" class="loading-overlay flex-s-b">
-      <img class="rotate" src="/images/loading-icon.svg" alt="loading">
+      <fa-icon class="rotate" [icon]="faSpinner" />
       <span class="spinner">Иконка загрузки, которую мы должны отобразить. Добавить анимацию прокрутки</span>
     </div>
 } @else {
@@ -81,11 +81,7 @@
                 placeholder="Дата похода"
               />
               <label class="date-label cur-p pos-abs">
-                <img
-                  class="date-icon pr-16 cur-p"
-                  src="/images/formkit_date.svg"
-                  alt='calendar'
-                />
+                <fa-icon class="date-icon pr-16 cur-p" [icon]="faCalendarDays" />
               </label>
             </div>
             <span class="menu-subtitle fs-14">укажите диапазон</span>
@@ -148,11 +144,7 @@
               height="400px"
             >
             <button id="btn-video-play">
-              <img
-                class="index-2 pos-abs svg-play"
-                src="/images/play-icon.svg"
-                alt="play-icon"
-              >
+              <fa-icon class="index-2 pos-abs svg-play" size="2x" [icon]="faCirclePlay" />
             </button>
           </div>
         </div>
@@ -182,7 +174,7 @@
 
                 @for (service of services; track service.id) {
                   <div class="feature-item  margin-top-20">
-                    <img [src]="'/images/' + service.icon + '.svg'" class="icons"/>
+                    <fa-icon [icon]="service.icon" size="2x" />
                     <div class="feature-text">
                       <h3>{{ service.title }}</h3>
                       <p>{{ service.description }}</p>
@@ -242,7 +234,7 @@
                 height="500"
               />
               <div class="rating">
-                <img src="/images/star-icon.svg" alt="star">
+                <fa-icon [icon]="faStar" />
                 {{ destination.tourEvaluation | number:'1.1-1' }}
               </div>
               <div class="card-info flex-s-b pos-abs">

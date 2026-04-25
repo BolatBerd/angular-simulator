@@ -29,7 +29,7 @@
         @for (item of routes; track item) {
           <li>
             <a id="service">
-              <img src="/images/pointer-icon.svg" alt="pointer">{{ item }}
+              <fa-icon [icon]="faAngleRight" />{{ item }}
             </a>
           </li>
         }
@@ -44,7 +44,7 @@
         @for (item of travelEssentials; track item) {
           <li>
             <a id="essential">
-              <img src="/images/pointer-icon.svg" alt="pointer">{{ item }}
+              <fa-icon [icon]="faAngleRight" />{{ item }}
             </a>
           </li>
         }

@@ -8,7 +8,7 @@
 <ng-template #toastTemplate let-message>
   <div id="toast-message" class="toast" [ngClass]="message.type">
 
-    <img src="/images/message-icon.svg" alt="message">
+    <fa-icon [icon]="faEnvelope" />
     <div class="toast-content">
       <strong>{{ message.type }}</strong>
       <div>{{ message.text }}</div>
@@ -18,8 +18,8 @@
       id="close-btn"
       class="close-btn"
       (click)="closeMessage(message)">
-      <img src="/images/close-icon.svg" alt="close">
-       <fa-icon class="pr-16" [icon]="faCircleXmark" />
+      <fa-icon class="pr-16" [icon]="faCircleXmark" />
+
     </button>
 
   </div>

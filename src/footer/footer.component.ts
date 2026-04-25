@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faVk, faTelegram, faSkype,faPinterest, IconDefinition } from '@fortawesome/free-brands-svg-icons';
+import { faVk, faTelegram, faSkype,faPinterest } from '@fortawesome/free-brands-svg-icons';
+import {  IconDefinition, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-footer',
@@ -11,6 +12,7 @@ import { faVk, faTelegram, faSkype,faPinterest, IconDefinition } from '@fortawes
 export class FooterComponent {
 
   companyIP: string = 'ИП Константинопольский К.К., 2023';
+  faAngleRight: IconDefinition = faAngleRight;
 
   messengers: string | any = [
     { name: 'telegram', icon: faTelegram },
