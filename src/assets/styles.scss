@@ -1,6 +1,8 @@
 @use './fonts';
 @use './normalize';
 
+@import 'primeicons/primeicons.css';
+
 * {
   font-family: 'Nunito Sans', sans-serif;
   margin: 0px;
@@ -16,6 +18,15 @@
   --footer-header-color: #F3F5F4;
   --bt-color: #1A3E3E;
   --container-width: 1200px;
+}
+
+.dark {
+  --primary-color: #28123f;
+  --black-color: #ecd2d2;
+  --yellow-color: #705913af;
+  --white-color: #481d74;
+  --footer-header-color: #13c7c7;
+  --bt-color: #b8c0bc;
 }
 
 .color-yellow {

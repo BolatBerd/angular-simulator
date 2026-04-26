@@ -4,6 +4,13 @@
       <img src="/images/logo.svg" alt="logo" width="137px" height="48px"/>
       <span class="logo-name">{{ companyName }}</span>
     </div>
+
+    <p-toggleswitch [(ngModel)]="isDarkTheme" (onChange)="toggleTheme()">
+      <ng-template #handle let-checked="checked">
+        <i [ngClass]="['!text-xs', 'pi', checked ? 'pi-check' : 'pi-times']"></i>
+      </ng-template>
+    </p-toggleswitch>
+
     <div class="flex-center">
       <nav class="nav flex-s-b fs-18">
 
@@ -25,6 +32,7 @@
       >
         Консультация
       </button>
+
     </div>
   </div>
 

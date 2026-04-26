@@ -3,7 +3,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { providePrimeNG } from 'primeng/config';
-import Nora from '@primeuix/themes/aura';
+import Aura from '@primeuix/themes/aura';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,9 +13,9 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection(),
     providePrimeNG({
       theme: {
-        preset: Nora,
+        preset: Aura,
         options: {
-          darkModeSelector: false
+          darkModeSelector: '.dark'
         }
       }
     })
