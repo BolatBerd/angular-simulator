@@ -174,7 +174,7 @@
 
                 @for (service of services; track service.id) {
                   <div class="feature-item  margin-top-20">
-                    <fa-icon [icon]="service.icon" size="2x" />
+                    <fa-icon [ngClass]="'icon-color-' + service.id" [icon]="service.icon" />
                     <div class="feature-text">
                       <h3>{{ service.title }}</h3>
                       <p>{{ service.description }}</p>
@@ -234,7 +234,7 @@
                 height="500"
               />
               <div class="rating">
-                <fa-icon [icon]="faStar" />
+                <fa-icon style="color: goldenrod;" [icon]="faStar" />
                 {{ destination.tourEvaluation | number:'1.1-1' }}
               </div>
               <div class="card-info flex-s-b pos-abs">

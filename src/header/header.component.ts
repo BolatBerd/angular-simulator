@@ -24,6 +24,7 @@ export class HeaderComponent {
 
   companyName: string = 'румтибет';
   isDarkTheme: boolean = false;
+  html: HTMLElement = document.documentElement;
   theme: string = 'light';
 
   navItems: INavItem[] = [
@@ -33,20 +34,18 @@ export class HeaderComponent {
 
   ngOnInit() {
     const savedTheme: string | null = localStorage.getItem('isStatus');
-    const html: HTMLElement = document.documentElement;
     if (savedTheme === 'true') {
-      html.classList.add('dark');
+      this.html.classList.add('dark');
       this.isDarkTheme = true;
     } else {
-      html.classList.remove('dark');
+      this.html.classList.remove('dark');
       this.isDarkTheme = false;
     }
   }
 
   toggleTheme(){
-    const html: HTMLElement = document.documentElement;
-    const isDark: boolean = html.classList.toggle('dark');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    localStorage.setItem('isStatus', isDark ? 'true' : 'false');
+    this.isDarkTheme = this.html.classList.toggle('dark');
+    localStorage.setItem('theme', this.isDarkTheme ? 'dark' : 'light');
+    localStorage.setItem('isStatus', this.isDarkTheme ? 'true' : 'false');
   }
 }

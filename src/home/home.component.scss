@@ -313,6 +313,22 @@ span {
   align-items: flex-start;
   cursor: pointer;
 
+  fa-icon {
+    font-size: 36px;
+  }
+
+  .icon-color-1 {
+    color: rgba(255, 187, 0, 0.574);
+  }
+
+  .icon-color-2 {
+    color: #28a745;
+  }
+
+  .icon-color-3 {
+    color: red;
+  }
+
   h3 {
     transition: color 0.3s ease;
   }
