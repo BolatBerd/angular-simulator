@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output} from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { INavItem } from '../interfaces/INavItem';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
@@ -7,6 +7,9 @@ import { CommonModule } from '@angular/common';
 import { ThemeService } from '../classes/theme.service';
 import { inject } from '@angular/core';
 import { tap } from 'rxjs';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 
 @Component({
   selector: 'app-header',
@@ -17,7 +20,8 @@ import { tap } from 'rxjs';
     RouterLinkActive,
     ToggleSwitchModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    FontAwesomeModule
   ],
 
   templateUrl: './header.component.html',
@@ -25,6 +29,8 @@ import { tap } from 'rxjs';
 })
 export class HeaderComponent {
 
+  faSun: IconDefinition = faSun;
+  faMoon:IconDefinition = faMoon;
   themeControl: FormControl = new FormControl<boolean>(false);
   private themeService: ThemeService = inject(ThemeService);
   companyName: string = 'румтибет';
@@ -50,7 +56,4 @@ export class HeaderComponent {
       ).subscribe();
   }
 
-  // toggleTheme(value: boolean): void {
-  //   this.themeService.darkTheme(value);
-  // }
 }

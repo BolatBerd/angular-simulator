@@ -7,7 +7,7 @@
 
     <p-toggleswitch [ngModel]="themeControl.value" (ngModelChange)="themeControl.setValue($event)" >
       <ng-template #handle let-checked="checked">
-        <i [ngClass]="['!text-xs', 'pi', checked ? 'pi-check' : 'pi-times']"></i>
+        <fa-icon class="icon" [icon]="checked ? faMoon : faSun"></fa-icon>
       </ng-template>
     </p-toggleswitch>
 
