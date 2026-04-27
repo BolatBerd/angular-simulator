@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output} from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { INavItem } from '../interfaces/INavItem';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ThemeService } from '../classes/theme.service';
+import { inject } from '@angular/core';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -22,10 +25,9 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent {
 
+  themeControl: FormControl = new FormControl<boolean>(false);
+  private themeService: ThemeService = inject(ThemeService);
   companyName: string = 'румтибет';
-  isDarkTheme: boolean = false;
-  html: HTMLElement = document.documentElement;
-  theme: string = 'light';
 
   navItems: INavItem[] = [
     { label: 'Главная', path: '' },
@@ -33,19 +35,22 @@ export class HeaderComponent {
   ];
 
   ngOnInit() {
-    const savedTheme: string | null = localStorage.getItem('isStatus');
-    if (savedTheme === 'true') {
-      this.html.classList.add('dark');
-      this.isDarkTheme = true;
-    } else {
-      this.html.classList.remove('dark');
-      this.isDarkTheme = false;
-    }
+    this.themeControl.valueChanges
+      .pipe
+        (tap(value => {
+        this.themeService.darkTheme(value);
+        })
+      ).subscribe();
+
+    this.themeService.darkThemeChange$
+      .pipe(
+        tap(value => {
+          this.themeControl.setValue(value, { emitEvent: false });
+        })
+      ).subscribe();
   }
 
-  toggleTheme(){
-    this.isDarkTheme = this.html.classList.toggle('dark');
-    localStorage.setItem('theme', this.isDarkTheme ? 'dark' : 'light');
-    localStorage.setItem('isStatus', this.isDarkTheme ? 'true' : 'false');
-  }
+  // toggleTheme(value: boolean): void {
+  //   this.themeService.darkTheme(value);
+  // }
 }
