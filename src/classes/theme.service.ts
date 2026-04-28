@@ -8,11 +8,12 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 export class ThemeService {
 
   LocalStorageService: LocalStorageService = inject(LocalStorageService);
+
   private darkThemeChange: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   darkThemeChange$: Observable<boolean> = this.darkThemeChange.asObservable();
   savedTheme: string | null = this.LocalStorageService.getItem<string>('isStatus');
   html: HTMLElement = document.documentElement;
-  theme: string = 'light';
+
 
   constructor() {
     this.darkThemeChange.pipe(

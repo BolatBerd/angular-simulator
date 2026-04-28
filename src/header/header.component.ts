@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { INavItem } from '../interfaces/INavItem';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
@@ -10,6 +10,7 @@ import { tap } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-header',
@@ -29,6 +30,8 @@ import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 })
 export class HeaderComponent {
 
+  private destroyRef: DestroyRef = inject(DestroyRef);
+
   faSun: IconDefinition = faSun;
   faMoon:IconDefinition = faMoon;
   themeControl: FormControl = new FormControl<boolean>(false);
@@ -45,14 +48,16 @@ export class HeaderComponent {
       .pipe
         (tap(value => {
         this.themeService.darkTheme(value);
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       ).subscribe();
 
     this.themeService.darkThemeChange$
       .pipe(
         tap(value => {
           this.themeControl.setValue(value, { emitEvent: false });
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       ).subscribe();
   }
 
