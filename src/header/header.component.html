@@ -5,11 +5,15 @@
       <span class="logo-name">{{ companyName }}</span>
     </div>
 
-    <p-toggleswitch [ngModel]="themeControl.value" (ngModelChange)="themeControl.setValue($event)" >
-      <ng-template #handle let-checked="checked">
-        <fa-icon class="icon" [icon]="checked ? faMoon : faSun"></fa-icon>
-      </ng-template>
-    </p-toggleswitch>
+      <p-toggleswitch
+        [ngModel]="themeControl.value"
+        (ngModelChange)="themeControl.setValue($event)"
+        [dt]="customStyle"
+      >
+        <ng-template #handle let-checked="checked">
+            <fa-icon class="icon" [icon]="checked ? faMoon : faSun"></fa-icon>
+        </ng-template>
+      </p-toggleswitch>
 
     <div class="flex-center">
       <nav class="nav flex-s-b fs-18">

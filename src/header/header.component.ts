@@ -56,4 +56,20 @@ export class HeaderComponent {
       ).subscribe();
   }
 
+  customStyle = {
+    colorScheme: {
+      light: {
+        root: {
+          background: '{lime.300}',
+          checkedBackground: '{amber.500}'
+        }
+      },
+      dark: {
+        root: {
+          background: '{blue.700}',
+          checkedBackground: '{amber.400}'
+        }
+      }
+    }
+  };
 }
