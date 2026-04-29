@@ -17,6 +17,8 @@ import Aura from '@primeuix/themes/aura';
 import Lara from '@primeuix/themes/lara';
 import Nora from '@primeuix/themes/nora';
 import { Preset } from '@primeuix/themes/types';
+import { ThemeOptions } from '../interfaces/IThemeOptions';
+import { Theme } from '../enums/theme';
 
 @Component({
   selector: 'app-header',
@@ -51,20 +53,28 @@ export class HeaderComponent {
   html: HTMLElement = document.documentElement;
   companyName: string = 'румтибет';
 
-  paymentOptions: { name: string; value: string }[] = [
-    { name: 'Aura', value: 'aura' },
-    { name: 'Lara', value: 'lara' },
-    { name: 'Nora', value: 'nora' }
+  themeOptions: ThemeOptions[] = [
+    {
+      name: 'Aura',
+      value: 'aura'
+    },
+    {
+      name: 'Lara',
+      value: 'lara'
+    },
+    { name: 'Nora',
+      value: 'nora'
+    }
   ]
 
-  themes: Record<'aura' | 'lara' | 'nora', Preset> = {
-    aura: Aura,
-    lara: Lara,
-    nora: Nora
+  themes: Record<Theme, Preset> = {
+    [Theme.Aura]: Aura,
+    [Theme.Lara]: Lara,
+    [Theme.Nora]: Nora
   };
 
   ngOnInit() {
-    this.themeService.darkThemeChange$
+    this.themeService.isDarkThemeChange$
       .pipe(
         tap((value: boolean) => this.html.classList.toggle('dark', value)),
         takeUntilDestroyed(this.destroyRef)

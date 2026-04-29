@@ -10,20 +10,20 @@ export class ThemeService {
   LocalStorageService: LocalStorageService = inject(LocalStorageService);
 
   savedTheme: boolean = this.LocalStorageService.getItem<boolean>('mode')?? false;
-  private darkThemeChange: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.savedTheme);
-  darkThemeChange$: Observable<boolean> = this.darkThemeChange.asObservable();
+  private isDarkThemeChange: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.savedTheme);
+  isDarkThemeChange$: Observable<boolean> = this.isDarkThemeChange.asObservable();
 
   savedSelectTheme: string = this.LocalStorageService.getItem<string>('theme') ?? 'aura';
   private selectThemeChange: BehaviorSubject<string> = new BehaviorSubject<string>(this.savedSelectTheme);
   dselectThemeChange$: Observable<string> = this.selectThemeChange.asObservable();
 
   darkTheme(value: boolean): void {
-    this.darkThemeChange.next(value);
+    this.isDarkThemeChange.next(value);
     this.LocalStorageService.setItem('mode', value);
   }
 
   getMode(): boolean {
-    return this.darkThemeChange.getValue();
+    return this.isDarkThemeChange.getValue();
   }
 
   updateMode(): void {
