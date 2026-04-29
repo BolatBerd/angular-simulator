@@ -32,7 +32,6 @@ import { Preset } from '@primeuix/themes/types';
     SelectButtonModule,
     AsyncPipe
   ],
-
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
