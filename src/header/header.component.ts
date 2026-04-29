@@ -18,7 +18,7 @@ import Lara from '@primeuix/themes/lara';
 import Nora from '@primeuix/themes/nora';
 import { Preset } from '@primeuix/themes/types';
 import { ThemeOptions } from '../interfaces/IThemeOptions';
-import { Theme } from '../enums/theme';
+import { Theme } from '../enums/Theme';
 
 @Component({
   selector: 'app-header',
