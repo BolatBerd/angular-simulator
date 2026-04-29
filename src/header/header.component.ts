@@ -51,7 +51,7 @@ export class HeaderComponent {
   html: HTMLElement = document.documentElement;
   companyName: string = 'румтибет';
 
-  paymentOptions: any[] = [
+  paymentOptions: { name: string; value: string }[] = [
     { name: 'Aura', value: 'aura' },
     { name: 'Lara', value: 'lara' },
     { name: 'Nora', value: 'nora' }
