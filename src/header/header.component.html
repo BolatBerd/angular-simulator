@@ -6,6 +6,7 @@
     </div>
 
     <p-toggleswitch
+      id="toggle-theme"
       [ngModel]="themeService.isDarkThemeChange$ | async"
       (onChange)="changeTheme($event.checked)"
       [dt]="customStyle"
@@ -17,6 +18,7 @@
 
     <div class="card flex justify-center">
       <p-selectbutton
+        id="select-theme"
         [options]="themeOptions"
         [ngModel]="themeService.dselectThemeChange$ | async"
         (ngModelChange)="changeSelectTheme($event)"
