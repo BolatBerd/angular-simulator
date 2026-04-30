@@ -30,7 +30,6 @@ export class UsersPageComponent implements OnInit {
 
   private userService: UserService = inject(UserService);
   private messageService: MessageService = inject(MessageService);
-  private destroyRef: DestroyRef = inject(DestroyRef);
 
   faArrowsRotate: IconDefinition = faArrowsRotate;
   private filterSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -43,8 +42,7 @@ export class UsersPageComponent implements OnInit {
         tap((users: IUser[]) => {
             this.userService.setUsers(users);
             this.messageService.showSuccess(`Загружены пользователи (${ users.length })`);
-        }),
-        takeUntilDestroyed(this.destroyRef)
+        })
       ).subscribe();
   }
 

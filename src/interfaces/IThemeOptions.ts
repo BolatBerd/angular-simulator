@@ -1,6 +1,6 @@
-export interface ThemeOptions {
+import { Theme } from '../enums/Theme';
 
+export interface IThemeOptions {
   name: string;
-  value: string;
-
+  value: Theme;
 }

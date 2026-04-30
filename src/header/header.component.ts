@@ -17,7 +17,7 @@ import Aura from '@primeuix/themes/aura';
 import Lara from '@primeuix/themes/lara';
 import Nora from '@primeuix/themes/nora';
 import { Preset } from '@primeuix/themes/types';
-import { ThemeOptions } from '../interfaces/IThemeOptions';
+import { IThemeOptions } from '../interfaces/IThemeOptions';
 import { Theme } from '../enums/Theme';
 
 @Component({
@@ -53,17 +53,18 @@ export class HeaderComponent {
   html: HTMLElement = document.documentElement;
   companyName: string = 'румтибет';
 
-  themeOptions: ThemeOptions[] = [
+  themeOptions: IThemeOptions[] = [
     {
       name: 'Aura',
-      value: 'aura'
+      value: Theme.Aura
     },
     {
       name: 'Lara',
-      value: 'lara'
+      value: Theme.Lara
     },
-    { name: 'Nora',
-      value: 'nora'
+    {
+      name: 'Nora',
+      value: Theme.Nora
     }
   ]
 

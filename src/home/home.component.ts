@@ -41,9 +41,9 @@ export class HomeComponent {
   form: ITourForm = {};
   faAnglesDown: IconDefinition = faAnglesDown;
   faCalendarDays: IconDefinition = faCalendarDays;
-  faSpinner:IconDefinition = faSpinner;
+  faSpinner: IconDefinition = faSpinner;
   faStar: IconDefinition = faStar;
-  faCirclePlay:IconDefinition = faCirclePlay;
+  faCirclePlay: IconDefinition = faCirclePlay;
 
   tours: Collection<string> = new Collection<string>([
     'Поход в горы',
