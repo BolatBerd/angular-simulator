@@ -7,36 +7,36 @@ import { BehaviorSubject, Observable} from 'rxjs';
 })
 export class ThemeService {
 
-  LocalStorageService: LocalStorageService = inject(LocalStorageService);
+  localStorageService: LocalStorageService = inject(LocalStorageService);
 
-  savedTheme: boolean = this.LocalStorageService.getItem<boolean>('mode')?? false;
-  private isDarkThemeChange: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.savedTheme);
-  isDarkThemeChange$: Observable<boolean> = this.isDarkThemeChange.asObservable();
+  savedMode: boolean = this.localStorageService.getItem<boolean>('mode')?? false;
+  private darkModeSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.savedMode);
+  darkMode$: Observable<boolean> = this.darkModeSubject.asObservable();
 
-  savedSelectTheme: string = this.LocalStorageService.getItem<string>('theme') ?? 'aura';
-  private selectThemeChange: BehaviorSubject<string> = new BehaviorSubject<string>(this.savedSelectTheme);
-  dselectThemeChange$: Observable<string> = this.selectThemeChange.asObservable();
+  savedTheme: string = this.localStorageService.getItem<string>('theme') ?? 'aura';
+  private themeSubject: BehaviorSubject<string> = new BehaviorSubject<string>(this.savedTheme);
+  theme$: Observable<string> = this.themeSubject.asObservable();
 
-  darkTheme(value: boolean): void {
-    this.isDarkThemeChange.next(value);
-    this.LocalStorageService.setItem('mode', value);
+  isDarkTheme(value: boolean): void {
+    this.darkModeSubject.next(value);
+    this.localStorageService.setItem('mode', value);
   }
 
   getMode(): boolean {
-    return this.isDarkThemeChange.getValue();
+    return this.darkModeSubject.getValue();
   }
 
   updateMode(): void {
-    this.darkTheme(this.getMode());
+    this.isDarkTheme(this.getMode());
   }
 
   selectTheme(theme: string): void {
-    this.selectThemeChange.next(theme);
-    this.LocalStorageService.setItem('theme', theme);
+    this.themeSubject.next(theme);
+    this.localStorageService.setItem('theme', theme);
   }
 
   getSelectTheme(): string {
-    return this.selectThemeChange.getValue();
+    return this.themeSubject.getValue();
   }
 
   updateSelectTheme(): void {

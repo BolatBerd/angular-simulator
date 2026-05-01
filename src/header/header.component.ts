@@ -56,32 +56,32 @@ export class HeaderComponent {
   themeOptions: IThemeOptions[] = [
     {
       name: 'Aura',
-      value: Theme.Aura
+      value: Theme.AURA
     },
     {
       name: 'Lara',
-      value: Theme.Lara
+      value: Theme.LARA
     },
     {
       name: 'Nora',
-      value: Theme.Nora
+      value: Theme.NORA
     }
   ]
 
   themes: Record<Theme, Preset> = {
-    [Theme.Aura]: Aura,
-    [Theme.Lara]: Lara,
-    [Theme.Nora]: Nora
+    [Theme.AURA]: Aura,
+    [Theme.LARA]: Lara,
+    [Theme.NORA]: Nora
   };
 
   ngOnInit() {
-    this.themeService.isDarkThemeChange$
+    this.themeService.darkMode$
       .pipe(
         tap((value: boolean) => this.html.classList.toggle('dark', value)),
         takeUntilDestroyed(this.destroyRef)
       ).subscribe();
 
-    this.themeService.dselectThemeChange$
+    this.themeService.theme$
     . pipe(
         tap((theme: string) => {
           if (theme in this.themes) {
@@ -94,7 +94,7 @@ export class HeaderComponent {
   }
 
   changeTheme(value: boolean) {
-    this.themeService.darkTheme(value);
+    this.themeService.isDarkTheme(value);
   }
 
   changeSelectTheme(theme: string) {
