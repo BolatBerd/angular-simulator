@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { IUser } from '../interfaces/IUser';
 import { UserService } from '../classes/user.service';
@@ -8,7 +8,6 @@ import { BehaviorSubject, combineLatest, map, Observable, tap } from 'rxjs';
 import { UsersFilterComponent } from '../users-filter/users-filter.component';
 import { AsyncPipe } from '@angular/common';
 import { MessageService } from '../classes/message.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowsRotate, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
