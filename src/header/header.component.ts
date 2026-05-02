@@ -82,22 +82,18 @@ export class HeaderComponent {
       ).subscribe();
 
     this.themeService.theme$
-    . pipe(
-        tap((theme: string) => {
-          if (theme in this.themes) {
-            usePreset(this.themes[theme as keyof typeof this.themes]);
-          }
-        }),
+      .pipe(
+        tap((theme: Theme) =>usePreset(this.themes[theme])),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
   }
 
-  changeTheme(value: boolean) {
-    this.themeService.isDarkTheme(value);
+  changeTheme(value: boolean): void {
+    this.themeService.setDarkMode(value);
   }
 
-  changeSelectTheme(theme: string) {
+  changeSelectTheme(theme: Theme): void {
     this.themeService.selectTheme(theme);
   }
 

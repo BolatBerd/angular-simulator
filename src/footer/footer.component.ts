@@ -14,14 +14,12 @@ export class FooterComponent {
   companyIP: string = 'ИП Константинопольский К.К., 2023';
   faAngleRight: IconDefinition = faAngleRight;
 
-  messengers: string | any = [
-    { name: 'telegram', icon: faTelegram },
-    { name: 'vk', icon: faVk },
-    { name: 'pinterest', icon: faPinterest },
-    { name: 'skype', icon: faSkype }
+  messengers: IconDefinition[] = [
+    faTelegram ,
+    faVk ,
+    faPinterest ,
+    faSkype
   ];
-
-
 
   routes: string[] = [
     "Прогулки в горы летом",

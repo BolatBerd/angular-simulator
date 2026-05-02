@@ -57,9 +57,9 @@ export class UserService {
   }
 
   addUser(user: IUser): void {
-    const nowUser: IUser | undefined = this.getUsers().find((u: IUser) => u.email === user.email);
+    const foundUser: IUser | undefined = this.getUsers().find((u: IUser) => u.email === user.email);
 
-    if(nowUser) {
+    if (foundUser) {
       this.messageService.showWarn(`Пользователь с таким ${ user.email } уже существует`);
       return;
     } else {
