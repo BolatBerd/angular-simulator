@@ -9,7 +9,7 @@
       id="toggle-theme"
       [ngModel]="themeService.darkMode$ | async"
       (onChange)="changeTheme($event.checked)"
-      [dt]="customStyle"
+      [dt]="themeService.customStyle"
     >
       <ng-template #handle let-checked="checked">
           <fa-icon class="icon" [icon]="checked ? faMoon : faSun"></fa-icon>
@@ -19,7 +19,7 @@
     <div class="card flex justify-center">
       <p-selectbutton
         id="select-theme"
-        [options]="themeOptions"
+        [options]="themeService.themeOption"
         [ngModel]="themeService.theme$ | async"
         (ngModelChange)="changeSelectTheme($event)"
         optionLabel="name"

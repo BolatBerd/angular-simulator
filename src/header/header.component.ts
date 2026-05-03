@@ -1,4 +1,4 @@
-import { Component, DestroyRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { INavItem } from '../interfaces/INavItem';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
@@ -6,18 +6,10 @@ import { FormsModule } from '@angular/forms';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ThemeService } from '../classes/theme.service';
 import { inject } from '@angular/core';
-import { tap } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { usePreset } from '@primeuix/themes';
-import Aura from '@primeuix/themes/aura';
-import Lara from '@primeuix/themes/lara';
-import Nora from '@primeuix/themes/nora';
-import { Preset } from '@primeuix/themes/types';
-import { IThemeOptions } from '../interfaces/IThemeOptions';
 import { Theme } from '../enums/Theme';
 
 @Component({
@@ -39,7 +31,6 @@ import { Theme } from '../enums/Theme';
 })
 export class HeaderComponent {
 
-  private destroyRef: DestroyRef = inject(DestroyRef);
   themeService: ThemeService = inject(ThemeService);
 
   navItems: INavItem[] = [
@@ -50,44 +41,7 @@ export class HeaderComponent {
   faSun: IconDefinition = faSun;
   faMoon: IconDefinition = faMoon;
 
-  html: HTMLElement = document.documentElement;
   companyName: string = 'румтибет';
-
-  themeOptions: IThemeOptions[] = [
-    {
-      name: 'Aura',
-      value: Theme.AURA
-    },
-    {
-      name: 'Lara',
-      value: Theme.LARA
-    },
-    {
-      name: 'Nora',
-      value: Theme.NORA
-    }
-  ]
-
-  themes: Record<Theme, Preset> = {
-    [Theme.AURA]: Aura,
-    [Theme.LARA]: Lara,
-    [Theme.NORA]: Nora
-  };
-
-  ngOnInit() {
-    this.themeService.darkMode$
-      .pipe(
-        tap((value: boolean) => this.html.classList.toggle('dark', value)),
-        takeUntilDestroyed(this.destroyRef)
-      ).subscribe();
-
-    this.themeService.theme$
-      .pipe(
-        tap((theme: Theme) =>usePreset(this.themes[theme])),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe();
-  }
 
   changeTheme(value: boolean): void {
     this.themeService.setDarkMode(value);
@@ -97,20 +51,4 @@ export class HeaderComponent {
     this.themeService.selectTheme(theme);
   }
 
-  customStyle = {
-    colorScheme: {
-      light: {
-        root: {
-          background: '{lime.300}',
-          checkedBackground: '{amber.500}'
-        }
-      },
-      dark: {
-        root: {
-          background: '{blue.700}',
-          checkedBackground: '{amber.400}'
-        }
-      }
-    }
-  };
 }
