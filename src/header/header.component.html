@@ -21,7 +21,7 @@
         id="select-theme"
         [options]="themeService.themeOption"
         [ngModel]="themeService.theme$ | async"
-        (ngModelChange)="changeSelectTheme($event)"
+        (onChange)="changeSelectTheme($event.value)"
         optionLabel="name"
         optionValue="value"
         [allowEmpty]="false"
