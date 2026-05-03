@@ -48,7 +48,7 @@ export class HeaderComponent {
   }
 
   changeSelectTheme(theme: Theme): void {
-    this.themeService.selectTheme(theme);
+    this.themeService.setTheme(theme);
   }
 
 }

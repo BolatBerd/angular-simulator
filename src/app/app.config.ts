@@ -16,22 +16,19 @@ import Nora from '@primeuix/themes/nora';
 import { Preset } from '@primeuix/themes/types';
 import { Theme } from '../enums/Theme';
 
-const themeMap: Record<Theme, Preset> = {
-  [Theme.AURA]: Aura,
-  [Theme.LARA]: Lara,
-  [Theme.NORA]: Nora
-};
+function getThemePresetFromStorage(): Preset {
+  const themeMap: Record<Theme, Preset> = {
+    [Theme.AURA]: Aura,
+    [Theme.LARA]: Lara,
+    [Theme.NORA]: Nora
+  };
 
-function getSavedTheme(): Theme {
-  const value = localStorage.getItem('theme') as Theme | null;
-  return value && value in themeMap ? value : Theme.AURA;
-}
+  const saved = localStorage.getItem('theme') as Theme | null;
 
-function getThemePreset(theme: Theme): Preset {
+  const theme = saved && saved in themeMap ? saved : Theme.AURA;
+
   return themeMap[theme];
 }
-
-const savedTheme = getSavedTheme();
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -42,7 +39,7 @@ export const appConfig: ApplicationConfig = {
 
     providePrimeNG({
       theme: {
-        preset: getThemePreset(savedTheme),
+        preset: getThemePresetFromStorage(),
         options: {
           darkModeSelector: '.dark'
         }

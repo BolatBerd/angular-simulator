@@ -8,6 +8,7 @@ import Nora from '@primeuix/themes/nora';
 import { Preset } from '@primeuix/themes/types';
 import { IThemeOptions } from '../interfaces/IThemeOptions';
 import { usePreset } from '@primeuix/themes';
+import { ICustomStyle } from '../interfaces/ICustomStyle';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +17,9 @@ export class ThemeService {
 
   localStorageService: LocalStorageService = inject(LocalStorageService);
 
-  private readonly MODE_KEY = 'mode';
-  private readonly THEME_KEY = 'theme';
+  private readonly MODE_KEY: string = 'mode';
+  private readonly THEME_KEY: string = 'theme';
+
   html: HTMLElement = document.documentElement;
 
    themeOption: IThemeOptions[] = [
@@ -47,16 +49,27 @@ export class ThemeService {
   theme$: Observable<Theme> = this.themeSubject.asObservable();
 
   constructor() {
-    this.html.classList.toggle('dark', this.savedMode);
+    this.initDarkMode();
+    this.initTheme();
   }
 
-  setDarkMode(value: boolean): void {
-    this.darkModeSubject.next(value);
-    this.localStorageService.setItem(this.MODE_KEY, value);
-    this.html.classList.toggle('dark', value)
+  private initDarkMode(): void {
+    const isDarkMode: boolean = this.darkModeSubject.getValue();
+    this.html.classList.toggle('dark', isDarkMode);
   }
 
-  selectTheme(theme: Theme): void {
+  private initTheme(): void {
+    const theme: Theme = this.themeSubject.getValue();
+    const option: IThemeOptions | undefined = this.themeOption.find((option: IThemeOptions) => option.value === theme);
+  }
+
+  setDarkMode(isDarkMode: boolean): void {
+    this.darkModeSubject.next(isDarkMode);
+    this.localStorageService.setItem(this.MODE_KEY, isDarkMode);
+    this.html.classList.toggle('dark', isDarkMode)
+  }
+
+  setTheme(theme: Theme): void {
     this.themeSubject.next(theme);
     this.localStorageService.setItem(this.THEME_KEY, theme);
 
@@ -67,7 +80,7 @@ export class ThemeService {
     }
   }
 
-  customStyle: Record<string, any> = {
+  customStyle: ICustomStyle = {
     colorScheme: {
       light: {
         root: {
