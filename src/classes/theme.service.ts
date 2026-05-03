@@ -57,7 +57,6 @@ export class ThemeService {
   }
 
   selectTheme(theme: Theme): void {
-    if (theme === null) return;
     this.themeSubject.next(theme);
     this.localStorageService.setItem(this.THEME_KEY, theme);
 
