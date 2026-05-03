@@ -6,7 +6,7 @@ import Aura from '@primeuix/themes/aura';
 import Lara from '@primeuix/themes/lara';
 import Nora from '@primeuix/themes/nora';
 import { Preset } from '@primeuix/themes/types';
-import { IThemeOptions } from '../interfaces/IThemeOptions';
+import { IThemeOption } from '../interfaces/IThemeOptions';
 import { usePreset } from '@primeuix/themes';
 import { ICustomStyle } from '../interfaces/ICustomStyle';
 
@@ -22,7 +22,7 @@ export class ThemeService {
 
   html: HTMLElement = document.documentElement;
 
-   themeOption: IThemeOptions[] = [
+   themeOption: IThemeOption[] = [
     {
       name: 'Aura',
       value: Theme.AURA,
@@ -60,7 +60,7 @@ export class ThemeService {
 
   private initTheme(): void {
     const theme: Theme = this.themeSubject.getValue();
-    const option: IThemeOptions | undefined = this.themeOption.find((option: IThemeOptions) => option.value === theme);
+    const option: IThemeOption | undefined = this.themeOption.find((option: IThemeOption) => option.value === theme);
   }
 
   setDarkMode(isDarkMode: boolean): void {
@@ -73,7 +73,7 @@ export class ThemeService {
     this.themeSubject.next(theme);
     this.localStorageService.setItem(this.THEME_KEY, theme);
 
-    const option: IThemeOptions | undefined = this.themeOption.find((option: IThemeOptions) => option.value === theme);
+    const option: IThemeOption | undefined = this.themeOption.find((option: IThemeOption) => option.value === theme);
 
     if (option) {
       usePreset(option.preset);
