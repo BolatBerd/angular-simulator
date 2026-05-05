@@ -5,10 +5,9 @@ import { Theme } from '../enums/Theme';
 import Aura from '@primeuix/themes/aura';
 import Lara from '@primeuix/themes/lara';
 import Nora from '@primeuix/themes/nora';
-import { Preset } from '@primeuix/themes/types';
 import { IThemeOption } from '../interfaces/IThemeOptions';
 import { usePreset } from '@primeuix/themes';
-import { ICustomStyle } from '../interfaces/ICustomStyle';
+import { ToggleSwitchDesignTokens } from '@primeuix/themes/types/toggleswitch';
 
 @Injectable({
   providedIn: 'root',
@@ -48,21 +47,6 @@ export class ThemeService {
   private themeSubject: BehaviorSubject<Theme> = new BehaviorSubject<Theme>(this.savedTheme);
   theme$: Observable<Theme> = this.themeSubject.asObservable();
 
-  constructor() {
-    this.initDarkMode();
-    this.initTheme();
-  }
-
-  private initDarkMode(): void {
-    const isDarkMode: boolean = this.darkModeSubject.getValue();
-    this.html.classList.toggle('dark', isDarkMode);
-  }
-
-  private initTheme(): void {
-    const theme: Theme = this.themeSubject.getValue();
-    const option: IThemeOption | undefined = this.themeOption.find((option: IThemeOption) => option.value === theme);
-  }
-
   setDarkMode(isDarkMode: boolean): void {
     this.darkModeSubject.next(isDarkMode);
     this.localStorageService.setItem(this.MODE_KEY, isDarkMode);
@@ -80,7 +64,7 @@ export class ThemeService {
     }
   }
 
-  customStyle: ICustomStyle = {
+  customStyle: Partial<ToggleSwitchDesignTokens> = {
     colorScheme: {
       light: {
         root: {

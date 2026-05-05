@@ -23,11 +23,19 @@ function getThemePresetFromStorage(): Preset {
     [Theme.NORA]: Nora
   };
 
-  const saved = localStorage.getItem('theme') as Theme | null;
+  const saved: Theme | null  = localStorage.getItem('theme') as Theme | null;
 
-  const theme = saved && saved in themeMap ? saved : Theme.AURA;
+  const theme: Theme = saved && saved in themeMap ? saved : Theme.AURA;
 
   return themeMap[theme];
+}
+
+function initDarkMode(): void {
+  const saved = localStorage.getItem('mode');
+
+  const isDark = saved === 'true';
+
+  document.documentElement.classList.toggle('dark', isDark);
 }
 
 export const appConfig: ApplicationConfig = {
@@ -41,7 +49,7 @@ export const appConfig: ApplicationConfig = {
       theme: {
         preset: getThemePresetFromStorage(),
         options: {
-          darkModeSelector: '.dark'
+          darkModeSelector: initDarkMode()
         }
       }
     })
