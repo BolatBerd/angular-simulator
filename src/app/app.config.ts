@@ -31,9 +31,9 @@ function getThemePresetFromStorage(): Preset {
 }
 
 function initDarkMode(): void {
-  const saved = localStorage.getItem('mode');
+  const saved: string | null = localStorage.getItem('mode');
 
-  const isDark = saved === 'true';
+  const isDark: boolean = saved === 'true';
 
   document.documentElement.classList.toggle('dark', isDark);
 }
@@ -44,12 +44,11 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideRouter(routes),
     provideZoneChangeDetection(),
-
     providePrimeNG({
       theme: {
         preset: getThemePresetFromStorage(),
         options: {
-          darkModeSelector: initDarkMode()
+          darkModeSelector: initDarkMode(),
         }
       }
     })
