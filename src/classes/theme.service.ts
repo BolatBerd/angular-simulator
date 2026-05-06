@@ -42,9 +42,7 @@ export class ThemeService {
   savedMode: boolean = this.localStorageService.getItem<boolean>(this.MODE_KEY) ?? false;
   private darkModeSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.savedMode);
   darkMode$: Observable<boolean> = this.darkModeSubject.asObservable().pipe(
-    tap((isDarkMode: boolean) => {
-      this.html.classList.toggle('dark', isDarkMode);
-    })
+    tap((isDarkMode: boolean) => this.html.classList.toggle('dark', isDarkMode))
   );
 
   savedTheme: Theme = this.localStorageService.getItem<Theme>(this.THEME_KEY) ?? Theme.AURA;
