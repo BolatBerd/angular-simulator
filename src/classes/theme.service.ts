@@ -47,6 +47,10 @@ export class ThemeService {
   private themeSubject: BehaviorSubject<Theme> = new BehaviorSubject<Theme>(this.savedTheme);
   theme$: Observable<Theme> = this.themeSubject.asObservable();
 
+  constructor() {
+    this.setDarkMode(this.savedMode);
+  }
+
   setDarkMode(isDarkMode: boolean): void {
     this.darkModeSubject.next(isDarkMode);
     this.localStorageService.setItem(this.MODE_KEY, isDarkMode);

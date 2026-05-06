@@ -30,16 +30,6 @@ function getThemePresetFromStorage(): Preset {
   return themeMap[theme];
 }
 
-function initDarkMode(): void {
-  const saved: string | null = localStorage.getItem('mode');
-
-  const isDark: boolean = saved === 'true';
-
-  document.documentElement.classList.toggle('dark', isDark);
-}
-
-initDarkMode();
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
