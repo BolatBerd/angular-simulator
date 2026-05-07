@@ -9,7 +9,7 @@
 
   <div class="controls">
     <button id="refresh-btn" class="refresh-btn" (click)="refreshUsers()" title="Загрузить данные с сервера">
-      <img class="icon" src="/images/refresh-users-icon.svg" alt="">
+      <fa-icon class="icon" [icon]="faArrowsRotate" />
     </button>
   </div>
   <app-users-filter (usersFiltered)="onFilterUser($event)"> </app-users-filter>

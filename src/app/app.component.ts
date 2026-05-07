@@ -6,6 +6,7 @@ import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { MessageComponent } from '../message/message.component';
 import { LoaderComponent } from '../loader/loader.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ import { LoaderComponent } from '../loader/loader.component';
     HeaderComponent,
     FooterComponent,
     MessageComponent,
-    LoaderComponent
+    LoaderComponent,
+    FontAwesomeModule
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']

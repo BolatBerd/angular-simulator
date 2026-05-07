@@ -1,20 +1,24 @@
 import { Component } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faVk, faTelegram, faSkype,faPinterest } from '@fortawesome/free-brands-svg-icons';
+import {  IconDefinition, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-footer',
-  imports: [],
+  imports: [FontAwesomeModule],
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {
 
   companyIP: string = 'ИП Константинопольский К.К., 2023';
+  faAngleRight: IconDefinition = faAngleRight;
 
-  messengers: string[] = [
-    'telegram',
-    'vk',
-    'pinterest',
-    'skype'
+  messengers: IconDefinition[] = [
+    faTelegram ,
+    faVk ,
+    faPinterest ,
+    faSkype
   ];
 
   routes: string[] = [

@@ -126,3 +126,10 @@ span {
 .active-link {
   text-decoration: underline;
 }
+
+:host-context(.dark) .icon {
+  color: #f57812af;
+}
+.icon {
+  color: var(--yellow-color);
+}

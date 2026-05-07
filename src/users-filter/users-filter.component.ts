@@ -1,7 +1,7 @@
 import { Component, DestroyRef, EventEmitter, inject, Output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-users-filter',
@@ -22,8 +22,9 @@ export class UsersFilterComponent {
       .pipe(
         debounceTime(200),
         distinctUntilChanged(),
+        map((value: string) => value.trim().toLowerCase()),
         tap((value: string) => this.usersFiltered.emit(value)),
-        takeUntilDestroyed(this.destroyRef),
+        takeUntilDestroyed(this.destroyRef)
       ).subscribe();
   }
 

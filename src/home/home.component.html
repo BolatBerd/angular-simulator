@@ -1,6 +1,6 @@
 @if (isLoading) {
     <div id="loader-overlay" class="loading-overlay flex-s-b">
-      <img class="rotate" src="/images/loading-icon.svg" alt="loading">
+      <fa-icon class="rotate" [icon]="faSpinner" />
       <span class="spinner">Иконка загрузки, которую мы должны отобразить. Добавить анимацию прокрутки</span>
     </div>
 } @else {
@@ -63,11 +63,7 @@
                 <option value="caucasus">Кавказ</option>
                 <option value="baikal">Байкал</option>
               </select>
-              <img
-                class="pr-16"
-                src="/images/arrow-left-icon.svg"
-                alt="arrow-left"
-              >
+              <fa-icon class="pr-16" [icon]="faAnglesDown" />
             </div>
             <span class="menu-subtitle fs-14">выберите из списка</span>
           </div>
@@ -85,11 +81,7 @@
                 placeholder="Дата похода"
               />
               <label class="date-label cur-p pos-abs">
-                <img
-                  class="date-icon pr-16 cur-p"
-                  src="/images/formkit_date.svg"
-                  alt='calendar'
-                />
+                <fa-icon class="date-icon pr-16 cur-p" [icon]="faCalendarDays" />
               </label>
             </div>
             <span class="menu-subtitle fs-14">укажите диапазон</span>
@@ -111,7 +103,7 @@
                 <option value="3">3 человека</option>
                 <option value="4+">4+ человека</option>
               </select>
-              <img class="pr-16" src="/images/arrow-left-icon.svg" alt="arrow-left">
+              <fa-icon class="pr-16" [icon]="faAnglesDown" />
             </div>
             <span class="menu-subtitle fs-14">выберите из списка</span>
           </div>
@@ -152,11 +144,7 @@
               height="400px"
             >
             <button id="btn-video-play">
-              <img
-                class="index-2 pos-abs svg-play"
-                src="/images/play-icon.svg"
-                alt="play-icon"
-              >
+              <fa-icon class="index-2 pos-abs svg-play" size="2x" [icon]="faCirclePlay" />
             </button>
           </div>
         </div>
@@ -186,7 +174,7 @@
 
                 @for (service of services; track service.id) {
                   <div class="feature-item  margin-top-20">
-                    <img [src]="'/images/' + service.icon + '.svg'" class="icons"/>
+                    <fa-icon [ngClass]="'icon-color-' + service.id" [icon]="service.icon" />
                     <div class="feature-text">
                       <h3>{{ service.title }}</h3>
                       <p>{{ service.description }}</p>
@@ -246,7 +234,7 @@
                 height="500"
               />
               <div class="rating">
-                <img src="/images/star-icon.svg" alt="star">
+                <fa-icon style="color: goldenrod;" [icon]="faStar" />
                 {{ destination.tourEvaluation | number:'1.1-1' }}
               </div>
               <div class="card-info flex-s-b pos-abs">

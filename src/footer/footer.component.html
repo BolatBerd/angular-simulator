@@ -15,7 +15,7 @@
 
         @for (item of messengers; track item) {
           <a [id]="item">
-            <img [src]="'/images/' + item + '-icon.svg'" [alt]="item">
+            <fa-icon [icon]="item" />
           </a>
         }
 
@@ -29,7 +29,7 @@
         @for (item of routes; track item) {
           <li>
             <a id="service">
-              <img src="/images/pointer-icon.svg" alt="pointer">{{ item }}
+              <fa-icon [icon]="faAngleRight" />{{ item }}
             </a>
           </li>
         }
@@ -44,7 +44,7 @@
         @for (item of travelEssentials; track item) {
           <li>
             <a id="essential">
-              <img src="/images/pointer-icon.svg" alt="pointer">{{ item }}
+              <fa-icon [icon]="faAngleRight" />{{ item }}
             </a>
           </li>
         }

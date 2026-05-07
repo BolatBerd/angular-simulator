@@ -1,6 +1,5 @@
 import { Injectable,inject  } from '@angular/core';
-import { BehaviorSubject, catchError, finalize, of } from 'rxjs';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, catchError, finalize, of, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IUser } from '../interfaces/IUser';
 import { UserApiService } from './user-api.service';
@@ -32,13 +31,11 @@ export class UserService {
     return this.usersSubject.getValue();
   }
 
-  loadUsers(forceReload: boolean = false): Observable<IUser[]> {
-    if (!forceReload ){
-      const cachedUsers: IUser[] | null = this.localStorageService.getItem<IUser[]>(this.USERS_KEY);
-      if (cachedUsers && cachedUsers.length > 0) {
-        this.usersSubject.next(cachedUsers);
-        return of(cachedUsers);
-      }
+  loadUsers(): Observable<IUser[]> {
+    const cachedUsers: IUser[] | null = this.localStorageService.getItem<IUser[]>(this.USERS_KEY);
+
+    if (cachedUsers && cachedUsers.length > 0) {
+      return of(cachedUsers);
     }
 
     this.loaderService.showLoader();
@@ -60,9 +57,17 @@ export class UserService {
   }
 
   addUser(user: IUser): void {
+    const foundUser: IUser | undefined = this.getUsers().find((u: IUser) => u.email === user.email);
+
+    if (foundUser) {
+      this.messageService.showWarn(`Пользователь с таким ${ user.email } уже существует`);
+      return;
+    } else {
     const currentUsers: IUser[] = this.getUsers();
     const updatedUsers: IUser[] = [...currentUsers, user];
     this.setUsers(updatedUsers);
+    this.messageService.showSuccess('Пользователь создан успешно');
+    }
   }
 
 }

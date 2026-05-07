@@ -11,12 +11,18 @@ import { IPhotoReport } from '../interfaces/IPhotoReport';
 import { LocalStorageService } from '../classes/local-storage.service';
 import { MessageService } from '../classes/message.service';
 import { ITravelEssential} from '../interfaces/ITravelEssential';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faAnglesDown, IconDefinition, faSpinner, faStar, faCirclePlay, faPeopleGroup, faShield } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
+import { faShopify } from '@fortawesome/free-brands-svg-icons';
+
 
 @Component({
   selector: 'app-home',
   imports: [
     FormsModule,
     CommonModule,
+    FontAwesomeModule
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
@@ -33,6 +39,11 @@ export class HomeComponent {
   liveInputValue!: string;
   count: number = 0;
   form: ITourForm = {};
+  faAnglesDown: IconDefinition = faAnglesDown;
+  faCalendarDays: IconDefinition = faCalendarDays;
+  faSpinner: IconDefinition = faSpinner;
+  faStar: IconDefinition = faStar;
+  faCirclePlay: IconDefinition = faCirclePlay;
 
   tours: Collection<string> = new Collection<string>([
     'Поход в горы',
@@ -49,19 +60,19 @@ export class HomeComponent {
   services: IService[] = [
     {
       id: 1,
-      icon: "people-icon",
+      icon: faPeopleGroup,
       title: "Опытный гид",
       description: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации."
     },
     {
       id: 2,
-      icon: "shield-icon",
+      icon: faShield,
       title: "Безопасный поход",
       description: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации."
     },
     {
       id: 3,
-      icon: "tag-icon",
+      icon: faShopify,
       title: "Лояльные цены",
       description: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации."
     }

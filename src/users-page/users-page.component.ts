@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { IUser } from '../interfaces/IUser';
 import { UserService } from '../classes/user.service';
@@ -8,7 +8,9 @@ import { BehaviorSubject, combineLatest, map, Observable, tap } from 'rxjs';
 import { UsersFilterComponent } from '../users-filter/users-filter.component';
 import { AsyncPipe } from '@angular/common';
 import { MessageService } from '../classes/message.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faArrowsRotate, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-users-page',
@@ -17,7 +19,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     UserCardComponent,
     FormsModule,
     UsersFilterComponent,
-    AsyncPipe],
+    AsyncPipe,
+    FontAwesomeModule
+  ],
   templateUrl: './users-page.component.html',
   styleUrl: './users-page.component.scss',
 })
@@ -25,17 +29,27 @@ export class UsersPageComponent implements OnInit {
 
   private userService: UserService = inject(UserService);
   private messageService: MessageService = inject(MessageService);
-  private destroyRef: DestroyRef = inject(DestroyRef);
 
+  faArrowsRotate: IconDefinition = faArrowsRotate;
   private filterSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   users$: Observable<IUser[]> = this.userService.users$;
   users: IUser[] = [];
 
+  ngOnInit(): void {
+    this.userService.loadUsers()
+      .pipe(
+        tap((users: IUser[]) => {
+            this.userService.setUsers(users);
+            this.messageService.showSuccess(`Загружены пользователи (${ users.length })`);
+        })
+      ).subscribe();
+  }
+
   filteredUsers$: Observable<IUser[]> = combineLatest([this.users$, this.filterSubject])
     .pipe(
-      map(([users, filter]) =>
+      map(([users, filter]: [IUser[], string]) =>
         users.filter((user: IUser) =>
-          user.name.toLowerCase().includes(filter.toLowerCase())
+          user.name.trim().toLowerCase().includes(filter)
       )),
     );
 
@@ -43,20 +57,8 @@ export class UsersPageComponent implements OnInit {
     this.filterSubject.next(value);
   }
 
-  ngOnInit(): void {
-    this.userService.loadUsers(true)
-      .pipe(
-        tap((users: IUser[]) => {
-            this.userService.setUsers(users);
-            this.messageService.showSuccess(`Загружены пользователи (${users.length})`);
-        }),
-        takeUntilDestroyed(this.destroyRef)
-      ).subscribe();
-  }
-
   onCreateUser(user: IUser): void {
     this.userService.addUser(user);
-    this.messageService.showSuccess('Пользователь создан успешно');
   }
 
   onDeleteUser(userId: number): void {
@@ -64,7 +66,7 @@ export class UsersPageComponent implements OnInit {
   }
 
   refreshUsers(): void {
-    this.userService.loadUsers(true)
+    this.userService.loadUsers()
       .pipe(
         tap((user: IUser[]) => this.userService.setUsers(user))
       ).subscribe();
