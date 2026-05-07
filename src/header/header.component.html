@@ -19,7 +19,7 @@
     <div class="card flex justify-center">
       <p-selectbutton
         id="select-theme"
-        [options]="themeService.themeOption"
+        [options]="themeService.themeOptions"
         [ngModel]="themeService.theme$ | async"
         (onChange)="changeSelectTheme($event.value)"
         optionLabel="name"

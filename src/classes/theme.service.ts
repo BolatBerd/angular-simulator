@@ -21,7 +21,7 @@ export class ThemeService {
 
   html: HTMLElement = document.documentElement;
 
-   themeOption: IThemeOption[] = [
+   themeOptions: IThemeOption[] = [
     {
       name: 'Aura',
       value: Theme.AURA,
@@ -59,7 +59,7 @@ export class ThemeService {
     this.themeSubject.next(theme);
     this.localStorageService.setItem(this.THEME_KEY, theme);
 
-    const option: IThemeOption | undefined = this.themeOption.find((option: IThemeOption) => option.value === theme);
+    const option: IThemeOption | undefined = this.themeOptions.find((option: IThemeOption) => option.value === theme);
 
     if (option) {
       usePreset(option.preset);
