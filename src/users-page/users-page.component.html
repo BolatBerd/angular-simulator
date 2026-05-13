@@ -1,9 +1,8 @@
 
 <section class="users-page">
-
   <div class="form-section">
     <app-create-user
-      (userCreated)="onCreateUser($event)"
+    (userCreated)="onCreateUser($event)"
     ></app-create-user>
   </div>
 
@@ -12,6 +11,7 @@
       <fa-icon class="icon" [icon]="faArrowsRotate" />
     </button>
   </div>
+  <span>{{ (filteredUsers$ | async)?.length ?? 0 | customPlural:'пользователь':'пользователя':'пользователей' }}</span>
   <app-users-filter (usersFiltered)="onFilterUser($event)"> </app-users-filter>
 
   <div class="cards-section">

@@ -10,7 +10,7 @@ import { AsyncPipe } from '@angular/common';
 import { MessageService } from '../classes/message.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowsRotate, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-
+import { CustomPluralPipe } from '../app/custom-plural.pipe';
 
 @Component({
   selector: 'app-users-page',
@@ -20,7 +20,8 @@ import { faArrowsRotate, IconDefinition } from '@fortawesome/free-solid-svg-icon
     FormsModule,
     UsersFilterComponent,
     AsyncPipe,
-    FontAwesomeModule
+    FontAwesomeModule,
+    CustomPluralPipe,
   ],
   templateUrl: './users-page.component.html',
   styleUrl: './users-page.component.scss',
@@ -34,6 +35,8 @@ export class UsersPageComponent implements OnInit {
   private filterSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   users$: Observable<IUser[]> = this.userService.users$;
   users: IUser[] = [];
+
+  usersLength: number = 0
 
   ngOnInit(): void {
     this.userService.loadUsers()
