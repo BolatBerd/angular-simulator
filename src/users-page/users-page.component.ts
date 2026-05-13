@@ -11,6 +11,10 @@ import { MessageService } from '../classes/message.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowsRotate, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { CustomPluralPipe } from '../app/custom-plural.pipe';
+import { IPhoneModes } from '../interfaces/IPhoneModes';
+import { PhoneModes } from '../enums/PhoneModes';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { PhoneModesService } from '../classes/phone-modes.service';
 
 @Component({
   selector: 'app-users-page',
@@ -22,6 +26,7 @@ import { CustomPluralPipe } from '../app/custom-plural.pipe';
     AsyncPipe,
     FontAwesomeModule,
     CustomPluralPipe,
+    SelectButtonModule
   ],
   templateUrl: './users-page.component.html',
   styleUrl: './users-page.component.scss',
@@ -30,13 +35,13 @@ export class UsersPageComponent implements OnInit {
 
   private userService: UserService = inject(UserService);
   private messageService: MessageService = inject(MessageService);
+  phoneModesService: PhoneModesService = inject(PhoneModesService);
 
   faArrowsRotate: IconDefinition = faArrowsRotate;
   private filterSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   users$: Observable<IUser[]> = this.userService.users$;
   users: IUser[] = [];
-
-  usersLength: number = 0
+  // usersLength: number = 0
 
   ngOnInit(): void {
     this.userService.loadUsers()
@@ -73,6 +78,10 @@ export class UsersPageComponent implements OnInit {
       .pipe(
         tap((user: IUser[]) => this.userService.setUsers(user))
       ).subscribe();
+  }
+
+  changeSelectModePhone(event: PhoneModes): void {
+    this.phoneModesService.setModePhone(event);
   }
 
 }

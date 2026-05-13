@@ -5,8 +5,7 @@
   <div class="section">
     <h3>Контакты</h3>
     <p><span>Почта:</span>{{ user.email}}</p>
-    <!-- <p><span>Почта:</span>{{ 3 | customPlural }}</p> -->
-    <p><span>Телефон:</span>{{ user.phone }}</p>
+    <p><span>Телефон:</span>{{ user.phone | phoneNumbers: ((phoneModesService.modePhon$ | async) ?? PhoneModes.INTERNATIONAL) }}</p>
     <p><span>Сайт:</span>{{ user.website }}</p>
   </div>
 
