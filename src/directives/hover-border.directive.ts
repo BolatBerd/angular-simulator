@@ -31,7 +31,6 @@ export class HoverBorderDirective implements OnDestroy {
   @HostListener('mouseleave')
   onLeave(): void {
     clearTimeout(this.timeoutId);
-    this.timeoutId = undefined;
     this.border = '1px solid transparent';
   }
 
