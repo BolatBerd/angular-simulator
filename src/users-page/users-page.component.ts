@@ -10,8 +10,7 @@ import { AsyncPipe } from '@angular/common';
 import { MessageService } from '../classes/message.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowsRotate, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { CustomPluralPipe } from '../app/custom-plural.pipe';
-import { IPhoneModes } from '../interfaces/IPhoneModes';
+import { CustomPluralPipe } from '../pipes/custom-plural.pipe';
 import { PhoneModes } from '../enums/PhoneModes';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { PhoneModesService } from '../classes/phone-modes.service';
@@ -41,7 +40,6 @@ export class UsersPageComponent implements OnInit {
   private filterSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   users$: Observable<IUser[]> = this.userService.users$;
   users: IUser[] = [];
-  // usersLength: number = 0
 
   ngOnInit(): void {
     this.userService.loadUsers()

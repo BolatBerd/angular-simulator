@@ -2,7 +2,7 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { IUser } from '../interfaces/IUser';
 import { AsyncPipe, UpperCasePipe } from '@angular/common';
 import { UserService } from '../classes/user.service';
-import { PhoneNumbersPipe } from '../app/phone-numbers.pipe';
+import { PhoneNumbersPipe } from '../pipes/phone-numbers.pipe';
 import { PhoneModes } from '../enums/PhoneModes';
 import { PhoneModesService } from '../classes/phone-modes.service';
 

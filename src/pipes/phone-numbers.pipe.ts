@@ -3,6 +3,8 @@ import { PhoneModes } from '../enums/PhoneModes';
 
 @Pipe({
   name: 'phoneNumbers',
+  standalone: true,
+  pure: true
 })
 export class PhoneNumbersPipe implements PipeTransform {
 
@@ -31,12 +33,7 @@ export class PhoneNumbersPipe implements PipeTransform {
       case PhoneModes.MASKED:
         return `+${operator} ${griup12} ${griup22} ${griup3}`;
       break;
-
     }
-
-
-
-    // return `+${operator} ${griup12} ${griup22} ${griup3}`;
   }
 
 }

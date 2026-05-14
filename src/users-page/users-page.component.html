@@ -19,7 +19,7 @@
   <span>{{ (filteredUsers$ | async)?.length ?? 0 | customPlural:'пользователь':'пользователя':'пользователей' }}</span>
   <app-users-filter (usersFiltered)="onFilterUser($event)"> </app-users-filter>
   <p-selectbutton
-    id="select-theme"
+    id="select-phone"
     [options]="phoneModesService.options"
     [ngModel]="phoneModesService.modePhon$| async"
     (onChange)="changeSelectModePhone($event.value)"
