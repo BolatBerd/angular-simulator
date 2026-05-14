@@ -3,6 +3,7 @@ import { IUser } from '../interfaces/IUser';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HoverDirective } from '../directives/hover.directive';
 import { HoverBorderDirective } from '../directives/hover-border.directive';
+import { GradientConfiguration } from '../interfaces/IGradientConfiguration';
 
 @Component({
   selector: 'app-create-user',
@@ -16,7 +17,7 @@ export class CreateUserComponent {
 
   private fb: FormBuilder = inject(FormBuilder)
 
-  myHoverConfig = {
+  readonly myHoverConfig: GradientConfiguration  = {
     delay: 500,
     colors: ['purple', 'orange'],
     thickness: 3

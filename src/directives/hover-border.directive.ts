@@ -23,7 +23,7 @@ export class HoverBorderDirective implements OnDestroy {
     clearTimeout(this.timeoutId);
 
     this.timeoutId = setTimeout(() => {
-      const color = this.defaultConfig?.colors?.[0] ?? 'black';
+      const color: string = this.defaultConfig?.colors?.[0] ?? 'black';
       this.border = `${this.defaultConfig.thickness}px solid ${color}`;
     }, this.defaultConfig.delay);
   }
