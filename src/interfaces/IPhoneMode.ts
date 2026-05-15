@@ -1,6 +1,6 @@
 import { PhoneModes } from "../enums/PhoneModes";
 
-export interface IPhoneModes {
+export interface IPhoneMode {
   name: string;
-  value: PhoneModes
+  value: PhoneModes;
 }

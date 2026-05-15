@@ -15,9 +15,9 @@ export class CreateUserComponent {
 
   @Output() userCreated: EventEmitter<IUser> = new EventEmitter<IUser>();
 
-  private fb: FormBuilder = inject(FormBuilder)
+  private fb: FormBuilder = inject(FormBuilder);
 
-  readonly myHoverConfig: GradientConfiguration  = {
+  readonly hoverConfig: GradientConfiguration = {
     delay: 500,
     colors: ['purple', 'orange'],
     thickness: 3

@@ -78,8 +78,4 @@ export class UsersPageComponent implements OnInit {
       ).subscribe();
   }
 
-  changeSelectModePhone(event: PhoneModes): void {
-    this.phoneModesService.setModePhone(event);
-  }
-
 }
