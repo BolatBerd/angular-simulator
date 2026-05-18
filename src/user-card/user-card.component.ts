@@ -1,9 +1,8 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { IUser } from '../interfaces/IUser';
 import { UpperCasePipe } from '@angular/common';
-import { UserService } from '../classes/user.service';
 import { PhoneNumbersPipe } from '../pipes/phone-numbers.pipe';
-import { PhoneModes } from '../enums/PhoneModes';
+import { PhoneMode } from '../enums/PhoneMode';
 import { PhoneModesService } from '../classes/phone-modes.service';
 
 
@@ -17,7 +16,7 @@ import { PhoneModesService } from '../classes/phone-modes.service';
 export class UserCardComponent {
 
   phoneModesService: PhoneModesService = inject(PhoneModesService)
-  modePhone: PhoneModes = PhoneModes.MASKED
+  modePhone: PhoneMode = PhoneMode.MASKED
 
   @Input({ required: true }) user!: IUser;
   @Output() userDeleted: EventEmitter<number> = new EventEmitter<number>();

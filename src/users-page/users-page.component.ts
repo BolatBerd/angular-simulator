@@ -11,7 +11,7 @@ import { MessageService } from '../classes/message.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowsRotate, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { CustomPluralPipe } from '../pipes/custom-plural.pipe';
-import { PhoneModes } from '../enums/PhoneModes';
+import { PhoneMode } from '../enums/PhoneMode';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { PhoneModesService } from '../classes/phone-modes.service';
 

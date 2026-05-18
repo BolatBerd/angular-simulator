@@ -1,4 +1,4 @@
-export interface GradientConfiguration {
+export interface IGradientConfiguration {
   delay?: number;
   colors?: string[];
   thickness?: number
