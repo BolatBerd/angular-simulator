@@ -20,9 +20,9 @@ export class HoverBorderDirective implements OnDestroy {
   @HostBinding('style.border')
   get border(): string {
     if (this.isActive) {
-      return `${this.gradientConfiguration.thickness ?? 2}px solid transparent`;
+      return `${ this.gradientConfiguration.thickness ?? 2 }px solid transparent`;
     }
-    return `${this.gradientConfiguration.thickness ?? 2}px solid #dcdcdc`
+    return `${ this.gradientConfiguration.thickness ?? 2 }px solid #dcdcdc`
   }
 
   @HostBinding('style.background')
@@ -34,7 +34,7 @@ export class HoverBorderDirective implements OnDestroy {
 
     return `
       linear-gradient(white, white) padding-box,
-      linear-gradient(90deg, ${this.gradientConfiguration.colors}) border-box
+      linear-gradient(90deg, ${ this.gradientConfiguration.colors }) border-box
     `;
   }
 
@@ -56,7 +56,6 @@ export class HoverBorderDirective implements OnDestroy {
 
   @HostListener('mouseenter')
   onEnter(): void {
-
     clearTimeout(this.timeoutId);
 
     this.timeoutId = setTimeout(() => {

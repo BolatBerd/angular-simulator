@@ -1,12 +1,10 @@
-import { Directive, ElementRef, HostBinding, HostListener, inject } from '@angular/core';
+import { Directive, HostBinding, HostListener } from '@angular/core';
 
 @Directive({
   selector: '[hover]',
   standalone: true,
 })
 export class HoverDirective {
-
-  private el: ElementRef = inject(ElementRef);
 
     @HostBinding('style.fontWeight') textBold: string = 'normal';
 

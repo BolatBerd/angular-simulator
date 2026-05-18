@@ -45,7 +45,7 @@ export class PhoneNumbersPipe implements PipeTransform {
         return value.replace(this.phoneRegex12, '+$1 $2 *** ** $5');
 
       default:
-        return `+${value}`;
+        return `+${ value }`;
     }
   }
   private format11(value: string, mode: PhoneMode): string {
@@ -60,7 +60,7 @@ export class PhoneNumbersPipe implements PipeTransform {
         return value.replace(this.phoneRegex11, '+$1 $2 ** ** $5');
 
       default:
-        return `+${value}`;
+        return `+${ value }`;
     }
   }
   private format10(value: string, mode: PhoneMode): string {
@@ -75,7 +75,7 @@ export class PhoneNumbersPipe implements PipeTransform {
         return value.replace(this.phoneRegex10, '+$1 $2 ** ** $5');
 
       default:
-        return `+${value}`;
+        return `+${ value }`;
     }
   }
 
