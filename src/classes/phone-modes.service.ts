@@ -12,7 +12,7 @@ export class PhoneModesService {
   private localStorageService: LocalStorageService = inject(LocalStorageService);
 
   private modePhonSubject: BehaviorSubject<PhoneMode> = new BehaviorSubject<PhoneMode>(PhoneMode.INTERNATIONAL);
-  modePhon$: Observable<PhoneMode> = this.modePhonSubject.asObservable();
+  modePhone$: Observable<PhoneMode> = this.modePhonSubject.asObservable();
 
     options: IPhoneMode[] = [
       {
