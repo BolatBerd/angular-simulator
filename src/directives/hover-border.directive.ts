@@ -19,23 +19,16 @@ export class HoverBorderDirective implements OnDestroy {
 
   @HostBinding('style.border')
   get border(): string {
-    if (this.isActive) {
-      return `${ this.gradientConfiguration.thickness ?? 2 }px solid transparent`;
-    }
-    return `${ this.gradientConfiguration.thickness ?? 2 }px solid #dcdcdc`
+    return this.isActive ?
+      `${ this.gradientConfiguration.thickness ?? 2 }px solid transparent`:
+      `${ this.gradientConfiguration.thickness ?? 2 }px solid #dcdcdc`
   }
 
   @HostBinding('style.background')
     get background(): string {
-
-    if (!this.isActive) {
-      return 'transparent';
-    }
-
-    return `
-      linear-gradient(white, white) padding-box,
-      linear-gradient(90deg, ${ this.gradientConfiguration.colors }) border-box
-    `;
+      return !this.isActive ?
+        'transparent':
+        `linear-gradient(white, white) padding-box, linear-gradient(90deg, ${ this.gradientConfiguration.colors }) border-box`;
   }
 
   @HostBinding('style.backgroundSize')
@@ -48,11 +41,9 @@ export class HoverBorderDirective implements OnDestroy {
     return this.isActive ? 'gradientMove 3s linear infinite alternate' : '';
   }
 
-  @HostBinding('style.borderRadius')
-  borderRadius: string = '12px';
+  @HostBinding('style.borderRadius') borderRadius: string = '12px';
 
-  @HostBinding('style.transition')
-  transition: string = 'all 0.3s ease';
+  @HostBinding('style.transition') transition: string = 'all 0.3s ease';
 
   @HostListener('mouseenter')
   onEnter(): void {
@@ -74,4 +65,5 @@ export class HoverBorderDirective implements OnDestroy {
   ngOnDestroy(): void {
     clearTimeout(this.timeoutId);
   }
+
 }
