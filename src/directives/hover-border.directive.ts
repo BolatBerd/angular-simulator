@@ -40,12 +40,12 @@ export class HoverBorderDirective implements OnDestroy {
 
   @HostBinding('style.backgroundSize')
   get backgroundSize(): string {
-    return this.isActive ? '300% 300%' : '';
+    return this.isActive ? '200% 200%' : '';
   }
 
   @HostBinding('style.animation')
   get animation(): string {
-    return this.isActive ? 'gradientMove 3s linear infinite' : '';
+    return this.isActive ? 'gradientMove 3s linear infinite alternate' : '';
   }
 
   @HostBinding('style.borderRadius')

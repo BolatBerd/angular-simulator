@@ -19,7 +19,7 @@ export class CreateUserComponent {
 
   readonly hoverConfig: IGradientConfiguration = {
     delay: 500,
-    colors: ['purple', 'orange', 'cyan', 'red'],
+    colors: ['purple', 'orange', 'cyan', 'red', 'cyan', 'orange', 'purple'],
     thickness: 3
   };
 
