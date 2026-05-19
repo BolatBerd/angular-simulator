@@ -7,7 +7,7 @@ import { IGradientConfiguration } from '../interfaces/IGradientConfiguration';
 })
 export class HoverBorderDirective implements OnDestroy {
 
-  private timeoutId?: ReturnType<typeof setTimeout>;
+  private timeoutId!: number;
 
   @Input() gradientConfiguration: IGradientConfiguration = {
     delay: 1000,
