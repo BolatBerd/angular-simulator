@@ -1,10 +1,13 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { IUser } from '../interfaces/IUser';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { HoverDirective } from '../directives/hover.directive';
+import { HoverBorderDirective } from '../directives/hover-border.directive';
+import { IGradientConfiguration } from '../interfaces/IGradientConfiguration';
 
 @Component({
   selector: 'app-create-user',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, HoverDirective, HoverBorderDirective],
   templateUrl: './create-user.component.html',
   styleUrl: './create-user.component.scss',
 })
@@ -12,7 +15,13 @@ export class CreateUserComponent {
 
   @Output() userCreated: EventEmitter<IUser> = new EventEmitter<IUser>();
 
-  private fb: FormBuilder = inject(FormBuilder)
+  private fb: FormBuilder = inject(FormBuilder);
+
+  readonly hoverConfig: IGradientConfiguration = {
+    delay: 500,
+    colors: ['purple', 'orange', 'cyan', 'red', 'cyan', 'orange', 'purple'],
+    thickness: 3
+  };
 
   form: FormGroup = this.fb.nonNullable.group({
     id: [{ value: null, disabled: true }],
