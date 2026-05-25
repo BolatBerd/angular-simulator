@@ -1,23 +1,23 @@
 import { HttpEvent, HttpEventType, HttpHandlerFn, HttpRequest } from "@angular/common/http";
-import { Observable, tap } from "rxjs";
+import { catchError, Observable, tap, throwError } from "rxjs";
 import { HttpStatusDescription } from "../enums/HttpStatusDescription";
 
 function getStatusMessage(status: number): string {
   switch (status) {
-    case 200:
-      return HttpStatusDescription.SUCCESS;
+    case HttpStatusDescription.SUCCESS:
+      return 'Запрос выполнен успешно';
 
-    case 401:
-      return HttpStatusDescription.UNAUTHORIZED;
+    case HttpStatusDescription.UNAUTHORIZED:
+      return "Доступ не разрешён. Пожалуйста, авторизуйтесь.";
 
-    case 403:
-      return HttpStatusDescription.FORBIDDEN;
+    case HttpStatusDescription.FORBIDDEN:
+      return "Доступ запрещён. У вас нет прав.";
 
-    case 404:
-      return HttpStatusDescription.NOT_FOUND;
+    case HttpStatusDescription.NOT_FOUND:
+      return "Ресурс не найден. Проверьте адрес.";
 
-    case 500:
-      return HttpStatusDescription.SERVER_ERROR;
+    case HttpStatusDescription.SERVER_ERROR:
+      return "Внутренняя ошибка сервера. Попробуйте позже.";
 
     default:
       return 'Неизвестный статус';

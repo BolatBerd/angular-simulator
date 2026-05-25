@@ -11,20 +11,20 @@ export function httpErrorInterceptor(req: HttpRequest<unknown>, next: HttpHandle
       if (event.type === HttpEventType.Response) {
 
         switch (event.status) {
-          case 401:
-            messageService.showError(HttpStatusDescription.UNAUTHORIZED);
+          case HttpStatusDescription.UNAUTHORIZED:
+            messageService.showError("Доступ не разрешён. Пожалуйста, авторизуйтесь.");
             console.log(req.url, event.status);
             break;
-          case 403:
-            messageService.showError(HttpStatusDescription.FORBIDDEN);
+          case HttpStatusDescription.FORBIDDEN:
+            messageService.showError("Доступ запрещён. У вас нет прав.");
             console.log(req.url, event.status);
             break;
-          case 404:
-            messageService.showError(HttpStatusDescription.NOT_FOUND);
+          case HttpStatusDescription.NOT_FOUND:
+            messageService.showError("Ресурс не найден. Проверьте адрес.");
             console.log(req.url, event.status);
             break;
-          case 500:
-            messageService.showError(HttpStatusDescription.SERVER_ERROR);
+          case HttpStatusDescription.SERVER_ERROR:
+            messageService.showError("Внутренняя ошибка сервера. Попробуйте позже.");
             console.log(req.url, event.status);
             break;
           default:
