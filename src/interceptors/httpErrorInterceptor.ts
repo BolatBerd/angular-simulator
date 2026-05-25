@@ -1,26 +1,30 @@
 import { HttpEvent, HttpEventType, HttpHandlerFn, HttpRequest } from "@angular/common/http";
 import { Observable, tap } from "rxjs";
 import { HttpStatusDescription } from "../enums/HttpStatusDescription";
+import { MessageService } from '../classes/message.service';
+import { inject } from "@angular/core";
 
 export function httpErrorInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
+  const messageService: MessageService = inject(MessageService);
   return next(req).pipe(
     tap((event) => {
       if (event.type === HttpEventType.Response) {
+
         switch (event.status) {
           case 401:
-            alert(HttpStatusDescription.UNAUTHORIZED);
+            messageService.showError(HttpStatusDescription.UNAUTHORIZED);
             console.log(req.url, event.status);
             break;
           case 403:
-            alert(HttpStatusDescription.FORBIDDEN);
+            messageService.showError(HttpStatusDescription.FORBIDDEN);
             console.log(req.url, event.status);
             break;
           case 404:
-            alert(HttpStatusDescription.NOT_FOUND);
+            messageService.showError(HttpStatusDescription.NOT_FOUND);
             console.log(req.url, event.status);
             break;
           case 500:
-            alert(HttpStatusDescription.SERVER_ERROR);
+            messageService.showError(HttpStatusDescription.SERVER_ERROR);
             console.log(req.url, event.status);
             break;
           default:

@@ -30,7 +30,7 @@ export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerF
     tap((event) => {
       const ended = Date.now();
       if (event.type === HttpEventType.Response) {
-        console.log(req.url, 'Вернул ответ со статусом', getStatusMessage(event.status), 'за', ended - started, 'мс');
+        console.log(req.method, req.url, 'Вернул ответ со статусом', getStatusMessage(event.status), 'за', ended - started, 'мс');
       }
     }),
   );
