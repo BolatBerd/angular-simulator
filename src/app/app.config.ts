@@ -1,10 +1,6 @@
-import {
-  ApplicationConfig,
-  provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection
-} from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { providePrimeNG } from 'primeng/config';
@@ -15,6 +11,8 @@ import Nora from '@primeuix/themes/nora';
 
 import { Preset } from '@primeuix/themes/types';
 import { Theme } from '../enums/Theme';
+import { loggingInterceptor } from '../interceptors/loggingInterceptor';
+import { httpErrorInterceptor } from '../interceptors/httpErrorInterceptor';
 
 function getThemePresetFromStorage(): Preset {
   const themeMap: Record<Theme, Preset> = {
@@ -33,7 +31,7 @@ function getThemePresetFromStorage(): Preset {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(),
+    provideHttpClient((withInterceptors([loggingInterceptor, httpErrorInterceptor]))),
     provideRouter(routes),
     provideZoneChangeDetection(),
     providePrimeNG({
