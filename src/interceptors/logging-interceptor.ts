@@ -25,10 +25,10 @@ function getStatusMessage(status: number): string {
 }
 
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
-  const started = Date.now();
+  const started: number = Date.now();
   return next(req).pipe(
     tap((event) => {
-      const ended = Date.now();
+      const ended: number = Date.now();
       if (event.type === HttpEventType.Response) {
         console.log(req.method, req.url, 'Вернул ответ со статусом', getStatusMessage(event.status), 'за', ended - started, 'мс');
       }
