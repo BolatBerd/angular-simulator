@@ -1,10 +1,16 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from '../home/home.component';
-import { UsersPageComponent } from "../users-page/users-page.component";
-import { NotFoundComponent } from '../not-found/not-found.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'user', component: UsersPageComponent },
-  { path: '**', component: NotFoundComponent }
+  {
+    path: '',
+    loadComponent: () => import('../home/home.component').then(m => m.HomeComponent)
+  },
+  {
+    path: 'user',
+    loadComponent: () => import('../users-page/users-page.component').then(m => m.UsersPageComponent)
+  },
+  {
+    path: '**',
+    loadComponent: () =>import('../not-found/not-found.component').then(m => m.NotFoundComponent)
+  },
 ];
