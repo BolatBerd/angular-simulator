@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { IPost } from '../IPost';
+import { PostApiService } from '../post-api.service';
 
 @Component({
   selector: 'app-post-create',
@@ -7,5 +9,13 @@ import { Component } from '@angular/core';
   styleUrl: './post-create.component.scss',
 })
 export class PostCreateComponent {
+
+  postApiService = inject(PostApiService);
+
+  getPosts(){
+    this.postApiService.getPosts().subscribe((posts: IPost[]) => {
+      console.log(posts);
+    })
+  }
 
 }

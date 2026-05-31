@@ -1,6 +1,5 @@
 import { HttpEvent, HttpEventType, HttpHandlerFn, HttpRequest } from "@angular/common/http";
 import { Observable, tap } from "rxjs";
-import { HttpStatusDescription } from "../enums/HttpStatusDescription";
 import { MessageService } from '../classes/message.service';
 import { inject } from "@angular/core";
 
