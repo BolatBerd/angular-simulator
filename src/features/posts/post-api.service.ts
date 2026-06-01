@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { IPost } from './IPost';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, throwError, tap } from 'rxjs';
 import { LocalStorageService } from '../../classes/local-storage.service';
 
 @Injectable({
@@ -51,6 +51,10 @@ export class PostApiService {
         this.postsSubject.next([...currentPosts]);
         this.localStorageService.setItem('posts', currentPosts);
       }
+    }),
+    catchError((error) => {
+      console.error('Ошибка обновления поста', error);
+      return throwError(() => error);
     })
   );
 }
