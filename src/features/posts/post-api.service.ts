@@ -3,6 +3,8 @@ import { IPost } from './IPost';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, throwError, tap } from 'rxjs';
 import { LocalStorageService } from '../../classes/local-storage.service';
+import { MessageService } from '../../classes/message.service';
+import { LoaderService } from '../../classes/loader.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +12,8 @@ import { LocalStorageService } from '../../classes/local-storage.service';
 export class PostApiService {
 
   localStorageService: LocalStorageService = inject(LocalStorageService);
+  messageService: MessageService = inject(MessageService);
+  loaderService: LoaderService = inject(LoaderService);
 
   private postsSubject: BehaviorSubject<IPost[]> = new BehaviorSubject<IPost[]>([]);
   post$: Observable<IPost[]> = this.postsSubject.asObservable();
@@ -23,51 +27,73 @@ export class PostApiService {
   }
 
   getPostById(id: number): Observable<IPost> {
-    return this.http.get<IPost>(`${this.apiUrl}/${id}`);
+    this.loaderService.showLoader();
+    return this.http.get<IPost>(`${this.apiUrl}/${id}`)
+      .pipe(
+        tap((post) => {
+          this.loaderService.hideLoader();
+          console.log('Пост успешно загружен:', post);
+        }),
+        catchError((error) => {
+          this.messageService.showError('Не удалось загрузить пост.');
+          return throwError(() => error);
+        })
+      );
   }
 
   createPost(post: IPost): Observable<IPost> {
+    this.loaderService.showLoader();
     return this.http.post<IPost>(`${this.apiUrl}/add`, post)
       .pipe(
         tap((createdPost: IPost) => {
+          this.loaderService.hideLoader();
           const currentPosts: IPost[] = this.postsSubject.getValue();
           const updatedPosts: IPost[] = [...currentPosts, createdPost];
           this.postsSubject.next(updatedPosts);
-          this.localStorageService.setItem('post', updatedPosts);
+        }),
+        catchError((error) => {
+          this.messageService.showError('Не удалось добавить пост.');
+          return throwError(() => error);
         })
       );
   }
 
   updatePost(id: number, post: Partial<IPost>): Observable<IPost> {
-  return this.http.put<IPost>(
-    `${this.apiUrl}/${id}`,
-    post
-  ).pipe(
-    tap((updatedPost) => {
-      const currentPosts = this.postsSubject.getValue();
-      const index = currentPosts.findIndex(p => p.id === updatedPost.id);
-      if (index !== -1) {
-        currentPosts[index] = { ...currentPosts[index], ...updatedPost };
-        this.postsSubject.next([...currentPosts]);
-        this.localStorageService.setItem('posts', currentPosts);
-      }
-    }),
-    catchError((error) => {
-      console.error('Ошибка обновления поста', error);
-      return throwError(() => error);
-    })
-  );
-}
+    this.loaderService.showLoader();
+    return this.http.put<IPost>(
+      `${this.apiUrl}/${id}`,
+      post
+    ).pipe(
+      tap((updatedPost) => {
+        this.loaderService.hideLoader();
+        const currentPosts = this.postsSubject.getValue();
+        const index = currentPosts.findIndex(p => p.id === updatedPost.id);
+        if (index !== -1) {
+          currentPosts[index] = { ...currentPosts[index], ...updatedPost };
+          this.postsSubject.next([...currentPosts]);
+        }
+      }),
+      catchError((error) => {
+        this.messageService.showError('Не удалось обновить пост.');
+        return throwError(() => error);
+      })
+    );
+  }
 
   deletePost(id: number){
+    this.loaderService.showLoader();
     return this.http.delete<IPost>(
       `${this.apiUrl}/${id}`
     ).pipe(
       tap(() => {
+        this.loaderService.hideLoader();
         const currentPosts = this.postsSubject.getValue();
         const updatedPosts = currentPosts.filter(p => p.id !== id);
         this.postsSubject.next(updatedPosts);
-        this.localStorageService.setItem('posts', updatedPosts);
+      }),
+      catchError((error) => {
+        this.messageService.showError('Не удалось удалить пост.');
+        return throwError(() => error);
       })
     );
   }

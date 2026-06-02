@@ -8,19 +8,23 @@ import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Router } from '@angular/router';
-
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { LoaderService } from '../../../classes/loader.service';
+import { finalize, Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-posts',
-  imports: [CommonModule, TableModule, SkeletonModule],
+  imports: [CommonModule, TableModule, SkeletonModule, ContextMenuModule],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.scss',
 })
 export class PostsComponent {
 
   private postApiService: PostApiService = inject(PostApiService);
+  private loaderService: LoaderService = inject(LoaderService);
   private router: Router = inject(Router);
   posts: IPost[] = [];
+  isLoading$: Observable<boolean> = this.loaderService.isLoading$;
   loading: boolean = true;
   menuVisible = false;
   menuX = 0;
@@ -28,12 +32,12 @@ export class PostsComponent {
   selectedPost?: IPost;
 
   ngOnInit(): void {
-    this.postApiService.getPosts().subscribe((response: any) => {
-      console.log(response.posts);
-      this.posts = response.posts;
-      this.loading = false;
-
-    });
+    this.loaderService.showLoader();
+    this.postApiService.getPosts()
+      .pipe(
+        tap((response: any) => { this.posts = response.posts; this.loading = false;}),
+        finalize(() => this.loaderService.hideLoader()))
+        .subscribe()
   }
 
   onRowDblClick(event: any) {
