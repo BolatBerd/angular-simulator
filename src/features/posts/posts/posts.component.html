@@ -15,7 +15,9 @@
           </tr>
       </ng-template>
   </p-table>
-} @else { <p-table [value]="posts" (onRowDblClick)="onRowDblClick($event)">
+} @else {
+    <p-contextMenu #cm [model]="menuItems" />
+    <p-table [value]="posts">
     <ng-template pTemplate="header">
       <tr>
         <th>Title</th>
@@ -24,7 +26,12 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-post>
-      <tr (contextmenu)="onContextMenu(post, $event)">
+      <tr
+        (dblclick)="onRowDblClick(post)"
+        (contextmenu)="selectedPost = post;
+        $event.preventDefault();
+        cm.show($event)"
+      >
         <td>{{ post.title }}</td>
         <td>{{ post.tags.join(', ') }}</td>
         <td>{{ post.views }}</td>
@@ -32,7 +39,7 @@
     </ng-template>
   </p-table>
 }
-@if(menuVisible){
+<!-- @if(menuVisible){
   <div  class="context-menu" [style.top.px]="menuY" [style.left.px]="menuX">
     <ul>
       <li (click)="onViewPost()">Просмотр</li>
@@ -40,4 +47,4 @@
       <li (click)="onDeletePost()">Удалить</li>
     </ul>
   </div>
-}
+} -->
