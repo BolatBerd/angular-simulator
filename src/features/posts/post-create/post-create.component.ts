@@ -12,10 +12,10 @@ export class PostCreateComponent {
 
   postApiService = inject(PostApiService);
 
-  getPosts(){
-    this.postApiService.getPosts().subscribe((posts: IPost[]) => {
-      console.log(posts);
-    })
-  }
+  // getPosts(){
+  //   this.postApiService.getPosts().subscribe((posts: IPost[]) => {
+  //     console.log(posts);
+  //   })
+  // }
 
 }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { PostCreateComponent } from '../post-create/post-create.component';
 import { PostDetailComponent } from '../post-detail/post-detail.component';
 import { PostEditDialogComponent } from '../post-edit-dialog/post-edit-dialog.component';
@@ -12,14 +12,21 @@ import { ContextMenuModule } from 'primeng/contextmenu';
 import { LoaderService } from '../../../classes/loader.service';
 import { finalize, Observable, tap } from 'rxjs';
 import { IPostsResponse } from '../IPostResponse';
+import { PaginatorModule } from 'primeng/paginator';
 
 @Component({
   selector: 'app-posts',
-  imports: [CommonModule, TableModule, SkeletonModule, ContextMenuModule],
+  imports: [
+    CommonModule,
+    TableModule,
+    SkeletonModule,
+    ContextMenuModule,
+    PaginatorModule
+  ],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.scss',
 })
-export class PostsComponent {
+export class PostsComponent implements OnInit {
 
   private postApiService: PostApiService = inject(PostApiService);
   private loaderService: LoaderService = inject(LoaderService);
@@ -27,9 +34,10 @@ export class PostsComponent {
   posts: IPost[] = [];
   isLoading$: Observable<boolean> = this.loaderService.isLoading$;
   menuVisible = false;
-  // menuX = 0;
-  // menuY = 0;
   selectedPost?: IPost;
+  currentPage = 1;
+  pageSize = 10;
+  totalPosts = 0;
 
   menuItems = [
     { label: 'Просмотр', command: () => this.onViewPost() },
@@ -37,11 +45,15 @@ export class PostsComponent {
     { label: 'Удалить', command: () => this.onDeletePost() }
   ];
 
+
   ngOnInit(): void {
     this.loaderService.showLoader();
-    this.postApiService.getPosts()
+    this.postApiService.getPosts(this.currentPage, this.pageSize)
       .pipe(
-        tap((response: any) => this.posts = response.posts),
+        tap((response: IPostsResponse) => {
+          this.posts = response.posts;
+          this.totalPosts = response.total;
+        }),
         finalize(() => this.loaderService.hideLoader()))
         .subscribe()
   }
@@ -96,4 +108,15 @@ export class PostsComponent {
      }
   }
 
+  onPageChange(event: any): void {
+    this.currentPage = event.page + 1; 
+    this.pageSize = event.rows;
+    this.loaderService.showLoader();
+    this.postApiService.getPosts(this.currentPage, this.pageSize)
+      .pipe(
+        tap((response) => (this.posts = response.posts)),
+        finalize(() => this.loaderService.hideLoader())
+      )
+      .subscribe();
+  }
 }

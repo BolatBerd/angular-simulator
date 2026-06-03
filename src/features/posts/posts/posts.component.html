@@ -39,12 +39,11 @@
     </ng-template>
   </p-table>
 }
-<!-- @if(menuVisible){
-  <div  class="context-menu" [style.top.px]="menuY" [style.left.px]="menuX">
-    <ul>
-      <li (click)="onViewPost()">Просмотр</li>
-      <li (click)="onEditPost()">Редактировать</li>
-      <li (click)="onDeletePost()">Удалить</li>
-    </ul>
-  </div>
-} -->
+<p-paginator
+  style="margin-bottom: 150px;"
+  [rows]="pageSize"
+  [totalRecords]="totalPosts"
+  (onPageChange)="onPageChange($event)"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  >
+</p-paginator>

@@ -5,6 +5,7 @@ import { BehaviorSubject, catchError, Observable, throwError, tap } from 'rxjs';
 import { LocalStorageService } from '../../classes/local-storage.service';
 import { MessageService } from '../../classes/message.service';
 import { LoaderService } from '../../classes/loader.service';
+import { IPostsResponse } from './IPostResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -22,9 +23,22 @@ export class PostApiService {
 
   private apiUrl: string = 'https://dummyjson.com/posts';
 
-  getPosts(): Observable<IPost[]> {
-    return this.http.get<IPost[]>(this.apiUrl);
-  }
+  // getPosts(): Observable<IPost[]> {
+  //   return this.http.get<IPost[]>(this.apiUrl);
+  // }
+
+  getPosts(page: number, pageSize: number): Observable<IPostsResponse> {
+  const skip: number = (page - 1) * pageSize;
+  return this.http.get<IPostsResponse>(
+    this.apiUrl,
+    {
+      params: {
+        skip: skip.toString(),
+        limit: pageSize.toString(),
+      },
+    }
+  );
+}
 
   getPostById(id: number): Observable<IPost> {
     this.loaderService.showLoader();
