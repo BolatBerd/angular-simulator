@@ -1,6 +1,8 @@
-@if (post$ | async; as post) {
+@if (post) {
   <h2>{{ post.title }}</h2>
   <p><strong>Tags:</strong> {{ post.tags.join(', ') }}</p>
   <p><strong>Views:</strong> {{ post.views }}</p>
   <p><strong>Content:</strong> {{ post.body }}</p>
+} @else {
+  <p>Пост не найден...</p>
 }

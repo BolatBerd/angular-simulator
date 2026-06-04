@@ -22,5 +22,14 @@
       <div class="error-message">Views must be a non-negative number.</div>
     }
   </div>
+
+   <div>
+    <label for="views">Body</label>
+    <input type="number" id="body" formControlName="body" />
+    @if (postForm.controls['body'].invalid && postForm.controls['body'].touched){
+      <div class="error-message">Views must be a non-negative number.</div>
+    }
+  </div>
+
   <button type="submit" [disabled]="postForm.invalid">Create Post</button>
 </form>

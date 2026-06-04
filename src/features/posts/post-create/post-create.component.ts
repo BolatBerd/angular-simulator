@@ -21,6 +21,7 @@ export class PostCreateComponent {
       title: ['', Validators.required],
       tags: ['', Validators.required],
       views: [0, [Validators.required, Validators.min(0)]],
+      body: ['', Validators.required],
     });
 
   onSubmit() {
