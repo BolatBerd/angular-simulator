@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { IPost } from './IPost';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, throwError, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, throwError, tap, timeout } from 'rxjs';
 import { LocalStorageService } from '../../classes/local-storage.service';
 import { MessageService } from '../../classes/message.service';
 import { LoaderService } from '../../classes/loader.service';
@@ -28,17 +28,17 @@ export class PostApiService {
   // }
 
   getPosts(page: number, pageSize: number): Observable<IPostsResponse> {
-  const skip: number = (page - 1) * pageSize;
-  return this.http.get<IPostsResponse>(
-    this.apiUrl,
-    {
-      params: {
-        skip: skip.toString(),
-        limit: pageSize.toString(),
-      },
-    }
-  );
-}
+    const skip: number = (page - 1) * pageSize;
+    return this.http.get<IPostsResponse>(
+      this.apiUrl,
+      {
+        params: {
+          skip: skip.toString(),
+          limit: pageSize.toString(),
+        },
+      }
+    );
+  }
 
   getPostById(id: number): Observable<IPost> {
     this.loaderService.showLoader();
@@ -67,6 +67,7 @@ export class PostApiService {
         }),
         catchError((error) => {
           this.messageService.showError('Не удалось добавить пост.');
+          this.loaderService.hideLoader();
           return throwError(() => error);
         })
       );

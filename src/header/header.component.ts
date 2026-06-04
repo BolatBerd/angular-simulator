@@ -35,7 +35,8 @@ export class HeaderComponent {
 
   navItems: INavItem[] = [
     { label: 'Главная', path: '' },
-    { label: 'Пользователи', path: 'user' }
+    { label: 'Пользователи', path: 'user' },
+    { label: 'Посты', path: 'posts' }
   ];
 
   faSun: IconDefinition = faSun;

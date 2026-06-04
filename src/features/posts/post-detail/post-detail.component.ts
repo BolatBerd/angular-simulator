@@ -1,11 +1,129 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { PostCreateComponent } from '../post-create/post-create.component';
+// import { PostDetailComponent } from '../post-detail/post-detail.component';
+import { PostEditDialogComponent } from '../post-edit-dialog/post-edit-dialog.component';
+import { IPost } from '../IPost';
+import { PostApiService } from '../post-api.service';
+import { CommonModule } from '@angular/common';
+import { TableModule } from 'primeng/table';
+import { SkeletonModule } from 'primeng/skeleton';
+import { Router } from '@angular/router';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { LoaderService } from '../../../classes/loader.service';
+import { finalize, Observable, tap } from 'rxjs';
+import { IPostsResponse } from '../IPostResponse';
+import { PaginatorModule } from 'primeng/paginator';
+import { MenuItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-post-detail',
-  imports: [],
+  imports: [    CommonModule,
+    TableModule,
+    SkeletonModule,
+    ContextMenuModule,
+    PaginatorModule,
+    ButtonModule],
   templateUrl: './post-detail.component.html',
   styleUrl: './post-detail.component.scss',
 })
 export class PostDetailComponent {
 
+  private postApiService: PostApiService = inject(PostApiService);
+  private loaderService: LoaderService = inject(LoaderService);
+  private router: Router = inject(Router);
+  posts: IPost[] = [];
+  isLoading$: Observable<boolean> = this.loaderService.isLoading$;
+  menuVisible = false;
+  selectedPost?: IPost;
+  currentPage = 1;
+  pageSize = 10;
+  totalPosts = 0;
+
+  menuItems: MenuItem[] = [
+    { label: 'Просмотр', command: () => this.onViewPost() },
+    { label: 'Редактировать', command: () => this.onEditPost() },
+    { label: 'Удалить', command: () => this.onDeletePost() }
+  ];
+
+  ngOnInit(): void {
+    this.loaderService.showLoader();
+    this.postApiService.getPosts(this.currentPage, this.pageSize)
+      .pipe(
+        tap((response: IPostsResponse) => {
+          this.posts = response.posts;
+          this.totalPosts = response.total;
+        }),
+        finalize(() => this.loaderService.hideLoader()))
+        .subscribe()
+  }
+
+  // onRowDblClick(event: any): void {
+  //   const post: IPost | undefined = event?.data;
+  //   if (post && post.id != null) {
+  //     this.router.navigate(['/posts', post.id]);
+  //   }
+  // }
+
+  onRowDblClick(post: IPost): void {
+    if (post?.id != null) {
+      this.router.navigate(['/posts', post.id]);
+    }
+  }
+
+  onContextMenu(post: IPost, event: MouseEvent) {
+    event.preventDefault();
+    this.selectedPost = post;
+    // this.menuX = event.clientX;
+    // this.menuY = event.clientY;
+    this.menuVisible = true;
+  }
+
+  closeMenu() {
+    this.menuVisible = false;
+    this.selectedPost = undefined;
+  }
+
+  onViewPost() {
+    if (this.selectedPost) {
+      this.router.navigate(['/posts', this.selectedPost.id]);
+      this.closeMenu();
+    }
+  }
+
+  onEditPost(){
+    if (this.selectedPost) {
+          // Открываем модалку с этим постом (например, с помощью диалога PrimeNG)
+    // this.postEditDialogComponent.open(this.selectedPost);
+    // this.closeMenu();
+    }
+  }
+
+  onDeletePost(){
+     if (this.selectedPost) {
+       this.postApiService.deletePost(this.selectedPost.id).subscribe(() => {
+      this.posts = this.posts.filter(p => p.id !== this.selectedPost!.id);
+      this.closeMenu();
+      });
+     }
+  }
+
+  onPageChange(event: any): void {
+    this.currentPage = event.page + 1;
+    this.pageSize = event.rows;
+    this.loaderService.showLoader();
+    this.postApiService.getPosts(this.currentPage, this.pageSize)
+      .pipe(
+        tap((response) => (this.posts = response.posts)),
+        finalize(() => this.loaderService.hideLoader())
+      )
+      .subscribe();
+  }
+
+  onCreatePost(): void {
+    this.router.navigate(['/posts/create']);
+  }
 }
+
+
+

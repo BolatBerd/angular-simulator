@@ -13,6 +13,8 @@ import { LoaderService } from '../../../classes/loader.service';
 import { finalize, Observable, tap } from 'rxjs';
 import { IPostsResponse } from '../IPostResponse';
 import { PaginatorModule } from 'primeng/paginator';
+import { MenuItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-posts',
@@ -21,7 +23,8 @@ import { PaginatorModule } from 'primeng/paginator';
     TableModule,
     SkeletonModule,
     ContextMenuModule,
-    PaginatorModule
+    PaginatorModule,
+    ButtonModule
   ],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.scss',
@@ -39,12 +42,11 @@ export class PostsComponent implements OnInit {
   pageSize = 10;
   totalPosts = 0;
 
-  menuItems = [
+  menuItems: MenuItem[] = [
     { label: 'Просмотр', command: () => this.onViewPost() },
     { label: 'Редактировать', command: () => this.onEditPost() },
     { label: 'Удалить', command: () => this.onDeletePost() }
   ];
-
 
   ngOnInit(): void {
     this.loaderService.showLoader();
@@ -109,7 +111,7 @@ export class PostsComponent implements OnInit {
   }
 
   onPageChange(event: any): void {
-    this.currentPage = event.page + 1; 
+    this.currentPage = event.page + 1;
     this.pageSize = event.rows;
     this.loaderService.showLoader();
     this.postApiService.getPosts(this.currentPage, this.pageSize)
@@ -118,5 +120,9 @@ export class PostsComponent implements OnInit {
         finalize(() => this.loaderService.hideLoader())
       )
       .subscribe();
+  }
+
+  onCreatePost(): void {
+    this.router.navigate(['/posts/create']);
   }
 }

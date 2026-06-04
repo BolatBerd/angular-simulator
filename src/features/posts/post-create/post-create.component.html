@@ -1,2 +1,26 @@
-<p>post-create works!</p>
-<!-- <button (click)="getPosts()">asdas</button> -->
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="title">Title</label>
+    <input id="title" formControlName="title" />
+    @if(postForm.controls['title'].invalid && postForm.controls['title'].touched){
+      <div class="error-message">Title is required.</div>
+    }
+  </div>
+
+  <div>
+    <label for="tags">Tags</label>
+    <input id="tags" formControlName="tags" />
+    @if (postForm.controls['tags'].invalid && postForm.controls['tags'].touched){
+      <div class="error-message">Tags are required.</div>
+    }
+  </div>
+
+  <div>
+    <label for="views">Views</label>
+    <input type="number" id="views" formControlName="views" />
+    @if (postForm.controls['views'].invalid && postForm.controls['views'].touched){
+      <div class="error-message">Views must be a non-negative number.</div>
+    }
+  </div>
+  <button type="submit" [disabled]="postForm.invalid">Create Post</button>
+</form>

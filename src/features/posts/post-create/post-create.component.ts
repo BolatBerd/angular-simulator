@@ -1,21 +1,33 @@
 import { Component, inject } from '@angular/core';
 import { IPost } from '../IPost';
 import { PostApiService } from '../post-api.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-post-create',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './post-create.component.html',
   styleUrl: './post-create.component.scss',
 })
 export class PostCreateComponent {
 
-  postApiService = inject(PostApiService);
+  private postApiService: PostApiService = inject(PostApiService);
+  private router: Router = inject(Router);
+  private fb: FormBuilder = inject(FormBuilder);
 
-  // getPosts(){
-  //   this.postApiService.getPosts().subscribe((posts: IPost[]) => {
-  //     console.log(posts);
-  //   })
-  // }
+  postForm: FormGroup = this.fb.group({
+      title: ['', Validators.required],
+      tags: ['', Validators.required],
+      views: [0, [Validators.required, Validators.min(0)]],
+    });
 
+  onSubmit() {
+    if (this.postForm.valid) {
+      this.postApiService.createPost(this.postForm.value).subscribe(() => {
+        this.router.navigate(['/posts']);
+      });
+    }
+  }
 }
