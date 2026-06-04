@@ -23,9 +23,7 @@ export class PostApiService {
 
   private apiUrl: string = 'https://dummyjson.com/posts';
 
-  // getPosts(): Observable<IPost[]> {
-  //   return this.http.get<IPost[]>(this.apiUrl);
-  // }
+
 
   getPosts(page: number, pageSize: number): Observable<IPostsResponse> {
     const skip: number = (page - 1) * pageSize;
@@ -39,7 +37,12 @@ export class PostApiService {
       }
     );
   }
-
+  // getPostById(id: number): Observable<IPost> {
+  //     return this.http.get<IPost>(`${this.apiUrl}/${id}`)
+  //     .pipe( catchError((error) => { this.messageService.showError('Не удалось загрузить пост.');
+  //       return throwError(() => error); })
+  //     );
+  //     }
   getPostById(id: number): Observable<IPost> {
     this.loaderService.showLoader();
     return this.http.get<IPost>(`${this.apiUrl}/${id}`)
@@ -112,5 +115,6 @@ export class PostApiService {
       })
     );
   }
+
 
 }

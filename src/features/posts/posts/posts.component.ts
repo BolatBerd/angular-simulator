@@ -60,13 +60,6 @@ export class PostsComponent implements OnInit {
         .subscribe()
   }
 
-  // onRowDblClick(event: any): void {
-  //   const post: IPost | undefined = event?.data;
-  //   if (post && post.id != null) {
-  //     this.router.navigate(['/posts', post.id]);
-  //   }
-  // }
-
   onRowDblClick(post: IPost): void {
     if (post?.id != null) {
       this.router.navigate(['/posts', post.id]);
@@ -76,8 +69,6 @@ export class PostsComponent implements OnInit {
   onContextMenu(post: IPost, event: MouseEvent) {
     event.preventDefault();
     this.selectedPost = post;
-    // this.menuX = event.clientX;
-    // this.menuY = event.clientY;
     this.menuVisible = true;
   }
 
@@ -125,4 +116,5 @@ export class PostsComponent implements OnInit {
   onCreatePost(): void {
     this.router.navigate(['/posts/create']);
   }
+  
 }
