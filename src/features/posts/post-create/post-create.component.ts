@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { IPost } from '../IPost';
 import { PostApiService } from '../post-api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -18,17 +17,17 @@ export class PostCreateComponent {
   private fb: FormBuilder = inject(FormBuilder);
 
   postForm: FormGroup = this.fb.group({
-      title: ['', Validators.required],
-      tags: ['', Validators.required],
-      views: [0, [Validators.required, Validators.min(0)]],
-      body: ['', Validators.required],
-    });
+    title: ['', Validators.required],
+    tags: ['', Validators.required],
+    views: [0, [Validators.required, Validators.min(0)]],
+  });
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.postForm.valid) {
       this.postApiService.createPost(this.postForm.value).subscribe(() => {
         this.router.navigate(['/posts']);
       });
     }
   }
+
 }

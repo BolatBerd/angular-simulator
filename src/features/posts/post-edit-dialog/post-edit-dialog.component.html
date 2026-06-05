@@ -1,1 +1,15 @@
-<p>post-edit-dialog works!</p>
+<form [formGroup]="editForm">
+  <div>
+    <label for="title">Title:</label>
+    <input id="title" formControlName="title" />
+  </div>
+  <div>
+    <label for="tags">Tags (comma-separated):</label>
+    <textarea id="tags" formControlName="tags"></textarea>
+  </div>
+  <div>
+    <label for="views">Views:</label>
+    <input type="number" id="views" formControlName="views" />
+  </div>
+  <button type="button" (click)="onSave()" [disabled]="!editForm.valid">Save</button>
+</form>

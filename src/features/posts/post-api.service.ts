@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { IPost } from './IPost';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, throwError, tap, timeout } from 'rxjs';
-import { LocalStorageService } from '../../classes/local-storage.service';
+import { BehaviorSubject, catchError, Observable, throwError, tap } from 'rxjs';
 import { MessageService } from '../../classes/message.service';
 import { LoaderService } from '../../classes/loader.service';
 import { IPostsResponse } from './IPostResponse';
@@ -12,9 +11,8 @@ import { IPostsResponse } from './IPostResponse';
 })
 export class PostApiService {
 
-  localStorageService: LocalStorageService = inject(LocalStorageService);
-  messageService: MessageService = inject(MessageService);
-  loaderService: LoaderService = inject(LoaderService);
+  private messageService: MessageService = inject(MessageService);
+  private loaderService: LoaderService = inject(LoaderService);
 
   private postsSubject: BehaviorSubject<IPost[]> = new BehaviorSubject<IPost[]>([]);
   post$: Observable<IPost[]> = this.postsSubject.asObservable();
@@ -76,8 +74,8 @@ export class PostApiService {
     ).pipe(
       tap((updatedPost) => {
         this.loaderService.hideLoader();
-        const currentPosts = this.postsSubject.getValue();
-        const index = currentPosts.findIndex(p => p.id === updatedPost.id);
+        const currentPosts: IPost[] = this.postsSubject.getValue();
+        const index: number = currentPosts.findIndex(p => p.id === updatedPost.id);
         if (index !== -1) {
           currentPosts[index] = { ...currentPosts[index], ...updatedPost };
           this.postsSubject.next([...currentPosts]);

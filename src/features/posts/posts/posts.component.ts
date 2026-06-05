@@ -1,7 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { PostCreateComponent } from '../post-create/post-create.component';
-import { PostDetailComponent } from '../post-detail/post-detail.component';
-import { PostEditDialogComponent } from '../post-edit-dialog/post-edit-dialog.component';
 import { IPost } from '../IPost';
 import { PostApiService } from '../post-api.service';
 import { CommonModule } from '@angular/common';
@@ -15,6 +12,7 @@ import { IPostsResponse } from '../IPostResponse';
 import { PaginatorModule } from 'primeng/paginator';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { PostEditDialogComponent } from '../post-edit-dialog/post-edit-dialog.component'
 
 @Component({
   selector: 'app-posts',
@@ -24,7 +22,8 @@ import { ButtonModule } from 'primeng/button';
     SkeletonModule,
     ContextMenuModule,
     PaginatorModule,
-    ButtonModule
+    ButtonModule,
+    PostEditDialogComponent
   ],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.scss',
@@ -37,6 +36,7 @@ export class PostsComponent implements OnInit {
   posts: IPost[] = [];
   isLoading$: Observable<boolean> = this.loaderService.isLoading$;
   menuVisible = false;
+  isDialogOpen = false;
   selectedPost?: IPost;
   currentPage = 1;
   pageSize = 10;
@@ -61,38 +61,65 @@ export class PostsComponent implements OnInit {
   }
 
   onRowDblClick(post: IPost): void {
-    if (post?.id != null) {
+    if (post.id != null) {
       this.router.navigate(['/posts', post.id]);
     }
   }
 
-  onContextMenu(post: IPost, event: MouseEvent) {
+  onContextMenu(post: IPost, event: MouseEvent): void {
     event.preventDefault();
     this.selectedPost = post;
     this.menuVisible = true;
   }
 
-  closeMenu() {
+  closeMenu(): void {
     this.menuVisible = false;
     this.selectedPost = undefined;
   }
 
-  onViewPost() {
+  onViewPost(): void {
     if (this.selectedPost) {
       this.router.navigate(['/posts', this.selectedPost.id]);
       this.closeMenu();
     }
   }
 
-  onEditPost(){
+  onEditPost(): void{
     if (this.selectedPost) {
-          // Открываем модалку с этим постом (например, с помощью диалога PrimeNG)
-    // this.postEditDialogComponent.open(this.selectedPost);
-    // this.closeMenu();
+      this.openEditDialog(this.selectedPost);
+      this.closeMenu();
     }
   }
 
-  onDeletePost(){
+  loadPosts() {
+   this.postApiService.getPosts(this.currentPage, this.pageSize)
+  .pipe(
+    tap((response: IPostsResponse) => {
+      this.posts = response.posts;
+      this.totalPosts = response.total;
+    }),
+    finalize(() => this.loaderService.hideLoader())
+  )
+  .subscribe();
+  }
+
+  openEditDialog(post: IPost) {
+    this.selectedPost = post;
+    this.isDialogOpen = true;
+  }
+
+  onSavePost(updatedPost: IPost) {
+    if (updatedPost.id != null) {
+      this.postApiService.updatePost(updatedPost.id, updatedPost).subscribe(() => {
+        this.loadPosts();
+        this.isDialogOpen = false;
+        this.selectedPost = undefined;
+      });
+    }
+    }
+
+
+  onDeletePost(): void{
      if (this.selectedPost) {
        this.postApiService.deletePost(this.selectedPost.id).subscribe(() => {
       this.posts = this.posts.filter(p => p.id !== this.selectedPost!.id);
@@ -116,5 +143,5 @@ export class PostsComponent implements OnInit {
   onCreatePost(): void {
     this.router.navigate(['/posts/create']);
   }
-  
+
 }

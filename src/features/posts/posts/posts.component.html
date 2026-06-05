@@ -39,7 +39,17 @@
     </ng-template>
   </p-table>
 }
+
 <button (click)="onCreatePost()" pButton type="button" label="Создать пост"></button>
+
+@if(isDialogOpen && selectedPost){
+  <app-post-edit-dialog
+    [post]="selectedPost"
+    (save)="onSavePost($event)"
+  >
+  </app-post-edit-dialog>
+ }
+
 <p-paginator
   style="margin-bottom: 150px;"
   [rows]="pageSize"
