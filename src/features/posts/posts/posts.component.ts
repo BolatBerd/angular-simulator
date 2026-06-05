@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { IPost } from '../IPost';
 import { PostApiService } from '../post-api.service';
 import { CommonModule } from '@angular/common';
@@ -7,12 +7,13 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { Router } from '@angular/router';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { LoaderService } from '../../../classes/loader.service';
-import { finalize, Observable, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { IPostsResponse } from '../IPostResponse';
 import { PaginatorModule } from 'primeng/paginator';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { PostEditDialogComponent } from '../post-edit-dialog/post-edit-dialog.component'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-posts',
@@ -33,14 +34,17 @@ export class PostsComponent implements OnInit {
   private postApiService: PostApiService = inject(PostApiService);
   private loaderService: LoaderService = inject(LoaderService);
   private router: Router = inject(Router);
-  posts: IPost[] = [];
+  private destroyRef = inject(DestroyRef);
+
+  posts$: Observable<IPost[]> = this.postApiService.post$;
   isLoading$: Observable<boolean> = this.loaderService.isLoading$;
-  menuVisible = false;
-  isDialogOpen = false;
+
+  isDialogOpen: boolean = false;
   selectedPost?: IPost;
-  currentPage = 1;
-  pageSize = 10;
-  totalPosts = 0;
+
+  currentPage: number = 1;
+  pageSize: number = 10;
+  totalPosts: number = 0;
 
   menuItems: MenuItem[] = [
     { label: 'Просмотр', command: () => this.onViewPost() },
@@ -49,15 +53,18 @@ export class PostsComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.loaderService.showLoader();
+    this.loadPosts()
+  }
+
+  loadPosts(): void {
     this.postApiService.getPosts(this.currentPage, this.pageSize)
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         tap((response: IPostsResponse) => {
-          this.posts = response.posts;
           this.totalPosts = response.total;
-        }),
-        finalize(() => this.loaderService.hideLoader()))
-        .subscribe()
+        })
+      )
+      .subscribe();
   }
 
   onRowDblClick(post: IPost): void {
@@ -66,82 +73,56 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  onContextMenu(post: IPost, event: MouseEvent): void {
-    event.preventDefault();
-    this.selectedPost = post;
-    this.menuVisible = true;
-  }
-
-  closeMenu(): void {
-    this.menuVisible = false;
-    this.selectedPost = undefined;
-  }
-
   onViewPost(): void {
     if (this.selectedPost) {
       this.router.navigate(['/posts', this.selectedPost.id]);
-      this.closeMenu();
     }
   }
 
   onEditPost(): void{
     if (this.selectedPost) {
-      this.openEditDialog(this.selectedPost);
-      this.closeMenu();
+      this.isDialogOpen = true;
     }
   }
 
-  loadPosts() {
-   this.postApiService.getPosts(this.currentPage, this.pageSize)
-  .pipe(
-    tap((response: IPostsResponse) => {
-      this.posts = response.posts;
-      this.totalPosts = response.total;
-    }),
-    finalize(() => this.loaderService.hideLoader())
-  )
-  .subscribe();
-  }
-
-  openEditDialog(post: IPost) {
+  openEditDialog(post: IPost): void {
     this.selectedPost = post;
     this.isDialogOpen = true;
   }
 
-  onSavePost(updatedPost: IPost) {
+  onSavePost(updatedPost: IPost): void {
     if (updatedPost.id != null) {
-      this.postApiService.updatePost(updatedPost.id, updatedPost).subscribe(() => {
-        this.loadPosts();
-        this.isDialogOpen = false;
-        this.selectedPost = undefined;
-      });
+      this.postApiService.updatePost(updatedPost.id, updatedPost)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => {
+          this.closeDialog();
+        });
     }
-    }
-
+  }
 
   onDeletePost(): void{
-     if (this.selectedPost) {
-       this.postApiService.deletePost(this.selectedPost.id).subscribe(() => {
-      this.posts = this.posts.filter(p => p.id !== this.selectedPost!.id);
-      this.closeMenu();
-      });
-     }
+    if (this.selectedPost) {
+      this.postApiService.deletePost(this.selectedPost.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => {
+          this.closeDialog();
+        });
+    }
   }
 
   onPageChange(event: any): void {
     this.currentPage = event.page + 1;
     this.pageSize = event.rows;
-    this.loaderService.showLoader();
-    this.postApiService.getPosts(this.currentPage, this.pageSize)
-      .pipe(
-        tap((response) => (this.posts = response.posts)),
-        finalize(() => this.loaderService.hideLoader())
-      )
-      .subscribe();
+    this.loadPosts();
   }
 
   onCreatePost(): void {
     this.router.navigate(['/posts/create']);
+  }
+
+  closeDialog(): void {
+    this.isDialogOpen = false;
+    this.selectedPost = undefined;
   }
 
 }

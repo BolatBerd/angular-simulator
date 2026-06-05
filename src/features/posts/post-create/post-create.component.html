@@ -1,29 +1,65 @@
-<form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="p-4" style="max-width: 500px;">
 
-  <div>
-    <label for="title">Title</label>
-    <input id="title" formControlName="title" />
-    @if(postForm.controls['title'].invalid && postForm.controls['title'].touched){
-      <div class="error-message">Title is required.</div>
+  <h2 class="mb-4">Создание нового поста</h2>
+
+  <div class="mb-3">
+    <label for="title" class="block mb-2 font-semibold">Title</label>
+    <input
+      id="title"
+      formControlName="title"
+      pInputText
+      class="w-full"
+      placeholder="Введите заголовок"
+    />
+    @if (postForm.controls['title'].invalid && postForm.controls['title'].touched) {
+      <div class="text-red-500 text-sm mt-1">Заголовок обязателен.</div>
     }
   </div>
 
-  <div>
-    <label for="tags">Tags</label>
-    <input id="tags" formControlName="tags" />
-    @if (postForm.controls['tags'].invalid && postForm.controls['tags'].touched){
-      <div class="error-message">Tags are required.</div>
+  <div class="mb-3">
+    <label for="tags" class="block mb-2 font-semibold">Tags</label>
+    <input
+      id="tags"
+      formControlName="tags"
+      pInputText
+      class="w-full"
+      placeholder="Например: angular, typescript, web"
+    />
+    @if (postForm.controls['tags'].invalid && postForm.controls['tags'].touched) {
+      <div class="text-red-500 text-sm mt-1">Теги обязательны.</div>
+    }
+    <small class="text-gray-500">Введите теги через запятую.</small>
+  </div>
+
+  <div class="mb-4">
+    <label for="views" class="block mb-2 font-semibold">Views</label>
+    <input
+      type="number"
+      id="views"
+      formControlName="views"
+      pInputNumber
+      class="w-full"
+      placeholder="0"
+    />
+    @if (postForm.controls['views'].invalid && postForm.controls['views'].touched) {
+      <div class="text-red-500 text-sm mt-1">Просмотры должны быть числом >= 0.</div>
     }
   </div>
 
-  <div>
-    <label for="views">Views</label>
-    <input type="number" id="views" formControlName="views" />
-    @if (postForm.controls['views'].invalid && postForm.controls['views'].touched){
-      <div class="error-message">Views must be a non-negative number.</div>
-    }
+  <div class="flex gap-2">
+    <button
+      type="button"
+      pButton
+      label="Отмена"
+      severity="secondary"
+      (click)="onCancel()"
+    ></button>
+    <button
+      type="submit"
+      pButton
+      label="Создать пост"
+      [disabled]="postForm.invalid"
+    ></button>
   </div>
-
-  <button type="submit" [disabled]="postForm.invalid">Create Post</button>
 
 </form>

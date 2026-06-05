@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, DestroyRef } from '@angular/core';
 import { IPost } from '../IPost';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
@@ -7,6 +7,9 @@ import { ContextMenuModule } from 'primeng/contextmenu';
 import { PaginatorModule } from 'primeng/paginator';
 import { ButtonModule } from 'primeng/button';
 import { ActivatedRoute } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
+import { MessageService } from '../../../classes/message.service';
 
 @Component({
   selector: 'app-post-detail',
@@ -21,13 +24,33 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PostDetailComponent implements OnInit {
 
-  private route: ActivatedRoute = inject(ActivatedRoute);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
+  private messageService: MessageService = inject(MessageService);
 
-  post!: IPost;
+  post?: IPost;
+  isLoading = true;
 
-  ngOnInit(): void {
-    this.route.data.subscribe(data => {
-      this.post = data['post'];
-    });
+  ngOnInit() {
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (data) => {
+          this.post = data['post'];
+          this.isLoading = false;
+        },
+        error: () => {
+          this.isLoading = false;
+          this.post = undefined;
+          this.messageService.showError('Ошибка загрузки')
+        }
+      });
   }
+
+  goBack(): void {
+    this.router.navigate(['/posts']);
+  }
+
 }
+

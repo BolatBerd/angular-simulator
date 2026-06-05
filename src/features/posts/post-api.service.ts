@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { IPost } from './IPost';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, throwError, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, throwError, tap, finalize } from 'rxjs';
 import { MessageService } from '../../classes/message.service';
 import { LoaderService } from '../../classes/loader.service';
 import { IPostsResponse } from './IPostResponse';
@@ -28,8 +28,16 @@ export class PostApiService {
         params: {
           skip: skip.toString(),
           limit: pageSize.toString(),
-        },
-      }
+         },
+    }).pipe(
+      tap((response) => {
+        this.postsSubject.next(response.posts);
+      }),
+      catchError((error) => {
+        this.messageService.showError('Не удалось загрузить список постов.');
+        return throwError(() => error);
+      }),
+      finalize(() => this.loaderService.hideLoader())
     );
   }
 
@@ -75,11 +83,11 @@ export class PostApiService {
       tap((updatedPost) => {
         this.loaderService.hideLoader();
         const currentPosts: IPost[] = this.postsSubject.getValue();
-        const index: number = currentPosts.findIndex(p => p.id === updatedPost.id);
-        if (index !== -1) {
-          currentPosts[index] = { ...currentPosts[index], ...updatedPost };
-          this.postsSubject.next([...currentPosts]);
-        }
+        const updatedPosts: IPost[] = currentPosts.map(p =>
+          p.id === updatedPost.id ? { ...p, ...updatedPost } : p
+        );
+
+        this.postsSubject.next(updatedPosts);
       }),
       catchError((error) => {
         this.messageService.showError('Не удалось обновить пост.');
@@ -88,7 +96,7 @@ export class PostApiService {
     );
   }
 
-  deletePost(id: number){
+  deletePost(id: number): Observable<IPost> {
     this.loaderService.showLoader();
     return this.http.delete<IPost>(
       `${this.apiUrl}/${id}`
@@ -96,8 +104,7 @@ export class PostApiService {
       tap(() => {
         this.loaderService.hideLoader();
         const currentPosts = this.postsSubject.getValue();
-        const updatedPosts = currentPosts.filter(p => p.id !== id);
-        this.postsSubject.next(updatedPosts);
+        this.postsSubject.next(currentPosts.filter(p => p.id !== id));
       }),
       catchError((error) => {
         this.messageService.showError('Не удалось удалить пост.');

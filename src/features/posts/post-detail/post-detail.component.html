@@ -1,8 +1,31 @@
-@if (post) {
-  <h2>{{ post.title }}</h2>
-  <p><strong>Tags:</strong> {{ post.tags.join(', ') }}</p>
-  <p><strong>Views:</strong> {{ post.views }}</p>
-  <p><strong>Content:</strong> {{ post.body }}</p>
-} @else {
-  <p>Пост не найден...</p>
+@if (isLoading) {
+  <div class="flex flex-column gap-3 p-4" style="max-width: 800px;">
+    <p-skeleton width="70%" height="2.5rem" />
+    <p-skeleton width="40%" height="1.5rem" />
+    <p-skeleton width="100%" height="10rem" />
+  </div>
+}
+
+@else if (post) {
+  <div class="p-4" style="max-width: 800px;">
+    <button pButton type="button" label="Назад к списку" severity="secondary" class="mb-3" (click)="goBack()"></button>
+
+    <div class="card p-4 shadow-1 border-round">
+      <h1 class="text-2xl font-bold mb-3">{{ post.title }}</h1>
+
+      <p class="text-500 mb-4"><strong>Теги:</strong> {{ post.tags.join(', ') }}</p>
+      <p class="text-500 mb-4"><strong>Просмотры:</strong> {{ post.views }}</p>
+
+      <div class="text-lg line-height-3">
+        {{ post.body }}
+      </div>
+    </div>
+  </div>
+}
+
+@else {
+  <div class="flex flex-column align-items-center justify-content-center p-5">
+    <h3>Пост не найден</h3>
+    <button pButton type="button" label="Вернуться к списку" (click)="goBack()"></button>
+  </div>
 }
