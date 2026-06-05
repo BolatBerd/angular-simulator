@@ -14,6 +14,7 @@ import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { PostEditDialogComponent } from '../post-edit-dialog/post-edit-dialog.component'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IPageChangeEvent } from '../IPageChangeEvent';
 
 @Component({
   selector: 'app-posts',
@@ -110,9 +111,13 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  onPageChange(event: any): void {
-    this.currentPage = event.page + 1;
-    this.pageSize = event.rows;
+  onPageChange(event: IPageChangeEvent): void {
+    const page: number = event.page ?? 0;
+    const rows: number = event.rows ?? this.pageSize;
+
+    this.currentPage = page + 1;
+    this.pageSize = rows;
+
     this.loadPosts();
   }
 

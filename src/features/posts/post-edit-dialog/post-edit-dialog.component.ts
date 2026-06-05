@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, inject, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, SimpleChanges, OnChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IPost } from '../IPost';
 import { ButtonModule } from 'primeng/button';
@@ -9,9 +9,10 @@ import { ButtonModule } from 'primeng/button';
   templateUrl: './post-edit-dialog.component.html',
   styleUrl: './post-edit-dialog.component.scss',
 })
-export class PostEditDialogComponent {
+export class PostEditDialogComponent implements OnChanges {
 
   private fb: FormBuilder = inject(FormBuilder);
+
   @Input() post!: IPost;
   @Output() save: EventEmitter<IPost> = new EventEmitter<IPost>();
   @Output() cancel = new EventEmitter<void>();
@@ -40,18 +41,17 @@ export class PostEditDialogComponent {
 
   onSave(): void {
     if (this.editForm.valid && this.post) {
-      const formValue = this.editForm.value;
 
-      const tagsArray = formValue.tags
+      const tagsArray: string[] = this.editForm.value.tags
         .split(',')
         .map((tag: string) => tag.trim())
         .filter((tag: string) => tag.length > 0);
 
       const updatedPost: IPost = {
         ...this.post,
-        title: formValue.title,
+        title: this.editForm.value.title,
         tags: tagsArray,
-        views: formValue.views
+        views: this.editForm.value.views
       };
       this.save.emit(updatedPost);
     }

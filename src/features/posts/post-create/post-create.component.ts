@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IPost } from '../IPost';
 import { ButtonModule } from 'primeng/button';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-post-create',
@@ -26,31 +27,33 @@ export class PostCreateComponent {
 
    onSubmit(): void {
     if (this.postForm.valid) {
-      const formValue = this.postForm.value;
 
-      const tagsArray = formValue.tags
+      const tagsArray: string[] = this.postForm.value.tags
         .split(',')
         .map((tag: string) => tag.trim())
         .filter((tag: string) => tag.length > 0);
 
       const newPost: IPost = {
         id: 0,
-        title: formValue.title,
-        body: formValue.body,
+        title: this.postForm.value.title,
+        body: this.postForm.value.body,
         tags: tagsArray,
-        views: formValue.views,
+        views: this.postForm.value.views,
         userId: 1,
         reactions: { likes: 0, dislikes: 0 }
       };
 
-      this.postApiService.createPost(newPost).subscribe({
-        next: () => {
-          this.router.navigate(['/posts']);
-        },
-        error: (err) => {
-          console.error('Ошибка при создании поста:', err);
-        }
-      });
+      this.postApiService.createPost(newPost)
+        .pipe(
+          tap({
+            next: () => {
+              this.router.navigate(['/posts']);
+            },
+            error: (err) => {
+            console.error('Ошибка при создании поста:', err);
+            }
+          })
+        ).subscribe();
     }
   }
 

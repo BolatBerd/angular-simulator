@@ -11,7 +11,7 @@ export class PostResolver implements Resolve<IPost> {
 
   private postApiService: PostApiService = inject(PostApiService);
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IPost> {
+  resolve(route: ActivatedRouteSnapshot): Observable<IPost> {
     const id: string | null = route.paramMap.get('id');
     return this.postApiService.getPostById(+id!);
   }

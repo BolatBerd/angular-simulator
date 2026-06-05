@@ -80,7 +80,7 @@ export class PostApiService {
       `${this.apiUrl}/${id}`,
       post
     ).pipe(
-      tap((updatedPost) => {
+      tap((updatedPost: IPost) => {
         this.loaderService.hideLoader();
         const currentPosts: IPost[] = this.postsSubject.getValue();
         const updatedPosts: IPost[] = currentPosts.map(p =>

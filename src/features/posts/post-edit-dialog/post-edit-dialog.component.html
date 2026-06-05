@@ -2,20 +2,20 @@
   <div class="flex flex-column gap-3" style="max-width: 400px;">
 
     <div class="flex flex-column gap-2">
-      <label for="title">Title:</label>
+      <label for="title">Заголовок:</label>
       <input
         pInputText
         id="title"
         formControlName="title"
-        placeholder="Enter post title"
+        placeholder="Введите заголовок сообщения"
       />
       @if (editForm.get('title')?.invalid && editForm.get('title')?.touched) {
-        <small class="text-red-500">Title is required (min 3 characters).</small>
+        <small class="text-red-500">Обязательно укажите заголовок (минимум 3 символа).</small>
       }
     </div>
 
     <div class="flex flex-column gap-2">
-      <label for="tags">Tags (comma-separated):</label>
+      <label for="tags">Теги (разделенные запятыми):</label>
       <textarea
         pInputTextarea
         id="tags"
@@ -26,7 +26,7 @@
     </div>
 
     <div class="flex flex-column gap-2">
-      <label for="views">Views:</label>
+      <label for="views">Просмотры:</label>
       <input
         type="number"
         pInputNumber
@@ -48,6 +48,7 @@
         pButton
         type="submit"
         label="Сохранить"
+        severity="primary"
         [disabled]="editForm.invalid"
       ></button>
     </div>
