@@ -30,7 +30,7 @@ export class PostApiService {
           limit: pageSize.toString(),
          },
     }).pipe(
-      tap((response) => {
+      tap((response: IPostsResponse) => {
         this.postsSubject.next(response.posts);
       }),
       catchError((error) => {
@@ -45,7 +45,7 @@ export class PostApiService {
     this.loaderService.showLoader();
     return this.http.get<IPost>(`${this.apiUrl}/${id}`)
       .pipe(
-        tap((post) => {
+        tap((post: IPost) => {
           this.loaderService.hideLoader();
           console.log('Пост успешно загружен:', post);
         }),
@@ -83,7 +83,7 @@ export class PostApiService {
       tap((updatedPost: IPost) => {
         this.loaderService.hideLoader();
         const currentPosts: IPost[] = this.postsSubject.getValue();
-        const updatedPosts: IPost[] = currentPosts.map(p =>
+        const updatedPosts: IPost[] = currentPosts.map((p: IPost) =>
           p.id === updatedPost.id ? { ...p, ...updatedPost } : p
         );
 
@@ -104,7 +104,7 @@ export class PostApiService {
       tap(() => {
         this.loaderService.hideLoader();
         const currentPosts = this.postsSubject.getValue();
-        this.postsSubject.next(currentPosts.filter(p => p.id !== id));
+        this.postsSubject.next(currentPosts.filter((p: IPost) => p.id !== id));
       }),
       catchError((error) => {
         this.messageService.showError('Не удалось удалить пост.');

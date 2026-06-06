@@ -16,4 +16,3 @@ export const postRoutes: Routes = [
     loadComponent: () => import('./post-detail/post-detail.component').then(m => m.PostDetailComponent)
   },
 ];
-

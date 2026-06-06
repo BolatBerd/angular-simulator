@@ -15,7 +15,6 @@ import { ButtonModule } from 'primeng/button';
 import { PostEditDialogComponent } from '../post-edit-dialog/post-edit-dialog.component'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IPageChangeEvent } from '../IPageChangeEvent';
-import { DynamicDialogModule, DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
 import { Dialog } from "primeng/dialog";
 
 @Component({
@@ -28,7 +27,6 @@ import { Dialog } from "primeng/dialog";
     PaginatorModule,
     ButtonModule,
     PostEditDialogComponent,
-    DynamicDialogModule,
     Dialog
 ],
   templateUrl: './posts.component.html',
@@ -51,8 +49,6 @@ export class PostsComponent implements OnInit {
   pageSize: number = 10;
   totalPosts: number = 0;
 
-  ref: DynamicDialogRef | undefined;
-
   menuItems: MenuItem[] = [
     { label: 'Просмотр', command: () => this.onViewPost() },
     { label: 'Редактировать', command: () => this.onEditPost() },
@@ -70,8 +66,7 @@ export class PostsComponent implements OnInit {
         tap((response: IPostsResponse) => {
           this.totalPosts = response.total;
         })
-      )
-      .subscribe();
+      ).subscribe();
   }
 
   onRowDblClick(post: IPost): void {
@@ -89,19 +84,6 @@ export class PostsComponent implements OnInit {
   onEditPost(): void{
     if (this.selectedPost) {
       this.isDialogOpen = true;
-    //   this.ref = this.dialogService.open(PostEditDialogComponent, {
-    //     header: 'Редактирование поста',
-    //     width: '500px',
-    //     data: this.selectedPost, // Передаем пост через data
-    //     modal: true
-    //   });
-
-    //   // Подписываемся на закрытие модалки
-    //   this.ref.onClose.subscribe((updatedPost: IPost) => {
-    //     if (updatedPost) {
-    //       this.onSavePost(updatedPost); // Вызываем сохранение
-    //     }
-    //   });
     }
   }
 
