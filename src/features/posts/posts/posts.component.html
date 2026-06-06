@@ -42,14 +42,24 @@
 
 <button (click)="onCreatePost()" pButton type="button" label="Создать пост"></button>
 
-@if(isDialogOpen && selectedPost){
-  <app-post-edit-dialog
-    [post]="selectedPost"
-    (save)="onSavePost($event)"
-    (cancel)="closeDialog()"
-  >
-  </app-post-edit-dialog>
- }
+
+<p-dialog
+  header="Редактирование поста"
+  [(visible)]="isDialogOpen"
+  [modal]="true"
+  [style]="{ width: '600px' }"
+  [closable]="true"
+  (onHide)="closeDialog()"
+>
+  @if(isDialogOpen && selectedPost){
+    <app-post-edit-dialog
+      [post]="selectedPost"
+      (save)="onSavePost($event)"
+      (cancel)="closeDialog()"
+    >
+    </app-post-edit-dialog>
+  }
+</p-dialog>
 
 <p-paginator
   style="margin-bottom: 150px;"
@@ -59,3 +69,13 @@
   [rowsPerPageOptions]="[10, 20, 30]"
   >
 </p-paginator>
+
+
+<!-- <p-dialog
+  header="Редактирование поста"
+  [(visible)]="isDialogOpen"
+  [modal]="true"
+  [style]="{ width: '600px' }"
+  [closable]="true"
+  (onHide)="closeDialog()"
+> -->

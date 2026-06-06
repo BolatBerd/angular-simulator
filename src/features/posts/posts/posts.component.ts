@@ -15,6 +15,8 @@ import { ButtonModule } from 'primeng/button';
 import { PostEditDialogComponent } from '../post-edit-dialog/post-edit-dialog.component'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IPageChangeEvent } from '../IPageChangeEvent';
+import { DynamicDialogModule, DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
+import { Dialog } from "primeng/dialog";
 
 @Component({
   selector: 'app-posts',
@@ -25,8 +27,10 @@ import { IPageChangeEvent } from '../IPageChangeEvent';
     ContextMenuModule,
     PaginatorModule,
     ButtonModule,
-    PostEditDialogComponent
-  ],
+    PostEditDialogComponent,
+    DynamicDialogModule,
+    Dialog
+],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.scss',
 })
@@ -46,6 +50,8 @@ export class PostsComponent implements OnInit {
   currentPage: number = 1;
   pageSize: number = 10;
   totalPosts: number = 0;
+
+  ref: DynamicDialogRef | undefined;
 
   menuItems: MenuItem[] = [
     { label: 'Просмотр', command: () => this.onViewPost() },
@@ -83,6 +89,19 @@ export class PostsComponent implements OnInit {
   onEditPost(): void{
     if (this.selectedPost) {
       this.isDialogOpen = true;
+    //   this.ref = this.dialogService.open(PostEditDialogComponent, {
+    //     header: 'Редактирование поста',
+    //     width: '500px',
+    //     data: this.selectedPost, // Передаем пост через data
+    //     modal: true
+    //   });
+
+    //   // Подписываемся на закрытие модалки
+    //   this.ref.onClose.subscribe((updatedPost: IPost) => {
+    //     if (updatedPost) {
+    //       this.onSavePost(updatedPost); // Вызываем сохранение
+    //     }
+    //   });
     }
   }
 
@@ -96,6 +115,7 @@ export class PostsComponent implements OnInit {
       this.postApiService.updatePost(updatedPost.id, updatedPost)
       .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(() => {
+          this.loadPosts();
           this.closeDialog();
         });
     }
