@@ -20,7 +20,7 @@ export class PostEditDialogComponent implements OnChanges {
 
   @Input() post!: IPost;
   @Output() save: EventEmitter<IPost> = new EventEmitter<IPost>();
-  @Output() cancel = new EventEmitter<void>();
+  @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
 
   editForm: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(3)]],

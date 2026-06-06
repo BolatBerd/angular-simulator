@@ -25,15 +25,15 @@ import { tap } from 'rxjs';
 })
 export class PostDetailComponent implements OnInit {
 
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private destroyRef = inject(DestroyRef);
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  private router: Router = inject(Router);
+  private destroyRef: DestroyRef = inject(DestroyRef);
   private messageService: MessageService = inject(MessageService);
 
   post?: IPost;
-  isLoading = true;
+  isLoading: boolean = true;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.data
       .pipe(
         tap({
@@ -56,4 +56,3 @@ export class PostDetailComponent implements OnInit {
   }
 
 }
-
