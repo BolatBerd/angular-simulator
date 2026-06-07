@@ -1,26 +1,27 @@
-import { Component, Input, Output, EventEmitter, inject, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, SimpleChanges, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IPost } from '../IPost';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { IPost } from '../IPost';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 
 @Component({
   selector: 'app-post-edit-dialog',
-  imports: [ReactiveFormsModule, ButtonModule, InputTextModule,
-
-  InputNumberModule],
+  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, InputNumberModule],
   templateUrl: './post-edit-dialog.component.html',
   styleUrl: './post-edit-dialog.component.scss',
 })
-export class PostEditDialogComponent implements OnChanges {
+export class PostEditDialogComponent implements OnChanges, OnInit {
 
   private fb: FormBuilder = inject(FormBuilder);
+  private config = inject(DynamicDialogConfig); // Получаем данные
+  private ref = inject(DynamicDialogRef);
 
-  @Input() post!: IPost;
   @Output() save: EventEmitter<IPost> = new EventEmitter<IPost>();
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
+  @Input() post!: IPost;
 
   editForm: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(3)]],
@@ -28,16 +29,30 @@ export class PostEditDialogComponent implements OnChanges {
     views: [0, [Validators.required, Validators.min(0)]],
   });
 
+  ngOnInit(): void {
+    this.post = this.config.data;
+
+    const tagsString: string = Array.isArray(this.post.tags)
+      ? this.post.tags.join(', ')
+      : String(this.post.tags);
+
+    this.editForm.patchValue({
+      title: this.post.title,
+      tags: tagsString,
+      views: this.post.views
+    });
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
       if (changes['post'] && this.post) {
         const tagsString: string = Array.isArray(this.post.tags)
-      ? this.post.tags.join(', ')
-      : this.post.tags;
+        ? this.post.tags.join(', ')
+        : this.post.tags;
 
-      this.editForm.patchValue({
-        title: this.post.title,
-        tags: tagsString,
-        views: this.post.views
+        this.editForm.patchValue({
+          title: this.post.title,
+          tags: tagsString,
+          views: this.post.views
       });
     } else {
       this.editForm.reset({ title: '', tags: '', views: 0 });
@@ -58,12 +73,12 @@ export class PostEditDialogComponent implements OnChanges {
         tags: tagsArray,
         views: this.editForm.value.views
       };
-      this.save.emit(updatedPost);
+      this.ref.close(updatedPost);
     }
   }
 
   onCancel(): void {
-    this.cancel.emit();
+    this.ref.close();
   }
 
 }

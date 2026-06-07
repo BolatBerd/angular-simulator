@@ -1,16 +1,17 @@
 import { Component, inject, OnInit, DestroyRef } from '@angular/core';
-import { IPost } from '../IPost';
-import { CommonModule } from '@angular/common';
-import { TableModule } from 'primeng/table';
-import { SkeletonModule } from 'primeng/skeleton';
-import { ContextMenuModule } from 'primeng/contextmenu';
-import { PaginatorModule } from 'primeng/paginator';
-import { ButtonModule } from 'primeng/button';
-import { ActivatedRoute } from '@angular/router';
+import { catchError, tap, throwError } from 'rxjs';
+import { ActivatedRoute, Data } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Router } from '@angular/router';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { HttpErrorResponse } from '@angular/common/http';
+import { PaginatorModule } from 'primeng/paginator';
+import { SkeletonModule } from 'primeng/skeleton';
 import { MessageService } from '../../../classes/message.service';
-import { tap } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { Router } from '@angular/router';
+import { IPost } from '../IPost';
 
 @Component({
   selector: 'app-post-detail',
@@ -25,10 +26,10 @@ import { tap } from 'rxjs';
 })
 export class PostDetailComponent implements OnInit {
 
+  private messageService: MessageService = inject(MessageService);
+  private destroyRef: DestroyRef = inject(DestroyRef);
   private route: ActivatedRoute = inject(ActivatedRoute);
   private router: Router = inject(Router);
-  private destroyRef: DestroyRef = inject(DestroyRef);
-  private messageService: MessageService = inject(MessageService);
 
   post?: IPost;
   isLoading: boolean = true;
@@ -36,19 +37,18 @@ export class PostDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.data
       .pipe(
-        tap({
-          next: (data) => {
+        tap((data: Data) => {
             this.post = data['post'];
             this.isLoading = false;
-          },
-          error: () => {
+          }),
+          catchError((error: HttpErrorResponse) => {
             this.isLoading = false;
             this.post = undefined;
             this.messageService.showError('Ошибка загрузки')
-          }
-        }),
-        takeUntilDestroyed(this.destroyRef))
-        .subscribe();
+            return throwError(() => error);
+          }),
+          takeUntilDestroyed(this.destroyRef))
+          .subscribe();
   }
 
   goBack(): void {

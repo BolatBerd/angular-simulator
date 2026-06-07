@@ -42,29 +42,11 @@
 
 <button (click)="onCreatePost()" pButton type="button" label="Создать пост"></button>
 
-<p-dialog
-  header="Редактирование поста"
-  [(visible)]="isDialogOpen"
-  [modal]="true"
-  [style]="{ width: '600px' }"
-  [closable]="true"
-  (onHide)="closeDialog()"
->
-  @if(isDialogOpen && selectedPost){
-    <app-post-edit-dialog
-      [post]="selectedPost"
-      (save)="onSavePost($event)"
-      (cancel)="closeDialog()"
-    >
-    </app-post-edit-dialog>
-  }
-</p-dialog>
 
 <p-paginator
-  style="margin-bottom: 150px;"
+  [first]="(currentPage - 1) * pageSize"
   [rows]="pageSize"
   [totalRecords]="totalPosts"
   (onPageChange)="onPageChange($event)"
   [rowsPerPageOptions]="[10, 20, 30]"
->
-</p-paginator>
+/>

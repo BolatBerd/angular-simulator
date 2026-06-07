@@ -1,12 +1,4 @@
-@if (isLoading) {
-  <div class="flex-col-cen" style="max-width: 800px;">
-    <p-skeleton width="70%" height="2.5rem" />
-    <p-skeleton width="40%" height="1.5rem" />
-    <p-skeleton width="100%" height="10rem" />
-  </div>
-}
-
-@else if (post) {
+@if (post) {
   <div>
     <button
       pButton type="button"

@@ -1,11 +1,13 @@
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { catchError, tap, throwError } from 'rxjs';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { PostApiService } from '../post-api.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-import { IPost } from '../IPost';
+import { MessageService } from '../../../classes/message.service';
 import { ButtonModule } from 'primeng/button';
-import { tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { IPost } from '../IPost';
 
 @Component({
   selector: 'app-post-create',
@@ -16,6 +18,7 @@ import { tap } from 'rxjs';
 export class PostCreateComponent {
 
   private postApiService: PostApiService = inject(PostApiService);
+  private messageService: MessageService = inject(MessageService);
   private router: Router = inject(Router);
   private fb: FormBuilder = inject(FormBuilder);
 
@@ -45,15 +48,15 @@ export class PostCreateComponent {
 
       this.postApiService.createPost(newPost)
         .pipe(
-          tap({
-            next: () => {
+          tap((newPost: IPost) => {
               this.router.navigate(['/posts']);
-            },
-            error: (err) => {
-            console.error('Ошибка при создании поста:', err);
-            }
-          })
-        ).subscribe();
+              this.messageService.showSuccess('Пост успешно создан');
+            }),
+            catchError((error: HttpErrorResponse) => {
+              this.messageService.showError('Ошибка при создании поста');
+              return throwError(() => error);
+            })
+          ).subscribe();
     }
   }
 

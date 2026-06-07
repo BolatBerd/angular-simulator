@@ -1,7 +1,7 @@
+import { Resolve, ActivatedRouteSnapshot} from '@angular/router';
 import { inject, Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
 import { PostApiService } from './post-api.service';
+import { Observable } from 'rxjs';
 import { IPost } from './IPost';
 
 @Injectable({

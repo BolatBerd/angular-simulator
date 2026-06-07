@@ -1,5 +1,5 @@
-import { Routes } from '@angular/router';
 import { PostResolver } from './post.resolver';
+import { Routes } from '@angular/router';
 
 export const postRoutes: Routes = [
   {
