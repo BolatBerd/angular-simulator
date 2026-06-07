@@ -16,7 +16,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 export class PostEditDialogComponent implements OnChanges, OnInit {
 
   private fb: FormBuilder = inject(FormBuilder);
-  private config = inject(DynamicDialogConfig); // Получаем данные
+  private config = inject(DynamicDialogConfig);
   private ref = inject(DynamicDialogRef);
 
   @Output() save: EventEmitter<IPost> = new EventEmitter<IPost>();
