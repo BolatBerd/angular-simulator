@@ -10,47 +10,44 @@ import { IPost } from './IPost';
 })
 export class PostStateService {
 
-  private postApiService = inject(PostApiService);
-  private loaderService = inject(LoaderService);
+  private postApiService: PostApiService = inject(PostApiService);
+  private loaderService: LoaderService = inject(LoaderService);
 
-  private postsSubject = new BehaviorSubject<IPost[]>([]);
-  posts$ = this.postsSubject.asObservable();
+  private postsSubject: BehaviorSubject<IPost[]> = new BehaviorSubject<IPost[]>([]);
+  posts$: Observable<IPost[]> = this.postsSubject.asObservable();
 
   loadPosts(page: number, pageSize: number): Observable<IPostsResponse> {
     this.loaderService.showLoader();
-    return this.postApiService.getPosts(page, pageSize).pipe(
-      tap((response: IPostsResponse) => {
-        this.postsSubject.next(response.posts);
-      }),
+    return this.postApiService.getPosts(page, pageSize)
+    .pipe(
+      tap((response: IPostsResponse) => this.postsSubject.next(response.posts)),
       finalize(() => this.loaderService.hideLoader())
     );
   }
 
   loadPostById(id: number): Observable<IPost> {
     this.loaderService.showLoader();
-    return this.postApiService.getPostById(id).pipe(
+    return this.postApiService.getPostById(id)
+    .pipe(
       finalize(() => this.loaderService.hideLoader())
     );
   }
 
   createPost(post: IPost): Observable<IPost> {
     this.loaderService.showLoader();
-    return this.postApiService.createPost(post).pipe(
-      tap((createdPost: IPost) => {
-        this.postsSubject.next([...this.postsSubject.getValue(), createdPost]);
-      }),
+    return this.postApiService.createPost(post)
+    .pipe(
+      tap((createdPost: IPost) => this.postsSubject.next([...this.postsSubject.getValue(), createdPost])),
       finalize(() => this.loaderService.hideLoader())
     );
   }
 
   updatePost(id: number, post: Partial<IPost>): Observable<IPost> {
     this.loaderService.showLoader();
-    return this.postApiService.updatePost(id, post).pipe(
-      tap((updatedPost: IPost) => {
-        const updatedPosts: IPost[] = this.postsSubject.getValue()
-        .map((p: IPost) =>
-          p.id === updatedPost.id ? { ...p, ...updatedPost } : p
-        );
+    return this.postApiService.updatePost(id, post)
+    .pipe(
+      tap((updatedPost: IPost) => { const updatedPosts: IPost[] = this.postsSubject.getValue()
+        .map((p: IPost) => p.id === updatedPost.id ? { ...p, ...updatedPost } : p);
         this.postsSubject.next(updatedPosts);
       }),
       finalize(() => this.loaderService.hideLoader())
@@ -59,10 +56,9 @@ export class PostStateService {
 
   deletePost(id: number): Observable<IPost> {
     this.loaderService.showLoader();
-    return this.postApiService.deletePost(id).pipe(
-      tap(() => {
-        this.postsSubject.next(this.postsSubject.getValue().filter((p: IPost) => p.id !== id));
-      }),
+    return this.postApiService.deletePost(id)
+    .pipe(
+      tap(() => this.postsSubject.next(this.postsSubject.getValue().filter((p: IPost) => p.id !== id))),
       finalize(() => this.loaderService.hideLoader())
     );
   }

@@ -15,12 +15,12 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 })
 export class PostEditDialogComponent implements OnChanges, OnInit {
 
+  private dialogConfig: DynamicDialogConfig = inject(DynamicDialogConfig);
+  private ref: DynamicDialogRef = inject(DynamicDialogRef);
   private fb: FormBuilder = inject(FormBuilder);
-  private config = inject(DynamicDialogConfig);
-  private ref = inject(DynamicDialogRef);
 
-  @Output() save: EventEmitter<IPost> = new EventEmitter<IPost>();
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
+  @Output() save: EventEmitter<IPost> = new EventEmitter<IPost>();
   @Input() post!: IPost;
 
   editForm: FormGroup = this.fb.group({
@@ -30,7 +30,7 @@ export class PostEditDialogComponent implements OnChanges, OnInit {
   });
 
   ngOnInit(): void {
-    this.post = this.config.data;
+    this.post = this.dialogConfig.data;
 
     const tagsString: string = Array.isArray(this.post.tags)
       ? this.post.tags.join(', ')

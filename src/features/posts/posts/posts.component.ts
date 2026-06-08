@@ -37,7 +37,7 @@ export class PostsComponent implements OnInit {
   private postStateService: PostStateService = inject(PostStateService);
   private messageService: MessageService = inject(MessageService);
   private loaderService: LoaderService = inject(LoaderService);
-  private dialogService = inject(DialogService);
+  private dialogService: DialogService = inject(DialogService);
   private router: Router = inject(Router);
 
   isLoading$: Observable<boolean> = this.loaderService.isLoading$;
@@ -65,9 +65,7 @@ export class PostsComponent implements OnInit {
   loadPosts(): void {
     this.postStateService.loadPosts(this.currentPage, this.pageSize)
       .pipe(
-        tap((response: IPostsResponse) => {
-          this.totalPosts = response.total;
-        })
+        tap((response: IPostsResponse) => this.totalPosts = response.total)
       ).subscribe();
   }
 
@@ -113,9 +111,7 @@ export class PostsComponent implements OnInit {
     if (updatedPost.id != null) {
       this.postStateService.updatePost(updatedPost.id, updatedPost)
       .pipe(
-        tap(() => {
-          this.messageService.showSuccess('Пост успешно обновлен');
-        }),
+        tap(() => this.messageService.showSuccess('Пост успешно обновлен')),
       ).subscribe();
     }
   }
@@ -124,9 +120,7 @@ export class PostsComponent implements OnInit {
     if (this.selectedPost) {
       this.postStateService.deletePost(this.selectedPost.id)
       .pipe(
-        tap(() => {
-          this.messageService.showSuccess('Пост успешно удален');
-        })
+        tap(() => this.messageService.showSuccess('Пост успешно удален'))
       ).subscribe();
     }
   }

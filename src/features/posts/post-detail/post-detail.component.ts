@@ -31,8 +31,8 @@ export class PostDetailComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);
   private router: Router = inject(Router);
 
-  post?: IPost;
   isLoading: boolean = true;
+  post?: IPost;
 
   ngOnInit(): void {
     this.route.data
