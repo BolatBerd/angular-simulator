@@ -1,10 +1,10 @@
-import { Component, Input, Output, EventEmitter, inject, SimpleChanges, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, Output, EventEmitter, inject } from '@angular/core';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { IPost } from '../IPost';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
   templateUrl: './post-edit-dialog.component.html',
   styleUrl: './post-edit-dialog.component.scss',
 })
-export class PostEditDialogComponent implements OnChanges, OnInit {
+export class PostEditDialogComponent {
 
   private dialogConfig: DynamicDialogConfig = inject(DynamicDialogConfig);
   private ref: DynamicDialogRef = inject(DynamicDialogRef);
@@ -21,7 +21,7 @@ export class PostEditDialogComponent implements OnChanges, OnInit {
 
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
   @Output() save: EventEmitter<IPost> = new EventEmitter<IPost>();
-  @Input() post!: IPost;
+  post!: IPost;
 
   editForm: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(3)]],
@@ -29,9 +29,8 @@ export class PostEditDialogComponent implements OnChanges, OnInit {
     views: [0, [Validators.required, Validators.min(0)]],
   });
 
-  ngOnInit(): void {
+  constructor() {
     this.post = this.dialogConfig.data;
-
     const tagsString: string = Array.isArray(this.post.tags)
       ? this.post.tags.join(', ')
       : String(this.post.tags);
@@ -43,30 +42,12 @@ export class PostEditDialogComponent implements OnChanges, OnInit {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-      if (changes['post'] && this.post) {
-        const tagsString: string = Array.isArray(this.post.tags)
-        ? this.post.tags.join(', ')
-        : this.post.tags;
-
-        this.editForm.patchValue({
-          title: this.post.title,
-          tags: tagsString,
-          views: this.post.views
-      });
-    } else {
-      this.editForm.reset({ title: '', tags: '', views: 0 });
-    }
-  }
-
   onSave(): void {
-    if (this.editForm.valid && this.post) {
-
+    if (this.editForm.valid) {
       const tagsArray: string[] = this.editForm.value.tags
         .split(',')
         .map((tag: string) => tag.trim())
         .filter((tag: string) => tag.length > 0);
-
       const updatedPost: IPost = {
         ...this.post,
         title: this.editForm.value.title,

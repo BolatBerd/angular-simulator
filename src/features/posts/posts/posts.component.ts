@@ -1,6 +1,6 @@
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Component, inject, OnInit } from '@angular/core';
 import { PostEditDialogComponent } from '../post-edit-dialog/post-edit-dialog.component'
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { IPageChangeEvent } from '../IPageChangeEvent';
 import { PostStateService } from '../post-store.service';
@@ -26,7 +26,6 @@ import { IPost } from '../IPost';
     ContextMenuModule,
     PaginatorModule,
     ButtonModule,
-
   ],
    providers: [DialogService],
   templateUrl: './posts.component.html',
@@ -49,8 +48,6 @@ export class PostsComponent implements OnInit {
   currentPage: number = 1;
   totalPosts: number = 0;
   pageSize: number = 10;
-
-  ref: DynamicDialogRef | undefined | null;
 
   menuItems: MenuItem[] = [
     { label: 'Просмотр', command: () => this.onViewPost() },
@@ -83,7 +80,8 @@ export class PostsComponent implements OnInit {
 
   onEditPost(): void{
     if (this.selectedPost) {
-      this.ref = this.dialogService.open(PostEditDialogComponent, {
+      const dialogRef: DynamicDialogRef<PostEditDialogComponent> | null = this.dialogService
+      .open(PostEditDialogComponent, {
         header: 'Редактировать пост',
         width: '600px',
         modal: true,
@@ -91,7 +89,7 @@ export class PostsComponent implements OnInit {
         closable: true,
         baseZIndex: 10000
       });
-      this.ref?.onClose
+      dialogRef?.onClose
       .pipe(
         tap((updatedPost: IPost | undefined) => {
           if (updatedPost) {
