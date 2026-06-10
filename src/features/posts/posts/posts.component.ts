@@ -2,7 +2,6 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Component, inject, OnInit } from '@angular/core';
 import { PostEditDialogComponent } from '../post-edit-dialog/post-edit-dialog.component'
 import { ContextMenuModule } from 'primeng/contextmenu';
-import { IPageChangeEvent } from '../IPageChangeEvent';
 import { PostStateService } from '../post-store.service';
 import { Observable, tap } from 'rxjs';
 import { PaginatorModule } from 'primeng/paginator';
@@ -10,6 +9,7 @@ import { IPostsResponse } from '../IPostResponse';
 import { SkeletonModule } from 'primeng/skeleton';
 import { MessageService } from '../../../classes/message.service';
 import { LoaderService } from '../../../classes/loader.service';
+import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
@@ -42,21 +42,20 @@ export class PostsComponent implements OnInit {
   isLoading$: Observable<boolean> = this.loaderService.isLoading$;
   posts$: Observable<IPost[]> = this.postStateService.posts$;
 
-  isDialogOpen: boolean = false;
   selectedPost?: IPost;
 
   currentPage: number = 1;
   totalPosts: number = 0;
   pageSize: number = 10;
 
-  menuItems: MenuItem[] = [
+  readonly menuItems: MenuItem[] = [
     { label: 'Просмотр', command: () => this.onViewPost() },
     { label: 'Редактировать', command: () => this.onEditPost() },
     { label: 'Удалить', command: () => this.onDeletePost() }
   ];
 
   ngOnInit(): void {
-    this.loadPosts()
+    this.loadPosts();
   }
 
   loadPosts(): void {
@@ -102,7 +101,6 @@ export class PostsComponent implements OnInit {
 
   openEditDialog(post: IPost): void {
     this.selectedPost = post;
-    this.isDialogOpen = true;
   }
 
   onSavePost(updatedPost: IPost): void {
@@ -123,11 +121,11 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  onPageChange(event: IPageChangeEvent): void {
+  onPageChange(event: LazyLoadEvent): void {
     const rows: number = event.rows ?? this.pageSize;
-    const page: number = event.page ?? 0;
+    const page: number = event.first ? (event.first / rows) + 1 : this.currentPage;
 
-    this.currentPage = page + 1;
+    this.currentPage = page;
     this.pageSize = rows;
 
     this.loadPosts();

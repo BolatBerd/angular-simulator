@@ -2,7 +2,7 @@ export interface IPost {
   body: string;
   id: number;
   title: string;
-  reactions:{
+  reactions: {
     likes: number;
     dislikes: number;
   };
