@@ -20,12 +20,12 @@ import { IPost } from '../IPost';
 @Component({
   selector: 'app-posts',
   imports: [
-    CommonModule,
-    TableModule,
-    SkeletonModule,
     ContextMenuModule,
     PaginatorModule,
+    SkeletonModule,
+    CommonModule,
     ButtonModule,
+    TableModule,
   ],
    providers: [DialogService],
   templateUrl: './posts.component.html',
@@ -112,7 +112,7 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  onDeletePost(): void{
+  onDeletePost(): void {
     if (this.selectedPost) {
       this.postStateService.deletePost(this.selectedPost.id)
       .pipe(
@@ -131,7 +131,7 @@ export class PostsComponent implements OnInit {
     this.loadPosts();
   }
 
-  onCreatePost(): void {
+  goToCreatePost(): void {
     this.router.navigate(['/posts/create']);
   }
 

@@ -1,4 +1,4 @@
-@if(isLoading$ | async){
+@if (isLoading$ | async) {
   <p-table [value]="(posts$ | async) || []" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template #header>
       <tr>
@@ -40,7 +40,7 @@
   </p-table>
 }
 
-<button (click)="onCreatePost()" pButton type="button" label="Создать пост"></button>
+<button (click)="goToCreatePost()" pButton type="button" label="Создать пост"></button>
 
 <p-paginator
   [first]="(currentPage - 1) * pageSize"

@@ -33,7 +33,7 @@ export class PostEditDialogComponent {
     this.initPost();
   }
 
-  initPost() {
+  initPost(): void {
     this.post = this.dialogConfig.data;
     const tagsString: string = Array.isArray(this.post.tags)
       ? this.post.tags.join(', ')

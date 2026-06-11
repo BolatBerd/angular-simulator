@@ -35,20 +35,24 @@ export class PostDetailComponent implements OnInit {
   post?: IPost;
 
   ngOnInit(): void {
+    this.loadPost();
+  }
+
+  loadPost(): void {
     this.route.data
-      .pipe(
-        tap((data: Data) => {
-            this.post = data['post'];
-            this.isLoading = false;
-          }),
-          catchError((error: HttpErrorResponse) => {
-            this.isLoading = false;
-            this.post = undefined;
-            this.messageService.showError('Ошибка загрузки')
-            return throwError(() => error);
-          }),
-          takeUntilDestroyed(this.destroyRef))
-          .subscribe();
+    .pipe(
+      tap((data: Data) => {
+          this.post = data['post'];
+          this.isLoading = false;
+        }),
+        catchError((error: HttpErrorResponse) => {
+          this.isLoading = false;
+          this.post = undefined;
+          this.messageService.showError('Ошибка загрузки')
+          return throwError(() => error);
+        }),
+        takeUntilDestroyed(this.destroyRef))
+        .subscribe();
   }
 
   goBack(): void {

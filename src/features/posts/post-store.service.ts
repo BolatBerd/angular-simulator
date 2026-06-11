@@ -1,8 +1,10 @@
-import { BehaviorSubject, Observable, tap, finalize } from 'rxjs';
+import { BehaviorSubject, Observable, tap, finalize, throwError, catchError } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
-import { LoaderService } from '../../classes/loader.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MessageService } from '../../classes/message.service';
 import { IPostsResponse } from './IPostResponse';
 import { PostApiService } from './post-api.service';
+import { LoaderService } from '../../classes/loader.service';
 import { IPost } from './IPost';
 
 @Injectable({
@@ -11,6 +13,7 @@ import { IPost } from './IPost';
 export class PostStateService {
 
   private postApiService: PostApiService = inject(PostApiService);
+  private messageService: MessageService = inject(MessageService);
   private loaderService: LoaderService = inject(LoaderService);
 
   private postsSubject: BehaviorSubject<IPost[]> = new BehaviorSubject<IPost[]>([]);
@@ -21,6 +24,10 @@ export class PostStateService {
     return this.postApiService.getPosts(page, pageSize)
     .pipe(
       tap((response: IPostsResponse) => this.postsSubject.next(response.posts)),
+      catchError((error: HttpErrorResponse) => {
+        this.messageService.showError('Не удалось загрузить список постов.');
+        return throwError(() => error);
+      }),
       finalize(() => this.loaderService.hideLoader())
     );
   }
@@ -29,6 +36,10 @@ export class PostStateService {
     this.loaderService.showLoader();
     return this.postApiService.getPostById(id)
     .pipe(
+      catchError((error: HttpErrorResponse) => {
+        this.messageService.showError('Не удалось загрузить пост.');
+        return throwError(() => error);
+      }),
       finalize(() => this.loaderService.hideLoader())
     );
   }
@@ -38,6 +49,10 @@ export class PostStateService {
     return this.postApiService.createPost(post)
     .pipe(
       tap((createdPost: IPost) => this.postsSubject.next([...this.postsSubject.getValue(), createdPost])),
+      catchError((error: HttpErrorResponse) => {
+        this.messageService.showError('Не удалось добавить пост.');
+        return throwError(() => error);
+      }),
       finalize(() => this.loaderService.hideLoader())
     );
   }
@@ -50,6 +65,10 @@ export class PostStateService {
         .map((p: IPost) => p.id === updatedPost.id ? { ...p, ...updatedPost } : p);
         this.postsSubject.next(updatedPosts);
       }),
+      catchError((error: HttpErrorResponse) => {
+        this.messageService.showError('Не удалось обновить пост.');
+        return throwError(() => error);
+      }),
       finalize(() => this.loaderService.hideLoader())
     );
   }
@@ -59,6 +78,10 @@ export class PostStateService {
     return this.postApiService.deletePost(id)
     .pipe(
       tap(() => this.postsSubject.next(this.postsSubject.getValue().filter((p: IPost) => p.id !== id))),
+      catchError((error: HttpErrorResponse) => {
+        this.messageService.showError('Не удалось удалить пост.');
+        return throwError(() => error);
+      }),
       finalize(() => this.loaderService.hideLoader())
     );
   }
