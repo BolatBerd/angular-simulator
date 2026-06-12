@@ -1,8 +1,10 @@
+import { authGuard } from '../features/auth/auth.guard';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
     path: 'posts',
+    canActivate:[authGuard],
     loadChildren: () => import('../features/posts/posts-routing.module').then(m => m.postRoutes)
   },
   {
