@@ -131,7 +131,7 @@ export class PostsComponent implements OnInit {
     this.loadPosts();
   }
 
-  goToCreatePost(): void {
+  redirectToCreatePost(): void {
     this.router.navigate(['/posts/create']);
   }
 

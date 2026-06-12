@@ -19,8 +19,6 @@ export class PostEditDialogComponent {
   private ref: DynamicDialogRef = inject(DynamicDialogRef);
   private fb: FormBuilder = inject(FormBuilder);
 
-  @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
-  @Output() save: EventEmitter<IPost> = new EventEmitter<IPost>();
   post!: IPost;
 
   editForm: FormGroup = this.fb.group({
