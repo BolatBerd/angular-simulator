@@ -13,6 +13,7 @@ import { Preset } from '@primeuix/themes/types';
 import { Theme } from '../enums/Theme';
 import { loggingInterceptor } from '../interceptors/logging-interceptor';
 import { httpErrorInterceptor } from '../interceptors/http-error-interceptor';
+import { authInterceptor } from '../features/auth/auth.interceptor';
 
 function getThemePresetFromStorage(): Preset {
   const themeMap: Record<Theme, Preset> = {
@@ -31,7 +32,7 @@ function getThemePresetFromStorage(): Preset {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient((withInterceptors([loggingInterceptor, httpErrorInterceptor]))),
+    provideHttpClient((withInterceptors([loggingInterceptor, httpErrorInterceptor, authInterceptor]))),
     provideRouter(routes),
     provideZoneChangeDetection(),
     providePrimeNG({

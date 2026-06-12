@@ -5,5 +5,4 @@ export const authRoutes: Routes = [
     path: '',
     loadComponent: () => import('./auth/auth.component').then(m => m.AuthComponent)
   },
-
 ];

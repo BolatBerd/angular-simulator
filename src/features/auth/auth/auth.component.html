@@ -1,1 +1,49 @@
-<p>auth works!</p>
+<form [formGroup]="authForm" (ngSubmit)="onSubmit()" style="max-width: 500px;">
+
+  <h2>Создание нового поста</h2>
+
+  <div>
+    <label for="login" >Логин</label>
+    <input
+      id="login"
+      formControlName="login"
+      pInputText
+      placeholder="Введите логин"
+    />
+    @if (authForm.controls['login'].invalid && authForm.controls['login'].touched) {
+      <div class="text">Логин обязателен.</div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label for="password">Теги</label>
+    <input
+      id="password"
+      formControlName="password"
+      pInputText
+      placeholder="password"
+    />
+    @if (authForm.controls['password'].invalid && authForm.controls['password'].touched) {
+      <div class="text">password обязателен.</div>
+    }
+    <small class="text">Введите password.</small>
+  </div>
+
+
+  <div class="flex gap-2">
+    <button
+      type="button"
+      pButton
+      label="Отмена"
+      severity="secondary"
+      (click)="onCancel()"
+    ></button>
+    <button
+      type="submit"
+      pButton
+      label="Авторизоваться"
+      [disabled]="authForm.invalid"
+    ></button>
+  </div>
+
+</form>
