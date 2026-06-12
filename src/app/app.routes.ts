@@ -2,6 +2,10 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: 'posts',
+    loadChildren: () => import('../features/posts/posts-routing.module').then(m => m.postRoutes)
+  },
+  {
     path: '',
     loadComponent: () => import('../home/home.component').then(m => m.HomeComponent)
   },

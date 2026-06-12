@@ -1,5 +1,5 @@
 import { HttpEvent, HttpEventType, HttpHandlerFn, HttpRequest } from "@angular/common/http";
-import { catchError, Observable, tap, throwError } from "rxjs";
+import { Observable, tap } from "rxjs";
 import { HttpStatusDescription } from "../enums/HttpStatusDescription";
 
 function getStatusMessage(status: number): string {
