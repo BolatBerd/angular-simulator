@@ -4,7 +4,6 @@ import { LocalStorageService } from '../../classes/local-storage.service';
 import { inject, Injectable } from '@angular/core';
 import { MessageService } from '../../classes/message.service';
 import { AuthApiService } from './auth-api.service';
-// import { Router } from '@angular/router';
 import { IAuth } from './IAuth';
 import { IUser } from './IUser';
 
@@ -17,13 +16,9 @@ export class AuthService {
   private messageService: MessageService = inject(MessageService);
   private authApiService: AuthApiService = inject(AuthApiService);
   private http: HttpClient = inject(HttpClient);
-  // private router: Router = inject(Router);
 
   private authSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isLoggedIn());
   auth$: Observable<boolean> = this.authSubject.asObservable();
-
-  // private refreshTokenUrl: string = 'https://dummyjson.com/auth/refresh';
-  // private apiLoginUrl: string = 'https://dummyjson.com/auth/login';
 
   private saveTokens(accessToken: string, refreshToken: string): void {
     this.localStorageService.setItem('accessToken', accessToken);
