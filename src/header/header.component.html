@@ -42,6 +42,16 @@
         }
 
       </nav>
+      @if (authService.isLoggedIn() === true) {
+        <button
+          id="btn-consultation-header"
+          class="consultation fs-16 br-8"
+          aria-label="выйти из системы"
+          (click)="logout()"
+        >
+          выйти из системы
+        </button>
+      }
       <button
         id="btn-consultation-header"
         class="consultation fs-16 br-8"

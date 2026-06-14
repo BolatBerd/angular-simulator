@@ -1,6 +1,6 @@
 <form [formGroup]="authForm" (ngSubmit)="onSubmit()" style="max-width: 500px;">
 
-  <h2>Создание нового поста</h2>
+  <h2>Вход в систему</h2>
 
   <div>
     <label for="login" >Логин</label>
@@ -16,7 +16,7 @@
   </div>
 
   <div class="mb-3">
-    <label for="password">Теги</label>
+    <label for="password">Пароль</label>
     <input
       id="password"
       formControlName="password"
@@ -24,20 +24,20 @@
       placeholder="password"
     />
     @if (authForm.controls['password'].invalid && authForm.controls['password'].touched) {
-      <div class="text">password обязателен.</div>
+      <div class="text">Пароль обязателен.</div>
     }
     <small class="text">Введите password.</small>
   </div>
 
 
   <div class="flex gap-2">
-    <button
+    <!-- <button
       type="button"
       pButton
       label="Отмена"
       severity="secondary"
       (click)="onCancel()"
-    ></button>
+    ></button> -->
     <button
       type="submit"
       pButton
