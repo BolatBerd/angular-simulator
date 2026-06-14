@@ -68,7 +68,7 @@ export class AuthService {
   logout(): void {
     this.daleteTokens();
     this.authSubject.next(false);
-    this.authApiService.navigateAuth;
+    this.authApiService.navigateAuth();
   }
 
   getAccessToken(): string | null {

@@ -11,15 +11,16 @@ export class AuthApiService {
   private refreshTokenUrl: string = 'https://dummyjson.com/auth/refresh';
   private apiLoginUrl: string = 'https://dummyjson.com/auth/login';
 
-  login() {
+  login(): string {
     return this.apiLoginUrl;
   }
 
-  refreshToken() {
+  refreshToken(): string {
     return this.refreshTokenUrl;
   }
 
-  navigateAuth() {
+  navigateAuth(): Promise<boolean> {
     return this.router.navigate(['/auth']);
   }
+
 }
