@@ -20,7 +20,7 @@ export class AuthService {
   private authSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isLoggedIn());
   auth$: Observable<boolean> = this.authSubject.asObservable();
 
-  private refreshTokenUrl: string = 'https://dummyjson.com/auth/refresh'
+  private refreshTokenUrl: string = 'https://dummyjson.com/auth/refresh';
   private apiLoginUrl: string = 'https://dummyjson.com/auth/login';
 
   private saveTokens(accessToken: string, refreshToken: string): void {
@@ -34,13 +34,12 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<IAuth> {
-    const user: IUser = {username, password, expiresInMins: 30}
+    const user: IUser = { username, password, expiresInMins: 30 }
     return this.http.post<IAuth>(this.apiLoginUrl, user)
       .pipe(
         tap((response: IAuth) => {
-          this.saveTokens(response.accessToken, response.refreshToken)
+          this.saveTokens(response.accessToken, response.refreshToken);
           this.authSubject.next(true);
-          console.log(response);
         }),
         catchError((error: HttpErrorResponse) => {
           this.messageService.showError('Неверные данные.');
@@ -53,7 +52,7 @@ export class AuthService {
     return this.http.post<IAuth>(this.refreshTokenUrl, { refreshToken: this.getRefreshToken() })
       .pipe(
         tap((response: IAuth) => {
-          this.saveTokens(response.accessToken, response.refreshToken)
+          this.saveTokens(response.accessToken, response.refreshToken);
           this.authSubject.next(true);
         }),
         catchError((error: HttpErrorResponse) => {
@@ -65,7 +64,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this.daleteTokens()
+    this.daleteTokens();
     this.authSubject.next(false);
     this.router.navigate(['/auth']);
   }

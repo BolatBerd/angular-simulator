@@ -10,7 +10,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
 
   const token: string | null = authService.getAccessToken();
 
-  if(!token){
+  if (!token) {
     return next(req);
   }
 

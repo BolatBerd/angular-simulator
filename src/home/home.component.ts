@@ -1,20 +1,20 @@
-import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { Collection } from '../collection';
-import { IService } from '../interfaces/IService';
-import { ITourForm } from '../interfaces/ITourForm';
-import { IDestination } from '../interfaces/IDestination';
-import { ITravelBlog } from '../interfaces/ITravelBlog';
-import { IMessage } from '../interfaces/IMessage';
-import { IPhotoReport } from '../interfaces/IPhotoReport';
-import { LocalStorageService } from '../classes/local-storage.service';
-import { MessageService } from '../classes/message.service';
-import { ITravelEssential} from '../interfaces/ITravelEssential';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faAnglesDown, IconDefinition, faSpinner, faStar, faCirclePlay, faPeopleGroup, faShield } from '@fortawesome/free-solid-svg-icons';
+import { LocalStorageService } from '../classes/local-storage.service';
+import { Component, inject } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ITravelEssential } from '../interfaces/ITravelEssential';
 import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
+import { MessageService } from '../classes/message.service';
+import { IDestination } from '../interfaces/IDestination';
+import { IPhotoReport } from '../interfaces/IPhotoReport';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ITravelBlog } from '../interfaces/ITravelBlog';
+import { Collection } from '../collection';
+import { ITourForm } from '../interfaces/ITourForm';
 import { faShopify } from '@fortawesome/free-brands-svg-icons';
+import { IService } from '../interfaces/IService';
+import { IMessage } from '../interfaces/IMessage';
 
 
 @Component({
@@ -29,7 +29,6 @@ import { faShopify } from '@fortawesome/free-brands-svg-icons';
 })
 export class HomeComponent {
 
-  private localStorageService: LocalStorageService = inject(LocalStorageService);
   messageService: MessageService = inject(MessageService);
   companyName: string = 'румтибет';
   companyIP: string = 'ИП Константинопольский К.К., 2023';

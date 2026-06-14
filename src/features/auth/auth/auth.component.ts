@@ -1,14 +1,14 @@
-import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
 import { catchError, tap, throwError } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { InputTextModule } from 'primeng/inputtext';
 import { MessageService } from '../../../classes/message.service';
 import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -38,7 +38,6 @@ export class AuthComponent {
               this.messageService.showSuccess('успешно авторизовался');
             }),
             catchError((error: HttpErrorResponse) => {
-              // this.messageService.showError('Ошибка при авторизции');
               return throwError(() => error);
             })
           ).subscribe();
