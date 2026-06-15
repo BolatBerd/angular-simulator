@@ -58,4 +58,8 @@ export class HeaderComponent {
     this.authService.logout();
   }
 
+  navigateToAuth(): void {
+    this.authService.navigateToAuth();
+  }
+
 }

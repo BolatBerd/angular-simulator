@@ -72,7 +72,7 @@ export class AuthService {
   logout(): void {
     this.daleteTokens();
     this.authSubject.next(false);
-    this.router.navigate(['/auth']);
+    this.navigateToAuth();
   }
 
   getAccessToken(): string | null {
@@ -91,6 +91,10 @@ export class AuthService {
     const currentDate: Date = new Date();
     currentDate.setSeconds(currentDate.getSeconds() + expiresInMins * 60);
     this.expiresInMinsSubject.next(currentDate);
+  }
+
+  navigateToAuth(): void {
+    this.router.navigate(['/auth']);
   }
 
 }

@@ -42,6 +42,16 @@
         }
 
       </nav>
+      @if (authService.isLoggedIn() === false) {
+        <button
+          id="btn-consultation-header"
+          class="consultation fs-16 br-8"
+          aria-label="вход в систему"
+          (click)="navigateToAuth()"
+        >
+          вход в систему
+        </button>
+      }
       @if (authService.isLoggedIn() === true) {
         <button
           id="btn-consultation-header"
