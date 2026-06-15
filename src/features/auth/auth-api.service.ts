@@ -1,12 +1,9 @@
-import { inject, Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthApiService {
-
-  private router: Router = inject(Router);
 
   private refreshTokenUrl: string = 'https://dummyjson.com/auth/refresh';
   private apiLoginUrl: string = 'https://dummyjson.com/auth/login';
@@ -17,10 +14,6 @@ export class AuthApiService {
 
   refreshToken(): string {
     return this.refreshTokenUrl;
-  }
-
-  navigateAuth(): Promise<boolean> {
-    return this.router.navigate(['/auth']);
   }
 
 }

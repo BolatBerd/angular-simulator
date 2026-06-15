@@ -34,18 +34,12 @@ export class AuthComponent {
         .login(this.authForm.value.login, this.authForm.value.password)
           .pipe(
             tap(() => {
-              this.router.navigate(['/posts']);
+              this.router.navigate(['']);
               this.messageService.showSuccess('успешно авторизовался');
             }),
-            catchError((error: HttpErrorResponse) => {
-              return throwError(() => error);
-            })
+            catchError((error: HttpErrorResponse) => { return throwError(() => error) })
           ).subscribe();
     }
-  }
-
-   onCancel(): void {
-    this.router.navigate(['/posts']);
   }
 
 }

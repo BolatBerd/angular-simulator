@@ -1,21 +1,18 @@
-import { HttpInterceptorFn, HttpErrorResponse, HttpRequest } from '@angular/common/http';
+import { HttpInterceptorFn, HttpErrorResponse, HttpRequest, HttpHandlerFn } from '@angular/common/http';
 import { catchError, switchMap, throwError } from 'rxjs';
 import { MessageService } from '../../classes/message.service';
 import { AuthService } from './auth.service';
 import { inject } from '@angular/core';
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
+export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   const messageService: MessageService = inject(MessageService);
   const authService: AuthService = inject(AuthService);
+
   const token: string | null = authService.getAccessToken();
 
   let authReq: HttpRequest<unknown> = req;
   if (token) {
-    authReq = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    authReq = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
   }
 
   return next(authReq).pipe(
@@ -25,11 +22,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         return authService.refreshToken().pipe(
           switchMap(() => {
             const newToken: string | null = authService.getAccessToken();
-            const retryReq: HttpRequest<unknown> = req.clone({
-              setHeaders: {
-                Authorization: `Bearer ${newToken}`
-              }
-            });
+            const retryReq: HttpRequest<unknown> = req.clone({ setHeaders: { Authorization: `Bearer ${newToken}` } });
             return next(retryReq);
           }),
           catchError((error: HttpErrorResponse) => {

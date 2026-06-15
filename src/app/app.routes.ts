@@ -4,7 +4,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () => import('../features/auth/auth-routing.module').then(m => m.authRoutes)
+    loadComponent: () => import('../features/auth/auth/auth.component').then(m => m.AuthComponent)
   },
   {
     path: 'posts',
@@ -13,10 +13,12 @@ export const routes: Routes = [
   },
   {
     path: 'user',
+    canActivate:[authGuard],
     loadComponent: () => import('../users-page/users-page.component').then(m => m.UsersPageComponent)
   },
   {
     path: '',
+    canActivate:[authGuard],
     loadComponent: () => import('../home/home.component').then(m => m.HomeComponent)
   },
   {
