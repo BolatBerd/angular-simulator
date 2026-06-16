@@ -37,7 +37,7 @@ export class AuthComponent {
               this.router.navigate(['']);
               this.messageService.showSuccess('успешно авторизовался');
             }),
-            catchError((error: HttpErrorResponse) => { return throwError(() => error) })
+            catchError((error: HttpErrorResponse) => throwError(() => error))
           ).subscribe();
     }
   }
