@@ -8,7 +8,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
   const messageService: MessageService = inject(MessageService);
   const authService: AuthService = inject(AuthService);
 
-  const token: string | null = authService.getAccessToken();
+  const token: string | undefined = authService.getAccessToken();
 
   let authReq: HttpRequest<unknown> = req;
   if (token) {
@@ -21,7 +21,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
         messageService.showError('Ошибка 401, refreshToken');
         return authService.refreshToken().pipe(
           switchMap(() => {
-            const newToken: string | null = authService.getAccessToken();
+            const newToken: string | undefined = authService.getAccessToken();
             const retryReq: HttpRequest<unknown> = req.clone({ setHeaders: { Authorization: `Bearer ${newToken}` } });
             return next(retryReq);
           }),
