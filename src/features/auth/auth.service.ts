@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from '../../classes/local-storage.service';
 import { inject, Injectable } from '@angular/core';
 import { MessageService } from '../../classes/message.service';
-import { IAuthTokens } from './IAuthTokens';
+import { IAuthToken } from './IAuthToken';
 import { Router } from '@angular/router';
 import { IAuth } from './IAuth';
 import { IUser } from './IUser';
@@ -24,9 +24,9 @@ export class AuthService {
   private apiLoginUrl: string = 'https://dummyjson.com/auth/login';
   private refreshTokenUrl: string = 'https://dummyjson.com/auth/refresh';
 
-  private readonly STORAGE_KEY = 'authTokens'
+  private readonly STORAGE_KEY: string = 'authTokens';
 
-  private saveTokens(tokens: IAuthTokens): void {
+  private saveTokens(tokens: IAuthToken): void {
     this.localStorageService.setItem(this.STORAGE_KEY, tokens);
   }
 
@@ -34,12 +34,12 @@ export class AuthService {
     this.localStorageService.removeItem(this.STORAGE_KEY);
   }
 
-  private getTokens(): IAuthTokens | null {
+  private getTokens(): IAuthToken | null {
     return this.localStorageService.getItem(this.STORAGE_KEY);
   }
 
   login(username: string, password: string): Observable<IAuth> {
-    const user: IUser = { username, password }
+    const user: IUser = { username, password };
     return this.http.post<IAuth>(this.apiLoginUrl, user)
       .pipe(
          tap((response: IAuth) => {
