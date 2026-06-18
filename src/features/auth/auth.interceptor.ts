@@ -12,7 +12,11 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
 
   let authReq: HttpRequest<unknown> = req;
   if (token) {
-    authReq = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+    authReq = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    });
   }
 
   return next(authReq).pipe(
@@ -22,7 +26,11 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
         return authService.refreshToken().pipe(
           switchMap(() => {
             const newToken: string | undefined = authService.getAccessToken();
-            const retryReq: HttpRequest<unknown> = req.clone({ setHeaders: { Authorization: `Bearer ${newToken}` } });
+            const retryReq: HttpRequest<unknown> = req.clone({
+              setHeaders: {
+                Authorization: `Bearer ${newToken}`
+              }
+            });
             return next(retryReq);
           }),
           catchError((error: HttpErrorResponse) => {

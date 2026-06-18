@@ -1,4 +1,4 @@
-import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, tap, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from '../../classes/local-storage.service';
 import { inject, Injectable } from '@angular/core';
@@ -6,7 +6,7 @@ import { MessageService } from '../../classes/message.service';
 import { IAuthToken } from './IAuthToken';
 import { Router } from '@angular/router';
 import { IAuth } from './IAuth';
-import { IUser } from './IUser';
+import { IAuthResponse } from './IAuthResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +18,8 @@ export class AuthService {
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
 
-  private authSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isLoggedIn());
-  auth$: Observable<boolean> = this.authSubject.asObservable();
+  private userSubject: BehaviorSubject<IAuth | null> = new BehaviorSubject<IAuth | null>(null);
+  user$: Observable<IAuth | null> = this.userSubject.asObservable();
 
   private apiLoginUrl: string = 'https://dummyjson.com/auth/login';
   private refreshTokenUrl: string = 'https://dummyjson.com/auth/refresh';
@@ -30,7 +30,7 @@ export class AuthService {
     this.localStorageService.setItem(this.STORAGE_KEY, tokens);
   }
 
-  private daleteTokens(): void {
+  private removeTokens(): void {
     this.localStorageService.removeItem(this.STORAGE_KEY);
   }
 
@@ -38,16 +38,15 @@ export class AuthService {
     return this.localStorageService.getItem(this.STORAGE_KEY);
   }
 
-  login(username: string, password: string): Observable<IAuth> {
-    const user: IUser = { username, password };
-    return this.http.post<IAuth>(this.apiLoginUrl, user)
+  login(username: string, password: string): Observable<IAuthResponse> {
+    return this.http.post<IAuthResponse>(this.apiLoginUrl, { username, password })
       .pipe(
-         tap((response: IAuth) => {
+         tap((response: IAuthResponse) => {
           this.saveTokens({
             accessToken: response.accessToken,
             refreshToken: response.refreshToken
           });
-          this.authSubject.next(true);
+          this.userSubject.next(response);
         }),
         catchError((error: HttpErrorResponse) => {
           this.messageService.showError('Неверные данные.');
@@ -56,15 +55,15 @@ export class AuthService {
       )
   }
 
-  refreshToken(): Observable<IAuth> {
-    return this.http.post<IAuth>(this.refreshTokenUrl, { refreshToken: this.getRefreshToken() })
+  refreshToken(): Observable<IAuthResponse> {
+    return this.http.post<IAuthResponse>(this.refreshTokenUrl, { refreshToken: this.getRefreshToken() })
       .pipe(
-        tap((response: IAuth) => {
+        tap((response: IAuthResponse) => {
           this.saveTokens({
             accessToken: response.accessToken,
             refreshToken: response.refreshToken
           });
-          this.authSubject.next(true);
+          this.userSubject.next(response);
         }),
         catchError((error: HttpErrorResponse) => {
           this.logout();
@@ -75,24 +74,24 @@ export class AuthService {
   }
 
   logout(): void {
-    this.daleteTokens();
-    this.authSubject.next(false);
-    this.goToLogin();
+    this.removeTokens();
+    this.userSubject.next(null);
+    this.redirectToLoginPage();
   }
 
   getAccessToken(): string | undefined {
-    return  this.getTokens()?.accessToken;
+    return this.getTokens()?.accessToken;
   }
 
   getRefreshToken(): string | undefined {
-    return  this.getTokens()?.refreshToken;
+    return this.getTokens()?.refreshToken;
   }
 
   isLoggedIn(): boolean {
     return !!this.getAccessToken();
   }
 
-  goToLogin(): void {
+  redirectToLoginPage(): void {
     this.router.navigate(['/auth']);
   }
 

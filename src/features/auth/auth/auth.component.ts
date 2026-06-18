@@ -29,7 +29,7 @@ export class AuthComponent {
   });
 
   onSubmit(): void {
-    if(this.authForm.valid) {
+    if (this.authForm.valid) {
       this.authService
         .login(this.authForm.value.login, this.authForm.value.password)
           .pipe(
@@ -37,7 +37,10 @@ export class AuthComponent {
               this.router.navigate(['']);
               this.messageService.showSuccess('успешно авторизовался');
             }),
-            catchError((error: HttpErrorResponse) => throwError(() => error))
+            catchError((error: HttpErrorResponse) => {
+              this.messageService.showError('Ошибка авторизации');
+              return throwError(() => error);
+              })
           ).subscribe();
     }
   }

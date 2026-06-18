@@ -58,8 +58,8 @@ export class HeaderComponent {
     this.authService.logout();
   }
 
-  goToLogin(): void {
-    this.authService.goToLogin();
+  redirectToLoginPage(): void {
+    this.authService.redirectToLoginPage();
   }
 
 }

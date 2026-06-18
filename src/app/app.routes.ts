@@ -8,21 +8,21 @@ export const routes: Routes = [
   },
   {
     path: 'posts',
-    canActivate:[authGuard],
+    canActivate: [authGuard],
     loadChildren: () => import('../features/posts/posts-routing.module').then(m => m.postRoutes)
   },
   {
     path: 'user',
-    canActivate:[authGuard],
+    canActivate: [authGuard],
     loadComponent: () => import('../users-page/users-page.component').then(m => m.UsersPageComponent)
   },
   {
     path: '',
-    canActivate:[authGuard],
+    canActivate: [authGuard],
     loadComponent: () => import('../home/home.component').then(m => m.HomeComponent)
   },
   {
     path: '**',
-    loadComponent: () =>import('../not-found/not-found.component').then(m => m.NotFoundComponent)
+    loadComponent: () => import('../not-found/not-found.component').then(m => m.NotFoundComponent)
   },
 ];
