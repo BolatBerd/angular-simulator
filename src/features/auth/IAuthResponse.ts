@@ -1,4 +1,4 @@
 import { IAuthToken } from "./IAuthToken";
-import { IAuth } from "./IAuth";
+import { IAuthUser } from "./IAuthUser";
 
-export interface IAuthResponse extends IAuth, IAuthToken {}
+export interface IAuthResponse extends IAuthUser, IAuthToken {}

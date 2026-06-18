@@ -1,12 +1,12 @@
-import { BehaviorSubject, catchError, Observable, of, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from '../../classes/local-storage.service';
 import { inject, Injectable } from '@angular/core';
 import { MessageService } from '../../classes/message.service';
-import { IAuthToken } from './IAuthToken';
-import { Router } from '@angular/router';
-import { IAuth } from './IAuth';
 import { IAuthResponse } from './IAuthResponse';
+import { IAuthToken } from './IAuthToken';
+import { IAuthUser } from './IAuthUser';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +18,8 @@ export class AuthService {
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
 
-  private userSubject: BehaviorSubject<IAuth | null> = new BehaviorSubject<IAuth | null>(null);
-  user$: Observable<IAuth | null> = this.userSubject.asObservable();
+  private authUserSubject: BehaviorSubject<IAuthUser | null> = new BehaviorSubject<IAuthUser | null>(null);
+  authUser$: Observable<IAuthUser | null> = this.authUserSubject.asObservable();
 
   private apiLoginUrl: string = 'https://dummyjson.com/auth/login';
   private refreshTokenUrl: string = 'https://dummyjson.com/auth/refresh';
@@ -46,7 +46,7 @@ export class AuthService {
             accessToken: response.accessToken,
             refreshToken: response.refreshToken
           });
-          this.userSubject.next(response);
+          this.authUserSubject.next(response);
         }),
         catchError((error: HttpErrorResponse) => {
           this.messageService.showError('Неверные данные.');
@@ -63,7 +63,7 @@ export class AuthService {
             accessToken: response.accessToken,
             refreshToken: response.refreshToken
           });
-          this.userSubject.next(response);
+          this.authUserSubject.next(response);
         }),
         catchError((error: HttpErrorResponse) => {
           this.logout();
@@ -75,7 +75,7 @@ export class AuthService {
 
   logout(): void {
     this.removeTokens();
-    this.userSubject.next(null);
+    this.authUserSubject.next(null);
     this.redirectToLoginPage();
   }
 
