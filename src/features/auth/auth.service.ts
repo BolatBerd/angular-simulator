@@ -77,6 +77,7 @@ export class AuthService {
     this.removeTokens();
     this.authUserSubject.next(null);
     this.redirectToLoginPage();
+    this.messageService.showError('Сессия истекла. Пожалуйста, войдите снова.');
   }
 
   getAccessToken(): string | undefined {

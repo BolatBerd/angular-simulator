@@ -14,7 +14,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
   if (token) {
     authReq = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${ token }`
       }
     });
   }
@@ -22,20 +22,18 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
-        messageService.showError('Ошибка 401, refreshToken');
         return authService.refreshToken().pipe(
           switchMap(() => {
             const newToken: string | undefined = authService.getAccessToken();
             const retryReq: HttpRequest<unknown> = req.clone({
               setHeaders: {
-                Authorization: `Bearer ${newToken}`
+                Authorization: `Bearer ${ newToken }`
               }
             });
             return next(retryReq);
           }),
           catchError((error: HttpErrorResponse) => {
             authService.logout();
-            messageService.showError('Ошибка');
             return throwError(() => error);
           })
         );
