@@ -21,8 +21,7 @@ export class AuthService {
   private authUserSubject: BehaviorSubject<IAuthUser | null> = new BehaviorSubject<IAuthUser | null>(null);
   authUser$: Observable<IAuthUser | null> = this.authUserSubject.asObservable();
 
-  private apiLoginUrl: string = 'https://dummyjson.com/auth/login';
-  private refreshTokenUrl: string = 'https://dummyjson.com/auth/refresh';
+  private apiUrl: string = 'https://dummyjson.com/auth';
 
   private readonly STORAGE_KEY: string = 'authTokens';
 
@@ -39,7 +38,7 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<IAuthResponse> {
-    return this.http.post<IAuthResponse>(this.apiLoginUrl, { username, password })
+    return this.http.post<IAuthResponse>(`${ this.apiUrl }/login`, { username, password })
       .pipe(
          tap((response: IAuthResponse) => {
           this.saveTokens({
@@ -56,7 +55,7 @@ export class AuthService {
   }
 
   refreshToken(): Observable<IAuthResponse> {
-    return this.http.post<IAuthResponse>(this.refreshTokenUrl, { refreshToken: this.getRefreshToken() })
+    return this.http.post<IAuthResponse>(`${ this.apiUrl }/refresh`, { refreshToken: this.getRefreshToken() })
       .pipe(
         tap((response: IAuthResponse) => {
           this.saveTokens({
