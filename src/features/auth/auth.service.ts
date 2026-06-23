@@ -42,29 +42,30 @@ export class AuthService {
       if (!token) {
         return of(false);
     }
-    return this.http.get<IAuthUser>(`${ this.apiUrl }/me`).pipe(
-      tap((response: IAuthUser) => {
-        const user: IAuthUser = {
-          id: response.id!,
-          username: response.username!,
-          firstName: response.firstName!,
-          lastName: response.lastName!,
-          email: response.email!,
-          gender: response.gender,
-          image: response.image,
-        };
-        this.authUserSubject.next(user);
-      }),
-      map(() => true),
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          this.removeTokens();
-          this.authUserSubject.next(null);
-        }
-        return of(false);
-        })
-      );
-    }
+    return this.http.get<IAuthUser>(`${ this.apiUrl }/me`)
+      .pipe(
+        tap((response: IAuthUser) => {
+          const user: IAuthUser = {
+            id: response.id!,
+            username: response.username!,
+            firstName: response.firstName!,
+            lastName: response.lastName!,
+            email: response.email!,
+            gender: response.gender,
+            image: response.image,
+          };
+          this.authUserSubject.next(user);
+        }),
+        map(() => true),
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 401) {
+            this.removeTokens();
+            this.authUserSubject.next(null);
+          }
+          return of(false);
+          })
+        );
+  }
 
   login(username: string, password: string): Observable<IAuthResponse> {
     return this.http.post<IAuthResponse>(`${ this.apiUrl }/login`, { username, password })

@@ -15,14 +15,6 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
   const authService: AuthService = inject(AuthService);
   const token: string | undefined = authService.getAccessToken();
 
-  // let authReq: HttpRequest<unknown> = req;
-  // if (token) {
-  //   authReq = req.clone({
-  //     setHeaders: {
-  //       Authorization: `Bearer ${ token }`
-  //     }
-  //   });
-  // }
   const authReq = token ? addToken(req, token) : req;
 
   return next(authReq).pipe(
