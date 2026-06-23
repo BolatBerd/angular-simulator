@@ -27,6 +27,6 @@ import { AuthService } from '../features/auth/auth.service';
 })
 export class AppComponent {
 
-  authService:AuthService = inject(AuthService);
+  authService: AuthService = inject(AuthService);
 
 }

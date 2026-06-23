@@ -1,4 +1,4 @@
-import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from '../../classes/local-storage.service';
 import { inject, Injectable } from '@angular/core';
@@ -36,6 +36,35 @@ export class AuthService {
   private getTokens(): IAuthToken | null {
     return this.localStorageService.getItem(this.STORAGE_KEY);
   }
+
+  checkAuth(): Observable<boolean> {
+    const token: string | undefined = this.getAccessToken();
+      if (!token) {
+        return of(false);
+    }
+    return this.http.get<IAuthUser>(`${ this.apiUrl }/me`).pipe(
+      tap((response: IAuthUser) => {
+        const user: IAuthUser = {
+          id: response.id!,
+          username: response.username!,
+          firstName: response.firstName!,
+          lastName: response.lastName!,
+          email: response.email!,
+          gender: response.gender,
+          image: response.image,
+        };
+        this.authUserSubject.next(user);
+      }),
+      map(() => true),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.removeTokens();
+          this.authUserSubject.next(null);
+        }
+        return of(false);
+        })
+      );
+    }
 
   login(username: string, password: string): Observable<IAuthResponse> {
     return this.http.post<IAuthResponse>(`${ this.apiUrl }/login`, { username, password })

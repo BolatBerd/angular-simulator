@@ -1,23 +1,29 @@
 import { HttpInterceptorFn, HttpErrorResponse, HttpRequest, HttpHandlerFn } from '@angular/common/http';
 import { catchError, switchMap, throwError } from 'rxjs';
-import { MessageService } from '../../classes/message.service';
 import { AuthService } from './auth.service';
 import { inject } from '@angular/core';
 
-export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
-  const messageService: MessageService = inject(MessageService);
-  const authService: AuthService = inject(AuthService);
+function addToken(req: HttpRequest<unknown>, token: string): HttpRequest<unknown> {
+  return req.clone({
+    setHeaders: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+}
 
+export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
+  const authService: AuthService = inject(AuthService);
   const token: string | undefined = authService.getAccessToken();
 
-  let authReq: HttpRequest<unknown> = req;
-  if (token) {
-    authReq = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${ token }`
-      }
-    });
-  }
+  // let authReq: HttpRequest<unknown> = req;
+  // if (token) {
+  //   authReq = req.clone({
+  //     setHeaders: {
+  //       Authorization: `Bearer ${ token }`
+  //     }
+  //   });
+  // }
+  const authReq = token ? addToken(req, token) : req;
 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
@@ -25,12 +31,10 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
         return authService.refreshToken().pipe(
           switchMap(() => {
             const newToken: string | undefined = authService.getAccessToken();
-            const retryReq: HttpRequest<unknown> = req.clone({
-              setHeaders: {
-                Authorization: `Bearer ${ newToken }`
-              }
-            });
-            return next(retryReq);
+            if (newToken){
+              return next(addToken(req, newToken))
+            }
+            return throwError(() => error);
           }),
           catchError((error: HttpErrorResponse) => {
             authService.logout();
