@@ -6,7 +6,7 @@ import { inject } from '@angular/core';
 function addToken(req: HttpRequest<unknown>, token: string): HttpRequest<unknown> {
   return req.clone({
     setHeaders: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${ token }`
     }
   })
 }

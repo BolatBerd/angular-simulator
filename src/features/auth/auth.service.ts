@@ -1,4 +1,4 @@
-import { BehaviorSubject, catchError, map, Observable, of, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from '../../classes/local-storage.service';
 import { inject, Injectable } from '@angular/core';
@@ -45,26 +45,39 @@ export class AuthService {
     return this.http.get<IAuthUser>(`${ this.apiUrl }/me`)
       .pipe(
         tap((response: IAuthUser) => {
-          const user: IAuthUser = {
-            id: response.id!,
-            username: response.username!,
-            firstName: response.firstName!,
-            lastName: response.lastName!,
-            email: response.email!,
-            gender: response.gender,
-            image: response.image,
-          };
-          this.authUserSubject.next(user);
+          this.authUserSubject.next(response);
         }),
         map(() => true),
         catchError((error: HttpErrorResponse) => {
           if (error.status === 401) {
-            this.removeTokens();
-            this.authUserSubject.next(null);
+            return this.refreshToken()
+              .pipe(
+                switchMap(() => {
+                  return this.http.get<IAuthUser>(`${ this.apiUrl }/me`)
+                    .pipe(
+                      tap((response: IAuthUser) => {
+                        this.authUserSubject.next(response);
+                      }),
+                      map(() => true),
+                      catchError(() => {
+                        this.removeTokens();
+                        this.authUserSubject.next(null);
+                        return of(false);
+                      })
+                    );
+                }),
+                catchError(() => {
+                  this.removeTokens();
+                  this.authUserSubject.next(null);
+                  return of(false);
+                })
+              );
           }
+          this.removeTokens();
+          this.authUserSubject.next(null);
           return of(false);
-          })
-        );
+        })
+      );
   }
 
   login(username: string, password: string): Observable<IAuthResponse> {
