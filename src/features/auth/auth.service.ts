@@ -45,19 +45,29 @@ export class AuthService {
     );
   }
 
+  private refreshAndFetch(): Observable<boolean> {
+    return this.refreshToken().pipe(
+      switchMap(() => this.fetchCurrentUser()),
+      map(() => true),
+      catchError(() => {
+        this.logout();
+        return of(false);
+      })
+    );
+  }
+
   checkAuth(): Observable<boolean> {
+    const token: string | undefined = this.getAccessToken();
+
+    if (!token) {
+      return of(false);
+    }
+
     return this.fetchCurrentUser().pipe(
       map(() => true),
-      catchError((error) => {
+      catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
-          return this.refreshToken().pipe(
-            switchMap(() => this.fetchCurrentUser()),
-            map(() => true),
-            catchError(() => {
-              this.logout();
-              return of(false);
-            })
-          );
+          return this.refreshAndFetch();
         }
         this.logout();
         return of(false);
