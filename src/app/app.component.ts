@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MessageComponent } from '../message/message.component';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
-import { MessageComponent } from '../message/message.component';
 import { LoaderComponent } from '../loader/loader.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from '../features/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -25,5 +26,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+  authService: AuthService = inject(AuthService);
 
 }

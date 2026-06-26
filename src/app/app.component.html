@@ -1,10 +1,15 @@
-<div class="layout">
-  <app-header></app-header>
-  <app-loader></app-loader>
+@if (authService.authUser$ | async; as user) {
+  <div class="layout">
+    <app-header></app-header>
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+    <app-footer></app-footer>
+  </div>
+} @else {
   <main class="main-content">
     <router-outlet></router-outlet>
   </main>
-
-  <app-footer></app-footer>
-</div>
+}
+<app-loader></app-loader>
 <app-message></app-message>

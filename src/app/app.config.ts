@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
@@ -13,6 +13,8 @@ import { Preset } from '@primeuix/themes/types';
 import { Theme } from '../enums/Theme';
 import { loggingInterceptor } from '../interceptors/logging-interceptor';
 import { httpErrorInterceptor } from '../interceptors/http-error-interceptor';
+import { authInterceptor } from '../features/auth/auth.interceptor';
+import { AuthService } from '../features/auth/auth.service';
 
 function getThemePresetFromStorage(): Preset {
   const themeMap: Record<Theme, Preset> = {
@@ -31,7 +33,7 @@ function getThemePresetFromStorage(): Preset {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient((withInterceptors([loggingInterceptor, httpErrorInterceptor]))),
+    provideHttpClient((withInterceptors([loggingInterceptor, httpErrorInterceptor, authInterceptor]))),
     provideRouter(routes),
     provideZoneChangeDetection(),
     providePrimeNG({
@@ -41,6 +43,12 @@ export const appConfig: ApplicationConfig = {
           darkModeSelector: '.dark',
         }
       }
-    })
+    }),
+     {
+      provide: APP_INITIALIZER,
+      useFactory: (authService: AuthService) => () => authService.checkAuth(),
+      deps: [AuthService],
+      multi: true
+    }
   ]
 };

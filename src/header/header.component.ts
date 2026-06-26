@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
-import { INavItem } from '../interfaces/INavItem';
-import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { FormsModule } from '@angular/forms';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { ThemeService } from '../classes/theme.service';
-import { inject } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
-import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+import { ThemeService } from '../classes/theme.service';
+import { AuthService } from '../features/auth/auth.service';
+import { FormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
+import { INavItem } from '../interfaces/INavItem';
+import { inject } from '@angular/core';
 import { Theme } from '../enums/Theme';
 
 @Component({
@@ -32,6 +33,7 @@ import { Theme } from '../enums/Theme';
 export class HeaderComponent {
 
   themeService: ThemeService = inject(ThemeService);
+  authService: AuthService = inject(AuthService);
 
   navItems: INavItem[] = [
     { label: 'Главная', path: '' },
@@ -50,6 +52,14 @@ export class HeaderComponent {
 
   changeSelectTheme(theme: Theme): void {
     this.themeService.setTheme(theme);
+  }
+
+  logout(): void {
+    this.authService.logout();
+  }
+
+  redirectToLoginPage(): void {
+    this.authService.redirectToLoginPage();
   }
 
 }
