@@ -6,6 +6,7 @@ import { MessageService } from '../../classes/message.service';
 import { IAuthResponse } from './IAuthResponse';
 import { IAuthToken } from './IAuthToken';
 import { IAuthUser } from './IAuthUser';
+import { UserRole } from './UserRole';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -79,11 +80,12 @@ export class AuthService {
     return this.http.post<IAuthResponse>(`${ this.apiUrl }/login`, { username, password })
       .pipe(
          tap((response: IAuthResponse) => {
+          const user: IAuthUser = { ...response, role: UserRole.ADMIN };
           this.saveTokens({
             accessToken: response.accessToken,
             refreshToken: response.refreshToken
           });
-          this.authUserSubject.next(response);
+          this.authUserSubject.next(user);
         }),
         catchError((error: HttpErrorResponse) => {
           this.messageService.showError('Неверные данные.');
@@ -133,5 +135,8 @@ export class AuthService {
     this.router.navigate(['/auth']);
   }
 
+  isAdmin(): boolean {
+    return this.authUserSubject.value?.role === 'admin';
+  }
 }
 
