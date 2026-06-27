@@ -136,7 +136,7 @@ export class AuthService {
   }
 
   isAdmin(): boolean {
-    return this.authUserSubject.value?.role === 'admin';
+    return this.authUserSubject.value?.role === UserRole.ADMIN;
   }
 }
 
