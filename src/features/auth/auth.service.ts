@@ -46,7 +46,7 @@ export class AuthService {
     );
   }
 
-  private refreshAndFetch(): Observable<boolean> {
+  private refreshAuth(): Observable<boolean> {
     return this.refreshToken().pipe(
       switchMap(() => this.fetchCurrentUser()),
       map(() => true),
@@ -68,7 +68,7 @@ export class AuthService {
       map(() => true),
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
-          return this.refreshAndFetch();
+          return this.refreshAuth();
         }
         this.logout();
         return of(false);
