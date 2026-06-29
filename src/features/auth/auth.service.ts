@@ -6,6 +6,7 @@ import { MessageService } from '../../classes/message.service';
 import { IAuthResponse } from './IAuthResponse';
 import { IAuthToken } from './IAuthToken';
 import { IAuthUser } from './IAuthUser';
+import { UserRole } from './UserRole';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -45,19 +46,29 @@ export class AuthService {
     );
   }
 
+  private refreshAuth(): Observable<boolean> {
+    return this.refreshToken().pipe(
+      switchMap(() => this.fetchCurrentUser()),
+      map(() => true),
+      catchError(() => {
+        this.logout();
+        return of(false);
+      })
+    );
+  }
+
   checkAuth(): Observable<boolean> {
+    const token: string | undefined = this.getAccessToken();
+
+    if (!token) {
+      return of(false);
+    }
+
     return this.fetchCurrentUser().pipe(
       map(() => true),
-      catchError((error) => {
+      catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
-          return this.refreshToken().pipe(
-            switchMap(() => this.fetchCurrentUser()),
-            map(() => true),
-            catchError(() => {
-              this.logout();
-              return of(false);
-            })
-          );
+          return this.refreshAuth();
         }
         this.logout();
         return of(false);
@@ -69,11 +80,12 @@ export class AuthService {
     return this.http.post<IAuthResponse>(`${ this.apiUrl }/login`, { username, password })
       .pipe(
          tap((response: IAuthResponse) => {
+          const user: IAuthUser = { ...response, role: UserRole.ADMIN };
           this.saveTokens({
             accessToken: response.accessToken,
             refreshToken: response.refreshToken
           });
-          this.authUserSubject.next(response);
+          this.authUserSubject.next(user);
         }),
         catchError((error: HttpErrorResponse) => {
           this.messageService.showError('Неверные данные.');
@@ -123,5 +135,8 @@ export class AuthService {
     this.router.navigate(['/auth']);
   }
 
+  isAdmin(): boolean {
+    return this.authUserSubject.value?.role === UserRole.ADMIN;
+  }
 }
 
