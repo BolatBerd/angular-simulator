@@ -29,7 +29,7 @@ module.exports = defineConfig([
       'semi': ['warn', 'always'],
       'no-unused-vars': ['warn'],
       'object-curly-spacing': ['warn', 'always'],
-      'template-curly-spacing': ['warn', 'always"'],
+      'template-curly-spacing': ['warn', 'always'],
       'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
       '@typescript-eslint/no-inferrable-types': ['off'],
       '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }],
