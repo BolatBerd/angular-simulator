@@ -1,13 +1,13 @@
 // @ts-check
-const eslint = require("@eslint/js");
-const { defineConfig } = require("eslint/config");
-const tseslint = require("typescript-eslint");
-const angular = require("angular-eslint");
-const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
+const eslint = require('@eslint/js');
+const { defineConfig } = require('eslint/config');
+const tseslint = require('typescript-eslint');
+const angular = require('angular-eslint');
+const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
 
 module.exports = defineConfig([
   {
-    files: ["**/*.ts"],
+    files: ['**/*.ts'],
     extends: [
       eslint.configs.recommended,
       tseslint.configs.recommended,
@@ -16,70 +16,75 @@ module.exports = defineConfig([
     ],
     processor: angular.processInlineTemplates,
     rules: {
+      'padded-blocks': ['error', { classes: 'always' }],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
-      'padded-blocks': ["error", { classes: 'always' }],
-      'quotes': ['warn', 'single', {
-        'avoidEscape': true,
-        'allowTemplateLiterals': true,
-      }],
-      "object-curly-spacing": ["warn", "always"],
-      "template-curly-spacing": ["warn", "always"],
-      "semi": ["warn", "always"],
+      quotes: [
+        'warn',
+        'single',
+        {
+          avoidEscape: true,
+          allowTemplateLiterals: true,
+        },
+      ],
+      semi: ['warn', 'always'],
       'no-unused-vars': ['warn'],
+      'object-curly-spacing': ['warn', 'always'],
+      'template-curly-spacing': ['warn', 'always"'],
       'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
       '@typescript-eslint/no-inferrable-types': ['off'],
-      '@typescript-eslint/explicit-member-accessibility': ['error', { 'accessibility': 'no-public' }],
+      '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }],
       '@typescript-eslint/naming-convention': [
-        'error', {
-          'selector': 'enumMember',
-          'format': ['UPPER_CASE'],
-          'leadingUnderscore': 'forbid'
+        'error',
+        {
+          selector: 'enumMember',
+          format: ['UPPER_CASE'],
+          leadingUnderscore: 'forbid',
         },
         {
-          "selector": ['objectLiteralProperty', 'typeProperty'],
-          'format': null
+          selector: ['objectLiteralProperty', 'typeProperty'],
+          format: null,
         },
         {
-          'selector': 'interface',
-          'format': ['PascalCase'],
-          'custom': {
-            'regex': '^I[A-Z]',
-            'match': true
-          }
-        }
+          selector: 'interface',
+          format: ['PascalCase'],
+          custom: {
+            regex: '^I[A-Z]',
+            match: true,
+          },
+        },
       ],
 
-      "@angular-eslint/directive-selector": [
-        "error",
+      '@angular-eslint/directive-selector': [
+        'error',
         {
-          type: "attribute",
-          prefix: "app",
-          style: "camelCase",
+          type: 'attribute',
+          prefix: 'app',
+          style: 'camelCase',
         },
       ],
-      "@angular-eslint/component-selector": [
-        "error",
+      '@angular-eslint/component-selector': [
+        'error',
         {
-          type: "element",
-          prefix: "app",
-          style: "kebab-case",
+          type: 'element',
+          prefix: 'app',
+          style: 'kebab-case',
         },
       ],
     },
   },
   {
-    files: ["**/*.html"],
+    files: ['**/*.html'],
     extends: [
       angular.configs.templateRecommended,
       angular.configs.templateAccessibility,
-      eslintPluginPrettierRecommended
+      eslintPluginPrettierRecommended,
     ],
     rules: {
       '@angular-eslint/template/banana-in-box': 'error',
       '@angular-eslint/template/eqeqeq': 'warn',
       '@angular-eslint/template/no-nested-tags': 'error',
 
-      'prettier/prettier': 'error'
+      'prettier/prettier': 'error',
     },
-  }
+  },
 ]);
