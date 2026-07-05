@@ -25,7 +25,7 @@ import { PhoneModesService } from '../classes/phone-modes.service';
     AsyncPipe,
     FontAwesomeModule,
     CustomPluralPipe,
-    SelectButtonModule
+    SelectButtonModule,
   ],
   templateUrl: './users-page.component.html',
   styleUrl: './users-page.component.scss',
@@ -42,22 +42,22 @@ export class UsersPageComponent implements OnInit {
   users: IUser[] = [];
 
   ngOnInit(): void {
-    this.userService.loadUsers()
+    this.userService
+      .loadUsers()
       .pipe(
         tap((users: IUser[]) => {
-            this.userService.setUsers(users);
-            this.messageService.showSuccess(`Загружены пользователи (${ users.length })`);
-        })
-      ).subscribe();
+          this.userService.setUsers(users);
+          this.messageService.showSuccess(`Загружены пользователи (${ users.length })`);
+        }),
+      )
+      .subscribe();
   }
 
-  filteredUsers$: Observable<IUser[]> = combineLatest([this.users$, this.filterSubject])
-    .pipe(
-      map(([users, filter]: [IUser[], string]) =>
-        users.filter((user: IUser) =>
-          user.name.trim().toLowerCase().includes(filter)
-      )),
-    );
+  filteredUsers$: Observable<IUser[]> = combineLatest([this.users$, this.filterSubject]).pipe(
+    map(([users, filter]: [IUser[], string]) =>
+      users.filter((user: IUser) => user.name.trim().toLowerCase().includes(filter)),
+    ),
+  );
 
   onFilterUser(value: string): void {
     this.filterSubject.next(value);
@@ -72,10 +72,10 @@ export class UsersPageComponent implements OnInit {
   }
 
   refreshUsers(): void {
-    this.userService.loadUsers()
-      .pipe(
-        tap((user: IUser[]) => this.userService.setUsers(user))
-      ).subscribe();
+    this.userService
+      .loadUsers()
+      .pipe(tap((user: IUser[]) => this.userService.setUsers(user)))
+      .subscribe();
   }
 
 }

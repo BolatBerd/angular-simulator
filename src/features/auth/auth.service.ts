@@ -14,12 +14,14 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  private localStorageService: LocalStorageService =inject(LocalStorageService);
+  private localStorageService: LocalStorageService = inject(LocalStorageService);
   private messageService: MessageService = inject(MessageService);
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
 
-  private authUserSubject: BehaviorSubject<IAuthUser | null> = new BehaviorSubject<IAuthUser | null>(null);
+  private authUserSubject: BehaviorSubject<IAuthUser | null> =
+    new BehaviorSubject<IAuthUser | null>(null);
+
   authUser$: Observable<IAuthUser | null> = this.authUserSubject.asObservable();
 
   private apiUrl: string = 'https://dummyjson.com/auth';
@@ -42,7 +44,7 @@ export class AuthService {
     return this.http.get<IAuthUser>(`${ this.apiUrl }/me`).pipe(
       tap((response: IAuthUser) => {
         this.authUserSubject.next(response);
-      })
+      }),
     );
   }
 
@@ -53,7 +55,7 @@ export class AuthService {
       catchError(() => {
         this.logout();
         return of(false);
-      })
+      }),
     );
   }
 
@@ -72,35 +74,35 @@ export class AuthService {
         }
         this.logout();
         return of(false);
-      })
+      }),
     );
   }
 
   login(username: string, password: string): Observable<IAuthResponse> {
-    return this.http.post<IAuthResponse>(`${ this.apiUrl }/login`, { username, password })
-      .pipe(
-         tap((response: IAuthResponse) => {
-          const user: IAuthUser = { ...response, role: UserRole.ADMIN };
-          this.saveTokens({
-            accessToken: response.accessToken,
-            refreshToken: response.refreshToken
-          });
-          this.authUserSubject.next(user);
-        }),
-        catchError((error: HttpErrorResponse) => {
-          this.messageService.showError('Неверные данные.');
-          return throwError(() => error);
-        })
-      )
+    return this.http.post<IAuthResponse>(`${ this.apiUrl }/login`, { username, password }).pipe(
+      tap((response: IAuthResponse) => {
+        const user: IAuthUser = { ...response, role: UserRole.ADMIN };
+        this.saveTokens({
+          accessToken: response.accessToken,
+          refreshToken: response.refreshToken,
+        });
+        this.authUserSubject.next(user);
+      }),
+      catchError((error: HttpErrorResponse) => {
+        this.messageService.showError('Неверные данные.');
+        return throwError(() => error);
+      }),
+    );
   }
 
   refreshToken(): Observable<IAuthResponse> {
-    return this.http.post<IAuthResponse>(`${ this.apiUrl }/refresh`, { refreshToken: this.getRefreshToken() })
+    return this.http
+      .post<IAuthResponse>(`${ this.apiUrl }/refresh`, { refreshToken: this.getRefreshToken() })
       .pipe(
         tap((response: IAuthResponse) => {
           this.saveTokens({
             accessToken: response.accessToken,
-            refreshToken: response.refreshToken
+            refreshToken: response.refreshToken,
           });
           this.authUserSubject.next(response);
         }),
@@ -108,8 +110,8 @@ export class AuthService {
           this.logout();
           this.messageService.showError('Неверные данные.');
           return throwError(() => error);
-        })
-      )
+        }),
+      );
   }
 
   logout(): void {
@@ -138,5 +140,5 @@ export class AuthService {
   isAdmin(): boolean {
     return this.authUserSubject.value?.role === UserRole.ADMIN;
   }
-}
 
+}

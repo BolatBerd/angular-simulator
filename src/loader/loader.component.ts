@@ -14,7 +14,7 @@ import { faSpinner, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 })
 export class LoaderComponent {
 
-  private loaderService: LoaderService = inject(LoaderService)
+  private loaderService: LoaderService = inject(LoaderService);
   faSpinner: IconDefinition = faSpinner;
 
   isLoading$: Observable<boolean> = this.loaderService.isLoading$;

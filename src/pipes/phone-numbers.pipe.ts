@@ -48,6 +48,7 @@ export class PhoneNumbersPipe implements PipeTransform {
         return `+${ value }`;
     }
   }
+
   private format11(value: string, mode: PhoneMode): string {
     switch (mode) {
       case PhoneMode.INTERNATIONAL:
@@ -63,6 +64,7 @@ export class PhoneNumbersPipe implements PipeTransform {
         return `+${ value }`;
     }
   }
+
   private format10(value: string, mode: PhoneMode): string {
     switch (mode) {
       case PhoneMode.INTERNATIONAL:

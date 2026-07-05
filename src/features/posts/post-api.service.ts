@@ -16,10 +16,10 @@ export class PostApiService {
   getPosts(page: number, pageSize: number): Observable<IPostsResponse> {
     const skip: number = (page - 1) * pageSize;
     return this.http.get<IPostsResponse>(this.apiUrl, {
-        params: {
-          skip: skip.toString(),
-          limit: pageSize.toString(),
-         },
+      params: {
+        skip: skip.toString(),
+        limit: pageSize.toString(),
+      },
     });
   }
 

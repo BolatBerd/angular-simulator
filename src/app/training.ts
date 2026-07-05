@@ -8,7 +8,7 @@ export interface ISystemUser extends IUser {
   role: string;
 }
 
-export let status: "loading" | "success" | "error";
+export let status: 'loading' | 'success' | 'error';
 export let textFormat: 'uppercase' | 'lowercase' | 'capitalize';
 
 export function calculateSum(a: number, b: number): number {

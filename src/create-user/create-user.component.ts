@@ -45,7 +45,7 @@ export class CreateUserComponent {
       catchPhrase: ['', [Validators.maxLength(200)]],
       bs: ['', [Validators.maxLength(100)]]
     })
-  })
+  });
 
   onSubmit(): void {
     if (this.form.invalid) {

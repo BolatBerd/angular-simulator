@@ -8,7 +8,7 @@ function addToken(req: HttpRequest<unknown>, token: string): HttpRequest<unknown
     setHeaders: {
       Authorization: `Bearer ${ token }`
     }
-  })
+  });
 }
 
 export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
@@ -24,7 +24,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
           switchMap(() => {
             const newToken: string | undefined = authService.getAccessToken();
             if (newToken){
-              return next(addToken(req, newToken))
+              return next(addToken(req, newToken));
             }
             return throwError(() => error);
           }),

@@ -15,7 +15,7 @@ import { PhoneModesService } from '../classes/phone-modes.service';
 })
 export class UserCardComponent {
 
-  phoneModesService: PhoneModesService = inject(PhoneModesService)
+  phoneModesService: PhoneModesService = inject(PhoneModesService);
   modePhone: PhoneMode = PhoneMode.MASKED;
 
   @Input({ required: true }) user!: IUser;

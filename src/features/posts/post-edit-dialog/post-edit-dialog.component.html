@@ -1,6 +1,5 @@
 <form [formGroup]="editForm" (ngSubmit)="onSave()">
-  <div class="flex flex-column" style="max-width: 400px;">
-
+  <div class="flex flex-column" style="max-width: 400px">
     <div class="flex flex-column">
       <label for="title">Заголовок:</label>
       <input
@@ -27,13 +26,7 @@
 
     <div class="flex flex-column">
       <label for="views">Просмотры:</label>
-      <input
-        type="number"
-        pInputNumber
-        id="views"
-        formControlName="views"
-        placeholder="0"
-      />
+      <input type="number" pInputNumber id="views" formControlName="views" placeholder="0" />
     </div>
 
     <div class="flex flex-column">
@@ -52,6 +45,5 @@
         [disabled]="editForm.invalid"
       ></button>
     </div>
-
   </div>
 </form>

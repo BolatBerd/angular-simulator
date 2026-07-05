@@ -1,12 +1,12 @@
 @if (post) {
   <div>
     <button
-      pButton type="button"
+      pButton
+      type="button"
       label="Назад к списку"
       severity="secondary"
       (click)="goBack()"
-    >
-    </button>
+    ></button>
 
     <div class="card">
       <h1 class="title">{{ post.title }}</h1>
@@ -19,9 +19,7 @@
       </div>
     </div>
   </div>
-}
-
-@else {
+} @else {
   <div class="flex-col-cen">
     <h3>Пост не найден</h3>
     <button pButton type="button" label="Вернуться к списку" (click)="goBack()"></button>

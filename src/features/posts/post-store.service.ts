@@ -85,4 +85,5 @@ export class PostStateService {
       finalize(() => this.loaderService.hideLoader())
     );
   }
+
 }

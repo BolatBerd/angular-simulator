@@ -1,15 +1,9 @@
-<form [formGroup]="authForm" (ngSubmit)="onSubmit()" style="max-width: 500px;">
-
+<form [formGroup]="authForm" (ngSubmit)="onSubmit()" style="max-width: 500px">
   <h2>Вход в систему</h2>
 
   <div>
-    <label for="login" >Логин</label>
-    <input
-      id="login"
-      formControlName="login"
-      pInputText
-      placeholder="Введите логин"
-    />
+    <label for="login">Логин</label>
+    <input id="login" formControlName="login" pInputText placeholder="Введите логин" />
     @if (authForm.controls['login'].invalid && authForm.controls['login'].touched) {
       <div class="text">Логин обязателен.</div>
     }
@@ -17,12 +11,7 @@
 
   <div class="mb-3">
     <label for="password">Пароль</label>
-    <input
-      id="password"
-      formControlName="password"
-      pInputText
-      placeholder="password"
-    />
+    <input id="password" formControlName="password" pInputText placeholder="password" />
     @if (authForm.controls['password'].invalid && authForm.controls['password'].touched) {
       <div class="text">Пароль обязателен.</div>
     }
@@ -35,8 +24,6 @@
       pButton
       label="Авторизоваться"
       [disabled]="authForm.invalid"
-    >
-    </button>
+    ></button>
   </div>
-
 </form>
