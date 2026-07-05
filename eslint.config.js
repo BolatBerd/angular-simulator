@@ -18,7 +18,7 @@ module.exports = defineConfig([
     rules: {
       'padded-blocks': ['error', { classes: 'always' }],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
-      quotes: [
+      'quotes': [
         'warn',
         'single',
         {
@@ -26,7 +26,7 @@ module.exports = defineConfig([
           allowTemplateLiterals: true,
         },
       ],
-      semi: ['warn', 'always'],
+      'semi': ['warn', 'always'],
       'no-unused-vars': ['warn'],
       'object-curly-spacing': ['warn', 'always'],
       'template-curly-spacing': ['warn', 'always"'],
