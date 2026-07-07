@@ -14,7 +14,7 @@ export class CustomPluralPipe implements PipeTransform {
       return `${ value } ${ one }`;
     }
     if ((value >= 2 && value <= 4) && lastDigit >= 2 && lastDigit <= 4) {
-      return `${ value} ${ few }`;
+      return `${ value } ${ few }`;
     }
     return `${ value } ${ many }`;
   }

@@ -9,15 +9,15 @@
     </ng-template>
     <ng-template #body let-skeleton>
       <tr>
-        <td><p-skeleton width="100%" height="1.5em"/></td>
-        <td><p-skeleton width="100%" height="1.5em"/></td>
-        <td><p-skeleton width="100%" height="1.5em"/></td>
+        <td><p-skeleton width="100%" height="1.5em" /></td>
+        <td><p-skeleton width="100%" height="1.5em" /></td>
+        <td><p-skeleton width="100%" height="1.5em" /></td>
       </tr>
     </ng-template>
   </p-table>
 } @else {
-    <p-contextMenu #cm [model]="menuItems" />
-    <p-table [value]="(posts$ | async) || []">
+  <p-contextMenu #cm [model]="menuItems" />
+  <p-table [value]="(posts$ | async) || []">
     <ng-template pTemplate="header">
       <tr>
         <th>Title</th>
@@ -28,9 +28,7 @@
     <ng-template pTemplate="body" let-post>
       <tr
         (dblclick)="onRowDblClick(post)"
-        (contextmenu)="selectedPost = post;
-        $event.preventDefault();
-        cm.show($event)"
+        (contextmenu)="selectedPost = post; $event.preventDefault(); cm.show($event)"
       >
         <td>{{ post.title }}</td>
         <td>{{ post.tags.join(', ') }}</td>
@@ -48,5 +46,5 @@
   [totalRecords]="totalPosts"
   (onPageChange)="onPageChange($event)"
   [rowsPerPageOptions]="[10, 20, 30]"
-  style="padding-bottom: 100px;"
+  style="padding-bottom: 100px"
 />

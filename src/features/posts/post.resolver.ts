@@ -1,4 +1,4 @@
-import { Resolve, ActivatedRouteSnapshot} from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { inject, Injectable } from '@angular/core';
 import { PostApiService } from './post-api.service';
 import { Observable } from 'rxjs';
@@ -15,4 +15,5 @@ export class PostResolver implements Resolve<IPost> {
     const id: string | null = route.paramMap.get('id');
     return this.postApiService.getPostById(+id!);
   }
+
 }

@@ -3,7 +3,7 @@ import { IMessage } from '../interfaces/IMessage';
 import { MessageService } from '../classes/message.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleXmark, IconDefinition, faEnvelope } from '@fortawesome/free-regular-svg-icons';
 

@@ -1,5 +1,12 @@
-import { faAnglesDown, IconDefinition, faSpinner, faStar, faCirclePlay, faPeopleGroup, faShield } from '@fortawesome/free-solid-svg-icons';
-import { LocalStorageService } from '../classes/local-storage.service';
+import {
+  faAnglesDown,
+  IconDefinition,
+  faSpinner,
+  faStar,
+  faCirclePlay,
+  faPeopleGroup,
+  faShield,
+} from '@fortawesome/free-solid-svg-icons';
 import { Component, inject } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ITravelEssential } from '../interfaces/ITravelEssential';
@@ -16,14 +23,9 @@ import { faShopify } from '@fortawesome/free-brands-svg-icons';
 import { IService } from '../interfaces/IService';
 import { IMessage } from '../interfaces/IMessage';
 
-
 @Component({
   selector: 'app-home',
-  imports: [
-    FormsModule,
-    CommonModule,
-    FontAwesomeModule
-  ],
+  imports: [FormsModule, CommonModule, FontAwesomeModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
@@ -47,87 +49,88 @@ export class HomeComponent {
   tours: Collection<string> = new Collection<string>([
     'Поход в горы',
     'Прогулка по парку',
-    'Поход к реке'
+    'Поход к реке',
   ]);
 
-  prices: Collection<number> = new Collection<number>([
-    500,
-    600,
-    700
-  ]);
+  prices: Collection<number> = new Collection<number>([500, 600, 700]);
 
   services: IService[] = [
     {
       id: 1,
       icon: faPeopleGroup,
-      title: "Опытный гид",
-      description: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации."
+      title: 'Опытный гид',
+      description:
+        'Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации.',
     },
     {
       id: 2,
       icon: faShield,
-      title: "Безопасный поход",
-      description: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации."
+      title: 'Безопасный поход',
+      description:
+        'Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации.',
     },
     {
       id: 3,
       icon: faShopify,
-      title: "Лояльные цены",
-      description: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации."
-    }
+      title: 'Лояльные цены',
+      description:
+        'Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации.',
+    },
   ];
 
   popularDestination: IDestination[] = [
     {
       id: 1,
-      image: "boat-on-lake",
-      nameTour: "Озеро возле гор",
-      tourDescription: "романтическое приключение",
-      tourPrice: "480",
-      tourEvaluation: 4.9
+      image: 'boat-on-lake',
+      nameTour: 'Озеро возле гор',
+      tourDescription: 'романтическое приключение',
+      tourPrice: '480',
+      tourEvaluation: 4.9,
     },
     {
       id: 2,
-      image: "night-in-mountains",
-      nameTour: "Ночь в горах",
-      tourDescription: "в компании друзей",
-      tourPrice: "500",
-      tourEvaluation: 4.5
+      image: 'night-in-mountains',
+      nameTour: 'Ночь в горах',
+      tourDescription: 'в компании друзей',
+      tourPrice: '500',
+      tourEvaluation: 4.5,
     },
     {
       id: 3,
-      image: "yoga-in-mountains",
-      nameTour: "Йога в горах",
-      tourDescription: "для тех, кто забоится о себе",
-      tourPrice: "230",
-      tourEvaluation: 5.0
+      image: 'yoga-in-mountains',
+      nameTour: 'Йога в горах',
+      tourDescription: 'для тех, кто забоится о себе',
+      tourPrice: '230',
+      tourEvaluation: 5.0,
     },
   ];
 
   travelBlog: ITravelBlog[] = [
     {
       id: 1,
-      title: "Красивая Италия, какая она в реальности?",
-      content: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации.",
-      imege: "italy"
+      title: 'Красивая Италия, какая она в реальности?',
+      content:
+        'Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации.',
+      imege: 'italy',
     },
     {
       id: 2,
-      title: "Долой сомнения! Весь мир открыт для вас!",
-      content: "Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации ... независимые способы реализации соответствующих",
-      imege: "pallet"
+      title: 'Долой сомнения! Весь мир открыт для вас!',
+      content:
+        'Для современного мира базовый вектор развития предполагает независимые способы реализации соответствующих условий активизации ... независимые способы реализации соответствующих',
+      imege: 'pallet',
     },
     {
       id: 3,
-      title: "Как подготовиться к путешествию в одиночку? ",
-      content: "Для современного мира базовый вектор развития предполагает.",
-      imege: "traveling-alone"
+      title: 'Как подготовиться к путешествию в одиночку? ',
+      content: 'Для современного мира базовый вектор развития предполагает.',
+      imege: 'traveling-alone',
     },
     {
       id: 4,
-      title: "Индия ... летим?",
-      content: "Для современного мира базовый.",
-      imege: "india"
+      title: 'Индия ... летим?',
+      content: 'Для современного мира базовый.',
+      imege: 'india',
     },
   ];
 
@@ -137,14 +140,14 @@ export class HomeComponent {
     { id: 3, img: 'skyscraper' },
     { id: 4, img: 'coastal-zone' },
     { id: 5, img: 'canyon' },
-    { id: 6, img: 'thing-for-travel' }
+    { id: 6, img: 'thing-for-travel' },
   ];
 
   travelEssentials: ITravelEssential[] = [
-    { title: "Как собрать в долгий поход?" },
-    { title: "Жизненно важные предметы для похода" },
-    { title: "Медицинская страховка, гарантии безопасности" },
-    { title: "Если вы врач - загляните сюда" }
+    { title: 'Как собрать в долгий поход?' },
+    { title: 'Жизненно важные предметы для похода' },
+    { title: 'Медицинская страховка, гарантии безопасности' },
+    { title: 'Если вы врач - загляните сюда' },
   ];
 
   constructor() {
@@ -179,7 +182,7 @@ export class HomeComponent {
   }
 
   private saveVisitCount(): void {
-    const current: number = Number(localStorage.getItem('visit-count') || 0);
+    const current = Number(localStorage.getItem('visit-count') || 0);
     localStorage.setItem('visit-count', String(current + 1));
   }
 

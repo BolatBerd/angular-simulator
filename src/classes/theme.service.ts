@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
-import { BehaviorSubject, Observable, tap} from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Theme } from '../enums/Theme';
 import Aura from '@primeuix/themes/aura';
 import Lara from '@primeuix/themes/lara';
@@ -37,7 +37,7 @@ export class ThemeService {
       value: Theme.NORA,
       preset: Nora
     }
-  ]
+  ];
 
   savedMode: boolean = this.localStorageService.getItem<boolean>(this.MODE_KEY) ?? false;
   private darkModeSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.savedMode);
@@ -52,7 +52,7 @@ export class ThemeService {
   setDarkMode(isDarkMode: boolean): void {
     this.darkModeSubject.next(isDarkMode);
     this.localStorageService.setItem(this.MODE_KEY, isDarkMode);
-    this.html.classList.toggle('dark', isDarkMode)
+    this.html.classList.toggle('dark', isDarkMode);
   }
 
   setTheme(theme: Theme): void {
@@ -82,4 +82,5 @@ export class ThemeService {
       }
     }
   };
+
 }

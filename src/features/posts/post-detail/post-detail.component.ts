@@ -15,12 +15,14 @@ import { IPost } from '../IPost';
 
 @Component({
   selector: 'app-post-detail',
-  imports: [    CommonModule,
+  imports: [
+    CommonModule,
     TableModule,
     SkeletonModule,
     ContextMenuModule,
     PaginatorModule,
-    ButtonModule],
+    ButtonModule,
+  ],
   templateUrl: './post-detail.component.html',
   styleUrl: './post-detail.component.scss',
 })
@@ -40,19 +42,20 @@ export class PostDetailComponent implements OnInit {
 
   loadPost(): void {
     this.route.data
-    .pipe(
-      tap((data: Data) => {
+      .pipe(
+        tap((data: Data) => {
           this.post = data['post'];
           this.isLoading = false;
         }),
         catchError((error: HttpErrorResponse) => {
           this.isLoading = false;
           this.post = undefined;
-          this.messageService.showError('Ошибка загрузки')
+          this.messageService.showError('Ошибка загрузки');
           return throwError(() => error);
         }),
-        takeUntilDestroyed(this.destroyRef))
-        .subscribe();
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe();
   }
 
   goBack(): void {

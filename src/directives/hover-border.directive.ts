@@ -11,7 +11,7 @@ export class HoverBorderDirective implements OnDestroy {
 
   @Input() gradientConfiguration: IGradientConfiguration = {
     delay: 1000,
-    colors: ['#ff0080','#7928ca', '#00d4ff', 'rgba(62, 80, 241, 0.13)'],
+    colors: ['#ff0080', '#7928ca', '#00d4ff', 'rgba(62, 80, 241, 0.13)'],
     thickness: 2,
   };
 
@@ -19,16 +19,16 @@ export class HoverBorderDirective implements OnDestroy {
 
   @HostBinding('style.border')
   get border(): string {
-    return this.isActive ?
-      `${ this.gradientConfiguration.thickness ?? 2 }px solid transparent`:
-      `${ this.gradientConfiguration.thickness ?? 2 }px solid #dcdcdc`
+    return this.isActive
+      ? `${ this.gradientConfiguration.thickness ?? 2 }px solid transparent`
+      : `${ this.gradientConfiguration.thickness ?? 2 }px solid #dcdcdc`;
   }
 
   @HostBinding('style.background')
-    get background(): string {
-      return !this.isActive ?
-        'transparent':
-        `linear-gradient(white, white) padding-box, linear-gradient(90deg, ${ this.gradientConfiguration.colors }) border-box`;
+  get background(): string {
+    return !this.isActive
+      ? 'transparent'
+      : `linear-gradient(white, white) padding-box, linear-gradient(90deg, ${ this.gradientConfiguration.colors }) border-box`;
   }
 
   @HostBinding('style.backgroundSize')
@@ -41,9 +41,9 @@ export class HoverBorderDirective implements OnDestroy {
     return this.isActive ? 'gradientMove 3s linear infinite alternate' : '';
   }
 
-  @HostBinding('style.borderRadius') borderRadius: string = '12px';
+  @HostBinding('style.borderRadius') borderRadius = '12px';
 
-  @HostBinding('style.transition') transition: string = 'all 0.3s ease';
+  @HostBinding('style.transition') transition = 'all 0.3s ease';
 
   @HostListener('mouseenter')
   onEnter(): void {
@@ -56,7 +56,6 @@ export class HoverBorderDirective implements OnDestroy {
 
   @HostListener('mouseleave')
   onLeave(): void {
-
     clearTimeout(this.timeoutId);
 
     this.isActive = false;

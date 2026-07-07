@@ -7,20 +7,14 @@
 
 <ng-template #toastTemplate let-message>
   <div id="toast-message" class="toast" [ngClass]="message.type">
-
     <fa-icon [icon]="faEnvelope" />
     <div class="toast-content">
       <strong>{{ message.type }}</strong>
       <div>{{ message.text }}</div>
     </div>
 
-    <button
-      id="close-btn"
-      class="close-btn"
-      (click)="closeMessage(message)">
+    <button id="close-btn" class="close-btn" (click)="closeMessage(message)">
       <fa-icon class="pr-16" [icon]="faCircleXmark" />
-
     </button>
-
   </div>
 </ng-template>

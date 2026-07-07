@@ -1,4 +1,4 @@
-import { Injectable,inject  } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, catchError, finalize, of, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IUser } from '../interfaces/IUser';
@@ -7,9 +7,8 @@ import { LoaderService } from './loader.service';
 import { MessageService } from './message.service';
 import { LocalStorageService } from './local-storage.service';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
 
@@ -39,15 +38,14 @@ export class UserService {
     }
 
     this.loaderService.showLoader();
-    return this.userApiService.getUsers()
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          const errorMessage: string = `Ошибка ${ error.status }: Не удалось загрузить данные`;
-          this.messageService.showError(errorMessage);
-          return of([]);
-        }),
-        finalize(() => this.loaderService.hideLoader())
-      );
+    return this.userApiService.getUsers().pipe(
+      catchError((error: HttpErrorResponse) => {
+        const errorMessage: string = `Ошибка ${ error.status }: Не удалось загрузить данные`;
+        this.messageService.showError(errorMessage);
+        return of([]);
+      }),
+      finalize(() => this.loaderService.hideLoader()),
+    );
   }
 
   deleteUserById(id: number): void {
@@ -63,10 +61,10 @@ export class UserService {
       this.messageService.showWarn(`Пользователь с таким ${ user.email } уже существует`);
       return;
     } else {
-    const currentUsers: IUser[] = this.getUsers();
-    const updatedUsers: IUser[] = [...currentUsers, user];
-    this.setUsers(updatedUsers);
-    this.messageService.showSuccess('Пользователь создан успешно');
+      const currentUsers: IUser[] = this.getUsers();
+      const updatedUsers: IUser[] = [...currentUsers, user];
+      this.setUsers(updatedUsers);
+      this.messageService.showSuccess('Пользователь создан успешно');
     }
   }
 

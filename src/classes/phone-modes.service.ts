@@ -31,7 +31,7 @@ export class PhoneModesService {
         name: 'MASKED',
         value: PhoneMode.MASKED,
       }
-    ]
+    ];
 
     setModePhone(value: PhoneMode): void{
       this.modePhonSubject.next(value);

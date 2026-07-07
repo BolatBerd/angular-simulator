@@ -1,6 +1,6 @@
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Component, inject, OnInit } from '@angular/core';
-import { PostEditDialogComponent } from '../post-edit-dialog/post-edit-dialog.component'
+import { PostEditDialogComponent } from '../post-edit-dialog/post-edit-dialog.component';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { PostStateService } from '../post-store.service';
 import { Observable, tap } from 'rxjs';
@@ -44,9 +44,9 @@ export class PostsComponent implements OnInit {
 
   selectedPost?: IPost;
 
-  currentPage: number = 1;
-  totalPosts: number = 0;
-  pageSize: number = 10;
+  currentPage = 1;
+  totalPosts = 0;
+  pageSize = 10;
 
   readonly menuItems: MenuItem[] = [
     { label: 'Просмотр', command: () => this.onViewPost() },
@@ -95,7 +95,7 @@ export class PostsComponent implements OnInit {
             this.onSavePost(updatedPost);
           }
         })
-      ).subscribe()
+      ).subscribe();
     }
   }
 
