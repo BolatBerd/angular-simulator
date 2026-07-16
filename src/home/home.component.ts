@@ -7,7 +7,7 @@ import {
   faPeopleGroup,
   faShield,
 } from '@fortawesome/free-solid-svg-icons';
-import { Component, inject } from '@angular/core';
+import { Component, inject, InjectionToken } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ITravelEssential } from '../interfaces/ITravelEssential';
 import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
@@ -22,19 +22,22 @@ import { ITourForm } from '../interfaces/ITourForm';
 import { faShopify } from '@fortawesome/free-brands-svg-icons';
 import { IService } from '../interfaces/IService';
 import { IMessage } from '../interfaces/IMessage';
+import { DATE_FORMAT } from '../date-format.token';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [FormsModule, CommonModule, FontAwesomeModule],
+  imports: [FormsModule, CommonModule, FontAwesomeModule, DatePipe],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-
   messageService: MessageService = inject(MessageService);
+  DATE_FORMAT = inject(DATE_FORMAT);
+
   companyName: string = 'румтибет';
   companyIP: string = 'ИП Константинопольский К.К., 2023';
-  currentDateAndTime: string = new Date().toLocaleString();
+  currentDateAndTime: Date = new Date();
   isDateView: boolean = true;
   isLoading: boolean = true;
   liveInputValue!: string;
@@ -162,7 +165,7 @@ export class HomeComponent {
     }, 2000);
 
     setInterval(() => {
-      this.currentDateAndTime = new Date().toLocaleString();
+      this.currentDateAndTime = new Date();
     }, 1000);
 
     this.initializeCountFromStorage();
@@ -215,5 +218,4 @@ export class HomeComponent {
   closeMessage(message: IMessage): void {
     this.messageService.closeMessage(message);
   }
-
 }

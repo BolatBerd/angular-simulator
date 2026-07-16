@@ -11,7 +11,7 @@
       <div class="content flex-s-b">
         @if (isDateView) {
           <span class="timer">
-            {{ currentDateAndTime }}
+            {{ currentDateAndTime | date: DATE_FORMAT }}
           </span>
         } @else {
           <div class="clicker flex-s-b">

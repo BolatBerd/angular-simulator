@@ -13,15 +13,15 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-
   private localStorageService: LocalStorageService = inject(LocalStorageService);
   private messageService: MessageService = inject(MessageService);
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
 
+  authDateSubject: BehaviorSubject<Date | null> = new BehaviorSubject<Date | null>(null);
+  authDate$: Observable<Date | null> = this.authDateSubject.asObservable();
   private authUserSubject: BehaviorSubject<IAuthUser | null> =
     new BehaviorSubject<IAuthUser | null>(null);
-
   authUser$: Observable<IAuthUser | null> = this.authUserSubject.asObservable();
 
   private apiUrl: string = 'https://dummyjson.com/auth';
@@ -41,7 +41,7 @@ export class AuthService {
   }
 
   private fetchCurrentUser(): Observable<IAuthUser> {
-    return this.http.get<IAuthUser>(`${ this.apiUrl }/me`).pipe(
+    return this.http.get<IAuthUser>(`${this.apiUrl}/me`).pipe(
       tap((response: IAuthUser) => {
         this.authUserSubject.next(response);
       }),
@@ -79,7 +79,7 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<IAuthResponse> {
-    return this.http.post<IAuthResponse>(`${ this.apiUrl }/login`, { username, password }).pipe(
+    return this.http.post<IAuthResponse>(`${this.apiUrl}/login`, { username, password }).pipe(
       tap((response: IAuthResponse) => {
         const user: IAuthUser = { ...response, role: UserRole.ADMIN };
         this.saveTokens({
@@ -97,7 +97,7 @@ export class AuthService {
 
   refreshToken(): Observable<IAuthResponse> {
     return this.http
-      .post<IAuthResponse>(`${ this.apiUrl }/refresh`, { refreshToken: this.getRefreshToken() })
+      .post<IAuthResponse>(`${this.apiUrl}/refresh`, { refreshToken: this.getRefreshToken() })
       .pipe(
         tap((response: IAuthResponse) => {
           this.saveTokens({
@@ -117,6 +117,7 @@ export class AuthService {
   logout(): void {
     this.removeTokens();
     this.authUserSubject.next(null);
+    this.authDateSubject.next(null);
     this.redirectToLoginPage();
     this.messageService.showError('Сессия истекла. Пожалуйста, войдите снова.');
   }
@@ -140,5 +141,4 @@ export class AuthService {
   isAdmin(): boolean {
     return this.authUserSubject.value?.role === UserRole.ADMIN;
   }
-
 }
