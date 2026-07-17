@@ -33,7 +33,7 @@ import { DatePipe } from '@angular/common';
 })
 export class HomeComponent {
   messageService: MessageService = inject(MessageService);
-  DATE_FORMAT = inject(DATE_FORMAT);
+  DATE_FORMAT: string = inject(DATE_FORMAT);
 
   companyName: string = 'румтибет';
   companyIP: string = 'ИП Константинопольский К.К., 2023';

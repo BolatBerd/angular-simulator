@@ -21,6 +21,7 @@ import { httpErrorInterceptor } from '../interceptors/http-error-interceptor';
 import { authInterceptor } from '../features/auth/auth.interceptor';
 import { AuthService } from '../features/auth/auth.service';
 import { DATE_FORMAT } from '../date-format.token';
+import { APP_CONFIG } from '../config.token';
 
 function getThemePresetFromStorage(): Preset {
   const themeMap: Record<Theme, Preset> = {
@@ -61,6 +62,16 @@ export const appConfig: ApplicationConfig = {
     {
       provide: DATE_FORMAT,
       useValue: 'dd.MM.yyyy HH:mm',
+    },
+    {
+      provide: APP_CONFIG,
+      useValue: {
+        companyName: 'румтибет',
+        enableLogs: true,
+        enableNotifications: true,
+        enableTheming: true,
+        sessionTimeout: 30,
+      },
     },
   ],
 };

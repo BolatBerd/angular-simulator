@@ -9,11 +9,13 @@ import { ThemeService } from '../classes/theme.service';
 import { AuthService } from '../features/auth/auth.service';
 import { DATE_FORMAT } from '../date-format.token';
 import { FormsModule } from '@angular/forms';
+import { APP_CONFIG } from '../config.token';
 import { Component } from '@angular/core';
 import { INavItem } from '../interfaces/INavItem';
 import { DatePipe } from '@angular/common';
 import { inject } from '@angular/core';
 import { Theme } from '../enums/Theme';
+import { AppConfig } from '../interfaces/IAppConfig';
 
 @Component({
   selector: 'app-header',
@@ -36,7 +38,8 @@ import { Theme } from '../enums/Theme';
 export class HeaderComponent {
   themeService: ThemeService = inject(ThemeService);
   authService: AuthService = inject(AuthService);
-  DATE_FORMAT = inject(DATE_FORMAT);
+  DATE_FORMAT: string = inject(DATE_FORMAT);
+  APP_CONFIG: AppConfig = inject(APP_CONFIG);
 
   authDate$ = this.authService.authDate$;
 
@@ -49,7 +52,7 @@ export class HeaderComponent {
   faSun: IconDefinition = faSun;
   faMoon: IconDefinition = faMoon;
 
-  companyName = 'румтибет';
+  companyName = this.APP_CONFIG.companyName;
 
   currentDateAndTime: Date = new Date();
 

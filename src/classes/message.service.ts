@@ -1,18 +1,25 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { IMessage } from '../interfaces/IMessage';
 import { MessageType } from '../enums/MessageType';
 import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
+import { APP_CONFIG } from '../config.token';
+import { AppConfig } from '../interfaces/IAppConfig';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessageService {
-
   private messagesSubject: BehaviorSubject<IMessage[]> = new BehaviorSubject<IMessage[]>([]);
   messages$: Observable<IMessage[]> = this.messagesSubject.asObservable();
 
+  APP_CONFIG: AppConfig = inject(APP_CONFIG);
+
   private addMessage(type: MessageType, text: string): void {
+    if (!this.APP_CONFIG.enableNotifications) {
+      return;
+    }
+
     const message: IMessage = { type, text };
 
     const current: IMessage[] = this.messagesSubject.getValue();
@@ -47,5 +54,4 @@ export class MessageService {
 
     this.messagesSubject.next(updated);
   }
-
 }
