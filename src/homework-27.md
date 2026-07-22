@@ -2,10 +2,9 @@
 1 экземпляр CounterService будет создан. Из-за providedIn: 'root'.
 
 Задача №2. Локальный Provider
-3 экземпляра CounterService будет создано. Из-за
-providedIn: 'root' 1 экземпляр
+2 экземпляра CounterService будет создано. Из-за
+<app-child></app-child> 1 экземпляр
 <app-child></app-child> 2 экземпляр
-<app-child></app-child> 3 экземпляр
 
 Задача №3. Какой экземпляр получит компонент?
 ChildComponent получит из ParentComponent
@@ -50,9 +49,9 @@ ChildComponent получит из ParentComponent
 => создает B > создает A.
 
 Задача №14. ⭐⭐
-4 объекта.
+1. 0 сервисов
+2. 3 объекта объекта сервисов .
 Сначала LoggerService, затем ApiService, потом UserService, и кэширует каждый из них.
-7 объектов.
 
 Задача №15. ⭐⭐⭐
 
@@ -65,7 +64,7 @@ ChildComponent получит из ParentComponent
 7. DashboardStatisticsService providers роутинга
 8. UserTableStateService providers роутинга
 9. ModalService providedIn: 'root'
-10. LoggerService useValue
+10. LoggerService InjectionToken + useValue/useFactory.
 11. AppConfig InjectionToken
 12. CurrencyFormatter providedIn: 'root'
 13. AnalyticsService useFactory

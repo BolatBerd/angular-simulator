@@ -15,6 +15,7 @@ import { APP_CONFIG } from '../../config.token';
   providedIn: 'root',
 })
 export class AuthService {
+
   private localStorageService: LocalStorageService = inject(LocalStorageService);
   private messageService: MessageService = inject(MessageService);
   private http: HttpClient = inject(HttpClient);
@@ -44,7 +45,7 @@ export class AuthService {
   }
 
   private fetchCurrentUser(): Observable<IAuthUser> {
-    return this.http.get<IAuthUser>(`${this.apiUrl}/me`).pipe(
+    return this.http.get<IAuthUser>(`${ this.apiUrl }/me`).pipe(
       tap((response: IAuthUser) => {
         this.authUserSubject.next(response);
       }),
@@ -83,7 +84,7 @@ export class AuthService {
 
   login(username: string, password: string): Observable<IAuthResponse> {
     return this.http
-      .post<IAuthResponse>(`${this.apiUrl}/login`, {
+      .post<IAuthResponse>(`${ this.apiUrl }/login`, {
         username,
         password,
         expiresInMins: this.APP_CONFIG.sessionTimeout,
@@ -106,7 +107,7 @@ export class AuthService {
 
   refreshToken(): Observable<IAuthResponse> {
     return this.http
-      .post<IAuthResponse>(`${this.apiUrl}/refresh`, {
+      .post<IAuthResponse>(`${ this.apiUrl }/refresh`, {
         refreshToken: this.getRefreshToken(),
         expiresInMins: this.APP_CONFIG.sessionTimeout,
       })
@@ -153,4 +154,5 @@ export class AuthService {
   isAdmin(): boolean {
     return this.authUserSubject.value?.role === UserRole.ADMIN;
   }
+
 }

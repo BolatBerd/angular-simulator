@@ -13,6 +13,7 @@ module.exports = defineConfig([
       tseslint.configs.recommended,
       tseslint.configs.stylistic,
       angular.configs.tsRecommended,
+      eslintPluginPrettierRecommended,
     ],
     processor: angular.processInlineTemplates,
     rules: {
@@ -68,6 +69,12 @@ module.exports = defineConfig([
           type: 'element',
           prefix: 'app',
           style: 'kebab-case',
+        },
+      ],
+      'prettier/prettier': [
+        'error',
+        {
+          bracketSpacing: true,
         },
       ],
     },

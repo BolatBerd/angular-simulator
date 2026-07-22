@@ -1,4 +1,4 @@
-import { HttpEvent, HttpEventType, HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpEventType, HttpHandlerFn, HttpRequest, HttpResponse } from '@angular/common/http';
 import { HttpStatusDescription } from '../enums/HttpStatusDescription';
 import { Observable, tap } from 'rxjs';
 import { APP_CONFIG } from '../config.token';
@@ -37,14 +37,11 @@ export function loggingInterceptor(
     tap((event: HttpEvent<unknown>) => {
       const ended: number = Date.now();
       if (event.type === HttpEventType.Response && config.enableLogs) {
+        const response = event as HttpResponse<unknown>;
+        const duration = Date.now() - started;
+        const statusMessage = getStatusMessage(response.status);
         console.log(
-          req.method,
-          req.url,
-          'Вернул ответ со статусом',
-          getStatusMessage(event.status),
-          'за',
-          ended - started,
-          'мс',
+          `[HTTP ${req.method}] ${req.url} | Статус: ${response.status} (${statusMessage}) | Время: ${duration} мс`
         );
       }
     }),
