@@ -40,7 +40,11 @@
           </a>
         }
       </nav>
+
       @if (authService.isLoggedIn()) {
+        <span class="timer">
+          {{ authDate$ | async | date: DATE_FORMAT }}
+        </span>
         <button
           id="btn-exit-header"
           class="consultation fs-16 br-8"

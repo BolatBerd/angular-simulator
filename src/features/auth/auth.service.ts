@@ -8,6 +8,8 @@ import { IAuthToken } from './IAuthToken';
 import { IAuthUser } from './IAuthUser';
 import { UserRole } from './UserRole';
 import { Router } from '@angular/router';
+import { AppConfig } from '../../interfaces/IAppConfig';
+import { APP_CONFIG } from '../../config.token';
 
 @Injectable({
   providedIn: 'root',
@@ -18,10 +20,12 @@ export class AuthService {
   private messageService: MessageService = inject(MessageService);
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
+  APP_CONFIG: AppConfig = inject(APP_CONFIG);
 
+  authDateSubject: BehaviorSubject<Date | null> = new BehaviorSubject<Date | null>(null);
+  authDate$: Observable<Date | null> = this.authDateSubject.asObservable();
   private authUserSubject: BehaviorSubject<IAuthUser | null> =
     new BehaviorSubject<IAuthUser | null>(null);
-
   authUser$: Observable<IAuthUser | null> = this.authUserSubject.asObservable();
 
   private apiUrl: string = 'https://dummyjson.com/auth';
@@ -79,25 +83,34 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<IAuthResponse> {
-    return this.http.post<IAuthResponse>(`${ this.apiUrl }/login`, { username, password }).pipe(
-      tap((response: IAuthResponse) => {
-        const user: IAuthUser = { ...response, role: UserRole.ADMIN };
-        this.saveTokens({
-          accessToken: response.accessToken,
-          refreshToken: response.refreshToken,
-        });
-        this.authUserSubject.next(user);
-      }),
-      catchError((error: HttpErrorResponse) => {
-        this.messageService.showError('Неверные данные.');
-        return throwError(() => error);
-      }),
-    );
+    return this.http
+      .post<IAuthResponse>(`${ this.apiUrl }/login`, {
+        username,
+        password,
+        expiresInMins: this.APP_CONFIG.sessionTimeout,
+      })
+      .pipe(
+        tap((response: IAuthResponse) => {
+          const user: IAuthUser = { ...response, role: UserRole.ADMIN };
+          this.saveTokens({
+            accessToken: response.accessToken,
+            refreshToken: response.refreshToken,
+          });
+          this.authUserSubject.next(user);
+        }),
+        catchError((error: HttpErrorResponse) => {
+          this.messageService.showError('Неверные данные.');
+          return throwError(() => error);
+        }),
+      );
   }
 
   refreshToken(): Observable<IAuthResponse> {
     return this.http
-      .post<IAuthResponse>(`${ this.apiUrl }/refresh`, { refreshToken: this.getRefreshToken() })
+      .post<IAuthResponse>(`${ this.apiUrl }/refresh`, {
+        refreshToken: this.getRefreshToken(),
+        expiresInMins: this.APP_CONFIG.sessionTimeout,
+      })
       .pipe(
         tap((response: IAuthResponse) => {
           this.saveTokens({
@@ -117,6 +130,7 @@ export class AuthService {
   logout(): void {
     this.removeTokens();
     this.authUserSubject.next(null);
+    this.authDateSubject.next(null);
     this.redirectToLoginPage();
     this.messageService.showError('Сессия истекла. Пожалуйста, войдите снова.');
   }

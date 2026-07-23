@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Component, inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -17,7 +17,6 @@ import { Router } from '@angular/router';
   styleUrl: './auth.component.scss',
 })
 export class AuthComponent {
-
   private messageService: MessageService = inject(MessageService);
   private authService: AuthService = inject(AuthService);
   private router: Router = inject(Router);
@@ -32,17 +31,18 @@ export class AuthComponent {
     if (this.authForm.valid) {
       this.authService
         .login(this.authForm.value.login, this.authForm.value.password)
-          .pipe(
-            tap(() => {
-              this.router.navigate(['']);
-              this.messageService.showSuccess('успешно авторизовался');
-            }),
-            catchError((error: HttpErrorResponse) => {
-              this.messageService.showError('Ошибка авторизации');
-              return throwError(() => error);
-              })
-          ).subscribe();
+        .pipe(
+          tap(() => {
+            this.router.navigate(['']);
+            this.messageService.showSuccess('успешно авторизовался');
+            this.authService.authDateSubject.next(new Date());
+          }),
+          catchError((error: HttpErrorResponse) => {
+            this.messageService.showError('Ошибка авторизации');
+            return throwError(() => error);
+          }),
+        )
+        .subscribe();
     }
   }
-
 }

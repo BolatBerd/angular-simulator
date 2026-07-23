@@ -1,4 +1,9 @@
-import { APP_INITIALIZER, ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import {
+  APP_INITIALIZER,
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZoneChangeDetection,
+} from '@angular/core';
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
@@ -15,12 +20,14 @@ import { loggingInterceptor } from '../interceptors/logging-interceptor';
 import { httpErrorInterceptor } from '../interceptors/http-error-interceptor';
 import { authInterceptor } from '../features/auth/auth.interceptor';
 import { AuthService } from '../features/auth/auth.service';
+import { DATE_FORMAT } from '../date-format.token';
+import { APP_CONFIG } from '../config.token';
 
 function getThemePresetFromStorage(): Preset {
   const themeMap: Record<Theme, Preset> = {
     [Theme.AURA]: Aura,
     [Theme.LARA]: Lara,
-    [Theme.NORA]: Nora
+    [Theme.NORA]: Nora,
   };
 
   const saved: Theme = localStorage.getItem('theme') as Theme;
@@ -33,7 +40,9 @@ function getThemePresetFromStorage(): Preset {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient((withInterceptors([loggingInterceptor, httpErrorInterceptor, authInterceptor]))),
+    provideHttpClient(
+      withInterceptors([loggingInterceptor, httpErrorInterceptor, authInterceptor]),
+    ),
     provideRouter(routes),
     provideZoneChangeDetection(),
     providePrimeNG({
@@ -41,14 +50,28 @@ export const appConfig: ApplicationConfig = {
         preset: getThemePresetFromStorage(),
         options: {
           darkModeSelector: '.dark',
-        }
-      }
+        },
+      },
     }),
-     {
+    {
       provide: APP_INITIALIZER,
       useFactory: (authService: AuthService) => () => authService.checkAuth(),
       deps: [AuthService],
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+    {
+      provide: DATE_FORMAT,
+      useValue: 'dd.MM.yyyy HH:mm',
+    },
+    {
+      provide: APP_CONFIG,
+      useValue: {
+        companyName: 'румтибет',
+        enableLogs: true,
+        enableNotifications: true,
+        enableTheming: true,
+        sessionTimeout: 30,
+      },
+    },
+  ],
 };
