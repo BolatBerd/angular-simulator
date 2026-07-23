@@ -37,11 +37,11 @@ export function loggingInterceptor(
     tap((event: HttpEvent<unknown>) => {
       const ended: number = Date.now();
       if (event.type === HttpEventType.Response && config.enableLogs) {
-        const response = event as HttpResponse<unknown>;
-        const duration = Date.now() - started;
-        const statusMessage = getStatusMessage(response.status);
+        const response: HttpResponse<unknown> = event as HttpResponse<unknown>;
+        const duration: number = Date.now() - started;
+        const statusMessage: string = getStatusMessage(response.status);
         console.log(
-          `[HTTP ${req.method}] ${req.url} | Статус: ${response.status} (${statusMessage}) | Время: ${duration} мс`
+          `[HTTP ${ req.method }] ${ req.url } | Статус: ${ response.status } (${ statusMessage }) | Время: ${ duration } мс`
         );
       }
     }),
