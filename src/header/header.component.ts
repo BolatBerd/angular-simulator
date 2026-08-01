@@ -47,6 +47,7 @@ export class HeaderComponent {
     { label: 'Главная', path: '' },
     { label: 'Пользователи', path: 'user' },
     { label: 'Посты', path: 'posts' },
+    { label: 'Родитель', path: 'parent' },
   ];
 
   faSun: IconDefinition = faSun;

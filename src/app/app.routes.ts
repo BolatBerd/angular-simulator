@@ -18,6 +18,10 @@ export const routes: Routes = [
     loadComponent: () => import('../users-page/users-page.component').then(m => m.UsersPageComponent)
   },
   {
+    path: 'parent',
+    loadComponent: () => import('../parent/parent.component').then(m => m.ParentComponent)
+  },
+  {
     path: '',
     canActivate: [authGuard],
     loadComponent: () => import('../home/home.component').then(m => m.HomeComponent)
