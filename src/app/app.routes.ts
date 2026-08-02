@@ -22,6 +22,10 @@ export const routes: Routes = [
     loadComponent: () => import('../parent/parent.component').then(m => m.ParentComponent)
   },
   {
+    path: 'change-detection-demo',
+    loadComponent: () => import('../change-detection-demo/change-detection-demo.component').then(m => m.ChangeDetectionDemoComponent)
+  },
+  {
     path: '',
     canActivate: [authGuard],
     loadComponent: () => import('../home/home.component').then(m => m.HomeComponent)

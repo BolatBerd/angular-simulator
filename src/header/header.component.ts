@@ -48,6 +48,7 @@ export class HeaderComponent {
     { label: 'Пользователи', path: 'user' },
     { label: 'Посты', path: 'posts' },
     { label: 'Родитель', path: 'parent' },
+    { label: 'Change Detection Demo', path: 'change-detection-demo' },
   ];
 
   faSun: IconDefinition = faSun;

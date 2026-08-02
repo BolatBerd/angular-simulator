@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-child',
@@ -9,13 +9,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } 
 })
 export class ChildComponent {
 
-  private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
-
   @Input() user!: { name: string; age: number };
 
-  ngOnInit() {
-    this.cdr.markForCheck();
-  }
+  //Компонент использует ChangeDetectionStrategy.OnPush.
+  //Angular при OnPush проверяет не содержимое объекта, а его ссылку.
 
 }
-

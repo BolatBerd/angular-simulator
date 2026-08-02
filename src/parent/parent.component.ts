@@ -26,7 +26,5 @@ export class ParentComponent {
   changeSpreadName(): void {
     this.user = { ...this.user, name: 'Eugene' };
   }
-  // Компонент использует ChangeDetectionStrategy.OnPush.
-  //Angular при OnPush проверяет не содержимое объекта, а его ссылку.
   
 }
