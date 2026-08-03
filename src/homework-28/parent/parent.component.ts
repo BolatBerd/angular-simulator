@@ -26,5 +26,5 @@ export class ParentComponent {
   changeSpreadName(): void {
     this.user = { ...this.user, name: 'Eugene' };
   }
-  
+
 }

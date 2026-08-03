@@ -19,11 +19,15 @@ export const routes: Routes = [
   },
   {
     path: 'parent',
-    loadComponent: () => import('../parent/parent.component').then(m => m.ParentComponent)
+    loadComponent: () => import('../homework-28/parent/parent.component').then(m => m.ParentComponent)
   },
   {
-    path: 'change-detection-demo',
-    loadComponent: () => import('../change-detection-demo/change-detection-demo.component').then(m => m.ChangeDetectionDemoComponent)
+    path: 'change-detection-default',
+    loadComponent: () => import('../homework-28/change-detection-default/change-detection-default.component').then(m => m.ChangeDetectionDefaultComponent)
+  },
+  {
+    path: 'change-detection-on-push',
+    loadComponent: () => import('../homework-28/change-detection-on-push/change-detection-on-push.component').then(m => m.ChangeDetectionOnPushComponent)
   },
   {
     path: '',
