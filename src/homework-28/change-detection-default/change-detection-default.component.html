@@ -1,0 +1,20 @@
+<h2>Change Detection Demo</h2>
+<p>Текущее значение <strong>count</strong>: {{ count }}</p>
+
+<hr />
+
+<h3>Сценарии</h3>
+
+<button (click)="oneClick()"> 1. Click </button>
+
+<button (click)="clickTimeout()"> 2. setTimeout (1 сек) </button>
+
+<button (click)="clickPromise()"> 3. Promise (1 сек) </button>
+
+<button (click)="clickHttpClient()"> 4. HttpClient </button>
+
+<button (click)="clickSetInterval()"> 5. setInterval (toggle) </button>
+
+<button (click)="clickMixed()"> 6. Mix: click + setTimeout + Promise </button>
+
+<hr class="demo"/>

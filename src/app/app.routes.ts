@@ -18,6 +18,18 @@ export const routes: Routes = [
     loadComponent: () => import('../users-page/users-page.component').then(m => m.UsersPageComponent)
   },
   {
+    path: 'parent',
+    loadComponent: () => import('../homework-28/parent/parent.component').then(m => m.ParentComponent)
+  },
+  {
+    path: 'change-detection-default',
+    loadComponent: () => import('../homework-28/change-detection-default/change-detection-default.component').then(m => m.ChangeDetectionDefaultComponent)
+  },
+  {
+    path: 'change-detection-on-push',
+    loadComponent: () => import('../homework-28/change-detection-on-push/change-detection-on-push.component').then(m => m.ChangeDetectionOnPushComponent)
+  },
+  {
     path: '',
     canActivate: [authGuard],
     loadComponent: () => import('../home/home.component').then(m => m.HomeComponent)
