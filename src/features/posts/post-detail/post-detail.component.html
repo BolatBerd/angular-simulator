@@ -3,7 +3,7 @@
     <button
       pButton
       type="button"
-      label="Назад к списку"
+      label="{{ 'POSTS.BACK_TO_LIST' | translate }}"
       severity="secondary"
       (click)="goBack()"
     ></button>
@@ -11,8 +11,15 @@
     <div class="card">
       <h1 class="title">{{ post.title }}</h1>
 
-      <p class="text"><strong>Теги:</strong> {{ post.tags.join(', ') }}</p>
-      <p class="text"><strong>Просмотры:</strong> {{ post.views }}</p>
+      <p class="text">
+        <strong>{{ 'POSTS.TAGS_LABEL' | translate }}:</strong>
+        {{ post.tags.join(', ') }}
+      </p>
+
+      <p class="text">
+        <strong>{{ 'POSTS.VIEWS_LABEL' | translate }}:</strong>
+        {{ post.views }}
+      </p>
 
       <div class="text-body">
         {{ post.body }}
@@ -21,7 +28,12 @@
   </div>
 } @else {
   <div class="flex-col-cen">
-    <h3>Пост не найден</h3>
-    <button pButton type="button" label="Вернуться к списку" (click)="goBack()"></button>
+    <h3>{{ 'POSTS.NOT_FOUND' | translate }}</h3>
+    <button
+      pButton
+      type="button"
+      label="{{ 'POSTS.BACK_TO_LIST' | translate }}"
+      (click)="goBack()"
+    ></button>
   </div>
 }

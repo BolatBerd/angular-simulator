@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../features/auth/auth.service';
+import { LanguageService } from '../classes/language.service';
 
 @Component({
   selector: 'app-root',
@@ -29,4 +30,9 @@ export class AppComponent {
 
   authService: AuthService = inject(AuthService);
 
+  private readonly languageService = inject(LanguageService);
+
+  ngOnInit(): void {
+    this.languageService.initLanguage();
+  }
 }

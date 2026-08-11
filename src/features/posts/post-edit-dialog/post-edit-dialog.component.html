@@ -1,46 +1,65 @@
 <form [formGroup]="editForm" (ngSubmit)="onSave()">
   <div class="flex flex-column" style="max-width: 400px">
     <div class="flex flex-column">
-      <label for="title">Заголовок:</label>
+      <label for="title">
+        {{ 'POSTS.EDIT_TITLE_LABEL' | translate }}
+      </label>
+
       <input
         pInputText
         id="title"
         formControlName="title"
-        placeholder="Введите заголовок сообщения"
+        placeholder="{{ 'POSTS.EDIT_TITLE_PLACEHOLDER' | translate }}"
       />
+
       @if (editForm.get('title')?.invalid && editForm.get('title')?.touched) {
-        <small class="text-red-500">Обязательно укажите заголовок (минимум 3 символа).</small>
+        <small class="text-red-500">
+          {{ 'POSTS.EDIT_TITLE_ERROR' | translate }}
+        </small>
       }
     </div>
 
     <div class="flex flex-column">
-      <label for="tags">Теги (разделенные запятыми):</label>
+      <label for="tags">
+        {{ 'POSTS.EDIT_TAGS_LABEL' | translate }}
+      </label>
+
       <textarea
         pInputTextarea
         id="tags"
         formControlName="tags"
         rows="3"
-        placeholder="e.g. angular, typescript, web"
+        placeholder="{{ 'POSTS.TAGS_PLACEHOLDER' | translate }}"
       ></textarea>
     </div>
 
     <div class="flex flex-column">
-      <label for="views">Просмотры:</label>
-      <input type="number" pInputNumber id="views" formControlName="views" placeholder="0" />
+      <label for="views">
+        {{ 'POSTS.COLUMN_VIEWS' | translate }}
+      </label>
+
+      <input
+        type="number"
+        pInputNumber
+        id="views"
+        formControlName="views"
+        placeholder="{{ 'POSTS.VIEWS_PLACEHOLDER' | translate }}"
+      />
     </div>
 
     <div class="flex flex-column">
       <button
         pButton
         type="button"
-        label="Выход"
+        label="{{ 'POSTS.CANCEL' | translate }}"
         severity="secondary"
         (click)="onCancel()"
       ></button>
+
       <button
         pButton
         type="submit"
-        label="Сохранить"
+        label="{{ 'POSTS.SAVE' | translate }}"
         severity="primary"
         [disabled]="editForm.invalid"
       ></button>

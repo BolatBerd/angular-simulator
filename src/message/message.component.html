@@ -1,5 +1,5 @@
 <div id="toast-container" class="toast-container">
-  @for (message of messages$ | async; track message) {
+  @for (message of messages$ | async;  track $index) {
     <ng-container *ngTemplateOutlet="toastTemplate; context: { $implicit: message }">
     </ng-container>
   }

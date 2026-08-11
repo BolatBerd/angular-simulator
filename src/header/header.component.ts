@@ -10,12 +10,15 @@ import { AuthService } from '../features/auth/auth.service';
 import { DATE_FORMAT } from '../date-format.token';
 import { FormsModule } from '@angular/forms';
 import { APP_CONFIG } from '../config.token';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { INavItem } from '../interfaces/INavItem';
 import { DatePipe } from '@angular/common';
-import { inject } from '@angular/core';
 import { Theme } from '../enums/Theme';
 import { AppConfig } from '../interfaces/IAppConfig';
+import { TranslatePipe } from '@ngx-translate/core';
+import { LanguageService} from '../classes/language.service';
+import { AppLanguage } from '../enums/Language';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -31,6 +34,7 @@ import { AppConfig } from '../interfaces/IAppConfig';
     SelectButtonModule,
     AsyncPipe,
     DatePipe,
+    TranslatePipe
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
@@ -41,23 +45,35 @@ export class HeaderComponent {
   DATE_FORMAT: string = inject(DATE_FORMAT);
   APP_CONFIG: AppConfig = inject(APP_CONFIG);
 
-  authDate$ = this.authService.authDate$;
+  readonly languageService: LanguageService = inject(LanguageService);
+
+  authDate$: Observable<Date | null> = this.authService.authDate$;
 
   navItems: INavItem[] = [
-    { label: 'Главная', path: '' },
-    { label: 'Пользователи', path: 'user' },
-    { label: 'Посты', path: 'posts' },
-    { label: 'Родитель', path: 'parent' },
-    { label: 'Default', path: 'change-detection-default' },
-    { label: 'OnPush', path: 'change-detection-on-push' },
+    { label: 'NAV.MAIN', path: '' },
+    { label: 'NAV.USERS', path: 'user' },
+    { label: 'NAV.POSTS', path: 'posts' },
+    { label: 'NAV.PARENT', path: 'parent' },
+    { label: 'NAV.DEFAULT', path: 'change-detection-default' },
+    { label: 'NAV.ON_PUSH', path: 'change-detection-on-push' },
+  ];
+
+  languageOptions: { code: AppLanguage; label: string }[] = [
+    { code: AppLanguage.RU, label: 'RU' },
+    { code: AppLanguage.EN, label: 'EN' },
+    { code: AppLanguage.KZ, label: 'KZ' },
   ];
 
   faSun: IconDefinition = faSun;
   faMoon: IconDefinition = faMoon;
 
-  companyName = this.APP_CONFIG.companyName;
+  companyName: string = this.APP_CONFIG.companyName;
 
   currentDateAndTime: Date = new Date();
+
+  setLanguage(language: AppLanguage): void {
+    this.languageService.setLanguage(language);
+  }
 
   changeTheme(value: boolean): void {
     this.themeService.setDarkMode(value);

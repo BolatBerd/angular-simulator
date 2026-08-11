@@ -9,12 +9,13 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-auth',
-  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, CommonModule],
+  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, CommonModule, TranslatePipe],
   templateUrl: './auth.component.html',
-  styleUrl: './auth.component.scss',
+  styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent {
   private messageService: MessageService = inject(MessageService);

@@ -4,10 +4,12 @@ import { Component, inject } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { APP_CONFIG } from '../config.token';
 import { AppConfig } from '../interfaces/IAppConfig';
+import { TranslatePipe } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-footer',
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, TranslatePipe, CommonModule],
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
 })
@@ -21,18 +23,18 @@ export class FooterComponent {
   messengers: IconDefinition[] = [faTelegram, faVk, faPinterest, faSkype];
 
   routes: string[] = [
-    'Прогулки в горы летом',
-    'Зимние походы в горы',
-    'Посещение храмов в горах',
-    'Экстремальные виды туризма',
-    'Походы в джунглях Амазонии',
-    'Поездка в Африку',
+    'FOOTER.ROUTE_1',
+    'FOOTER.ROUTE_2',
+    'FOOTER.ROUTE_3',
+    'FOOTER.ROUTE_4',
+    'FOOTER.ROUTE_5',
+    'FOOTER.ROUTE_6',
   ];
 
   travelEssentials: string[] = [
-    'Как собрать в долгий поход?',
-    'Жизненно важные предметы для похода',
-    'Медицинская страховка, гарантии безопасности',
-    'Если вы врач - загляните сюда',
+    'FOOTER.ESSENTIAL_1',
+    'FOOTER.ESSENTIAL_2',
+    'FOOTER.ESSENTIAL_3',
+    'FOOTER.ESSENTIAL_4',
   ];
 }

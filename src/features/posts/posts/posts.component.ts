@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { IPost } from '../IPost';
 
 @Component({
@@ -26,6 +27,7 @@ import { IPost } from '../IPost';
     CommonModule,
     ButtonModule,
     TableModule,
+    TranslatePipe,
   ],
    providers: [DialogService],
   templateUrl: './posts.component.html',
@@ -38,24 +40,31 @@ export class PostsComponent implements OnInit {
   private loaderService: LoaderService = inject(LoaderService);
   private dialogService: DialogService = inject(DialogService);
   private router: Router = inject(Router);
+  private translateService: TranslateService = inject(TranslateService);
 
   isLoading$: Observable<boolean> = this.loaderService.isLoading$;
   posts$: Observable<IPost[]> = this.postStateService.posts$;
 
   selectedPost?: IPost;
 
-  currentPage = 1;
-  totalPosts = 0;
-  pageSize = 10;
+  currentPage: number = 1;
+  totalPosts: number = 0;
+  pageSize: number = 10;
 
-  readonly menuItems: MenuItem[] = [
-    { label: 'Просмотр', command: () => this.onViewPost() },
-    { label: 'Редактировать', command: () => this.onEditPost() },
-    { label: 'Удалить', command: () => this.onDeletePost() }
-  ];
+  menuItems: MenuItem[] = [];
 
   ngOnInit(): void {
     this.loadPosts();
+    this.updateMenuItems();
+    this.translateService.onLangChange.subscribe(() => this.updateMenuItems());
+  }
+
+  private updateMenuItems(): void {
+    this.menuItems = [
+      { label: this.translateService.instant('POSTS.VIEW'), command: () => this.onViewPost() },
+      { label: this.translateService.instant('POSTS.EDIT'), command: () => this.onEditPost() },
+      { label: this.translateService.instant('POSTS.DELETE'), command: () => this.onDeletePost() },
+    ];
   }
 
   loadPosts(): void {
@@ -81,7 +90,7 @@ export class PostsComponent implements OnInit {
     if (this.selectedPost) {
       const dialogRef: DynamicDialogRef<PostEditDialogComponent> | null = this.dialogService
       .open(PostEditDialogComponent, {
-        header: 'Редактировать пост',
+        header: this.translateService.instant('POSTS.EDIT_HEADER'),
         width: '600px',
         modal: true,
         data: this.selectedPost,

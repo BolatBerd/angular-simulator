@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { Router } from '@angular/router';
 import { IPost } from '../IPost';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-post-detail',
@@ -22,6 +23,7 @@ import { IPost } from '../IPost';
     ContextMenuModule,
     PaginatorModule,
     ButtonModule,
+    TranslatePipe,
   ],
   templateUrl: './post-detail.component.html',
   styleUrl: './post-detail.component.scss',

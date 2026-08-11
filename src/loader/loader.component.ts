@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component,inject } from '@angular/core';
 import { LoaderService } from '../classes/loader.service';
 import { Observable } from 'rxjs';
@@ -8,7 +8,7 @@ import { faSpinner, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-loader',
-  imports: [AsyncPipe, FontAwesomeModule],
+  imports: [AsyncPipe, FontAwesomeModule, CommonModule],
   templateUrl: './loader.component.html',
   styleUrl: './loader.component.scss',
 })

@@ -5,13 +5,15 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { IPost } from '../IPost';
+import { TranslatePipe } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-post-edit-dialog',
-  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, InputNumberModule],
+  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, InputNumberModule, TranslatePipe, CommonModule],
   templateUrl: './post-edit-dialog.component.html',
-  styleUrl: './post-edit-dialog.component.scss',
+  styleUrls: ['./post-edit-dialog.component.scss'],
 })
 export class PostEditDialogComponent {
 

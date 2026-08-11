@@ -1,11 +1,11 @@
 <section id="contacts" class="footer pos-rel">
   <div class="company-container footer-grid">
     <div class="footer-col">
-      <h3>Компания "{{ companyName }}"</h3>
-      <p>
-        Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух
-        тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney.
-      </p>
+      <h3>
+        {{ 'FOOTER.COMPANY_TITLE' | translate:{ companyName: companyName } }}
+      </h3>
+
+      <p>{{ 'FOOTER.DESCRIPTION' | translate }}</p>
 
       <div class="contacts">
         <a id="info" href="mailto:info@domain.com">info@domain.com</a>
@@ -22,22 +22,30 @@
     </div>
 
     <div class="footer-col">
-      <h3>Наши услуги</h3>
+      <h3>{{ 'FOOTER.SERVICES_TITLE' | translate }}</h3>
+
       <ul>
         @for (item of routes; track item) {
           <li>
-            <a id="service"> <fa-icon [icon]="faAngleRight" />{{ item }} </a>
+            <a id="service">
+              <fa-icon [icon]="faAngleRight" />
+              {{ item | translate }}
+            </a>
           </li>
         }
       </ul>
     </div>
 
     <div class="footer-col">
-      <h3>Важно для путешествий</h3>
+      <h3>{{ 'FOOTER.TRAVEL_ESSENTIALS_TITLE' | translate }}</h3>
+
       <ul>
         @for (item of travelEssentials; track item) {
           <li>
-            <a id="essential"> <fa-icon [icon]="faAngleRight" />{{ item }} </a>
+            <a id="essential">
+              <fa-icon [icon]="faAngleRight" />
+              {{ item | translate }}
+            </a>
           </li>
         }
       </ul>
@@ -47,32 +55,50 @@
   <div class="footer-company-container mt-85 flex-s-b">
     <div class="footer-company flex-s-b fs-14">
       <p>{{ companyIP }}</p>
-      <a id="policy" class="policy cur-p">Политика обработки персональных данных</a>
+      <a id="policy" class="policy cur-p">
+        Политика обработки персональных данных
+      </a>
     </div>
   </div>
 
   <section id="subscribe" class="subscribe pos-abs">
     <div class="subscribe__content">
-      <span class="subscribe__label">актуально</span>
+      <span class="subscribe__label">
+        {{ 'FOOTER.SUBSCRIBE_LABEL' | translate }}
+      </span>
+
       <h2 class="subscribe__title">
-        Получайте полезные<br />
-        рассылки о путешествиях
+        {{ 'FOOTER.SUBSCRIBE_TITLE' | translate }}
       </h2>
     </div>
 
     <form id="form" class="subscribe__form">
-      <label class="subscribe__label__text" for="email"> Введите e-mail адрес </label>
+      <label class="subscribe__label__text" for="email">
+        {{ 'FOOTER.EMAIL_LABEL' | translate }}
+      </label>
 
       <div class="subscribe__controls">
-        <input type="email" id="email" placeholder="name@domain.com" required />
-        <button id="submit" type="submit">Подписаться на новости</button>
+        <input
+          type="email"
+          id="email"
+          placeholder="{{ 'FOOTER.EMAIL_PLACEHOLDER' | translate }}"
+          required
+        />
+
+        <button id="submit" type="submit">
+          {{ 'FOOTER.SUBSCRIBE_BUTTON' | translate }}
+        </button>
       </div>
 
       <p class="subscribe__policy">
-        подписываясь на новости, вы автоматически соглашаетесь с
-        <a id="personal-data">условиями обработки персональных данных</a>
-        и
-        <a id="rules-advertising-mailings">правилами рекламных рассылок</a>
+        {{ 'FOOTER.POLICY_TEXT1' | translate }}
+        <a id="personal-data">
+          {{ 'FOOTER.POLICY_LINK_1' | translate }}
+        </a>
+        {{ 'FOOTER.POLICY_TEXT2' | translate }}
+        <a id="rules-advertising-mailings">
+          {{ 'FOOTER.POLICY_LINK_2' | translate }}
+        </a>
       </p>
     </form>
   </section>
