@@ -1,38 +1,45 @@
 import { LocalStorageService } from './local-storage.service';
-import { inject, Injectable } from '@angular/core';
+import { DestroyRef, inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AppLanguage } from '../enums/Language';
 import { PrimeNG } from 'primeng/config';
 import { tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LanguageService {
 
-  private readonly localStorage: LocalStorageService = inject(LocalStorageService);
+  private readonly localStorageService: LocalStorageService = inject(LocalStorageService);
   private readonly translate: TranslateService = inject(TranslateService);
   private readonly primeNG: PrimeNG = inject(PrimeNG);
+  private destroyRef: DestroyRef = inject(DestroyRef);
 
   private readonly LANGUAGE_KEY: string = 'language';
 
   DEFAULT_LANGUAGE: AppLanguage = AppLanguage.RU;
-  SUPPORTED_LANGUAGES: AppLanguage[] = [AppLanguage.RU,  AppLanguage.EN,  AppLanguage.KZ];
+  SUPPORTED_LANGUAGES: AppLanguage[] = Object.values(AppLanguage);
 
   initLanguage(): void {
     this.translate.addLangs(this.SUPPORTED_LANGUAGES);
     this.translate.setFallbackLang(this.DEFAULT_LANGUAGE);
 
-    const savedLanguage: AppLanguage | null = this.localStorage.getItem(
-      this.LANGUAGE_KEY,
-    ) as AppLanguage | null;
+    const savedLanguage: AppLanguage | null = this.localStorageService.getItem(this.LANGUAGE_KEY,) as AppLanguage | null;
 
-    const language: AppLanguage =
-      savedLanguage && this.SUPPORTED_LANGUAGES.includes(savedLanguage)
-        ? savedLanguage
-        : this.DEFAULT_LANGUAGE;
+    if (savedLanguage && this.SUPPORTED_LANGUAGES.includes(savedLanguage)) {
+      this.setLanguage(savedLanguage);
+      return;
+    }
 
-    this.setLanguage(language);
+    const browserLeng: string = navigator.language.split('-')[0];
+
+    if (this.SUPPORTED_LANGUAGES.includes(browserLeng as AppLanguage)) {
+      this.setLanguage(browserLeng as AppLanguage)
+      return;
+    }
+
+    this.setLanguage(this.DEFAULT_LANGUAGE);
 
     this.translate.onLangChange.pipe(
       tap(() => {
@@ -50,19 +57,17 @@ export class LanguageService {
       return;
     }
 
-    this.localStorage.setItem(this.LANGUAGE_KEY, language);
-    this.translate.use(language).pipe(
-      tap(() => {
-        this.updatePrimeNgTranslation();
-      })
-    ).subscribe();
+    this.localStorageService.setItem(this.LANGUAGE_KEY, language);
+    this.translate.use(language);
+    this.updatePrimeNgTranslation();
   }
 
   private updatePrimeNgTranslation(): void {
     this.translate.get('PRIMENG').pipe(
-      tap((translation) => {
+      tap((translation: Record<string, any>) => {
         this.primeNG.setTranslation(translation);
-      })
+      }),
+      takeUntilDestroyed(this.destroyRef)
     ).subscribe();
   }
 
