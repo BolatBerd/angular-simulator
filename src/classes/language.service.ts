@@ -3,7 +3,7 @@ import { DestroyRef, inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AppLanguage } from '../enums/Language';
 import { PrimeNG } from 'primeng/config';
-import { tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
@@ -15,6 +15,9 @@ export class LanguageService {
   private readonly translate: TranslateService = inject(TranslateService);
   private readonly primeNG: PrimeNG = inject(PrimeNG);
   private destroyRef: DestroyRef = inject(DestroyRef);
+
+  private readonly languageSubject = new BehaviorSubject<AppLanguage>(AppLanguage.RU);
+  readonly language$: Observable<AppLanguage> = this.languageSubject.asObservable();
 
   private readonly LANGUAGE_KEY: string = 'language';
 
@@ -60,6 +63,7 @@ export class LanguageService {
     this.localStorageService.setItem(this.LANGUAGE_KEY, language);
     this.translate.use(language);
     this.updatePrimeNgTranslation();
+    this.languageSubject.next(language);
   }
 
   private updatePrimeNgTranslation(): void {

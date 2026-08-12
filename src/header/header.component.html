@@ -30,17 +30,18 @@
 
     <div class="flex-center">
       <nav class="nav flex-s-b fs-18">
-        <a
-          *ngFor="let item of navItems"
-          [routerLink]="item.path"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: item.path === '' }"
-        >
-          {{ item.label | translate }}
-        </a>
+        @for (item of navItems; track item.path) {
+          <a
+            [routerLink]="item.path"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: item.path === '' }"
+          >
+            {{ item.label | translate }}
+          </a>
+        }
       </nav>
 
-      <ng-container *ngIf="authService.isLoggedIn()">
+      @if (authService.isLoggedIn()) {
         <span class="timer">
           {{ authDate$ | async | date: DATE_FORMAT }}
         </span>
@@ -52,15 +53,20 @@
         >
           {{ 'HEADER.LOGOUT' | translate }}
         </button>
-      </ng-container>
+      }
 
       <span class="header-welcome">{{ 'HEADER.HELLO' | translate }}</span>
 
-      <div class="language-buttons">
-        <button *ngFor="let lang of languageOptions" (click)="setLanguage(lang.code)">
-          {{ lang.label }}
-        </button>
-      </div>
+      <p-selectbutton
+        id="select-language"
+        class="language-switcher"
+        [options]="languageOptions"
+        [ngModel]="languageService.language$ | async"
+        (onChange)="setLanguage($event.value)"
+        optionLabel="label"
+        optionValue="code"
+        [allowEmpty]="false"
+      />
 
       <button
         id="btn-consultation-header"
