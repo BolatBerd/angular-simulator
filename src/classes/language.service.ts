@@ -16,7 +16,7 @@ export class LanguageService {
   private readonly primeNG: PrimeNG = inject(PrimeNG);
   private destroyRef: DestroyRef = inject(DestroyRef);
 
-  private readonly languageSubject = new BehaviorSubject<AppLanguage>(AppLanguage.RU);
+  private readonly languageSubject: BehaviorSubject<AppLanguage> = new BehaviorSubject<AppLanguage>(AppLanguage.RU);
   readonly language$: Observable<AppLanguage> = this.languageSubject.asObservable();
 
   private readonly LANGUAGE_KEY: string = 'language';
