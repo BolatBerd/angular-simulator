@@ -6,14 +6,14 @@ import { UserCardComponent } from '../user-card/user-card.component';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, combineLatest, map, Observable, tap } from 'rxjs';
 import { UsersFilterComponent } from '../users-filter/users-filter.component';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { MessageService } from '../classes/message.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowsRotate, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { CustomPluralPipe } from '../pipes/custom-plural.pipe';
-import { PhoneMode } from '../enums/PhoneMode';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { PhoneModesService } from '../classes/phone-modes.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-users-page',
@@ -23,9 +23,11 @@ import { PhoneModesService } from '../classes/phone-modes.service';
     FormsModule,
     UsersFilterComponent,
     AsyncPipe,
+    CommonModule,
     FontAwesomeModule,
     CustomPluralPipe,
     SelectButtonModule,
+    TranslatePipe,
   ],
   templateUrl: './users-page.component.html',
   styleUrl: './users-page.component.scss',

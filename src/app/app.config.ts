@@ -22,6 +22,8 @@ import { authInterceptor } from '../features/auth/auth.interceptor';
 import { AuthService } from '../features/auth/auth.service';
 import { DATE_FORMAT } from '../date-format.token';
 import { APP_CONFIG } from '../config.token';
+import { provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader'
 
 function getThemePresetFromStorage(): Preset {
   const themeMap: Record<Theme, Preset> = {
@@ -43,6 +45,13 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([loggingInterceptor, httpErrorInterceptor, authInterceptor]),
     ),
+    provideTranslateService({
+    fallbackLang: 'ru',
+      loader: provideTranslateHttpLoader({
+        prefix: './i18n/',
+        suffix: '.json'
+      })
+    }),
     provideRouter(routes),
     provideZoneChangeDetection(),
     providePrimeNG({

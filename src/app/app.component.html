@@ -1,4 +1,6 @@
-@if (authService.authUser$ | async; as user) {
+@let user = authService.authUser$ | async;
+
+@if (user) {
   <div class="layout">
     <app-header></app-header>
     <main class="main-content">
@@ -11,5 +13,6 @@
     <router-outlet></router-outlet>
   </main>
 }
+
 <app-loader></app-loader>
 <app-message></app-message>

@@ -3,6 +3,8 @@ import { catchError, tap, throwError } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 import { PostApiService } from '../post-api.service';
 import { MessageService } from '../../../classes/message.service';
 import { ButtonModule } from 'primeng/button';
@@ -11,7 +13,7 @@ import { IPost } from '../IPost';
 
 @Component({
   selector: 'app-post-create',
-  imports: [ReactiveFormsModule, ButtonModule],
+  imports: [ReactiveFormsModule, ButtonModule, TranslatePipe, CommonModule],
   templateUrl: './post-create.component.html',
   styleUrl: './post-create.component.scss',
 })

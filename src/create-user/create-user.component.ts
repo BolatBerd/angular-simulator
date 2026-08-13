@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IUser } from '../interfaces/IUser';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HoverDirective } from '../directives/hover.directive';
@@ -7,7 +8,7 @@ import { IGradientConfiguration } from '../interfaces/IGradientConfiguration';
 
 @Component({
   selector: 'app-create-user',
-  imports: [ReactiveFormsModule, HoverDirective, HoverBorderDirective],
+  imports: [ReactiveFormsModule, HoverDirective, HoverBorderDirective, TranslatePipe],
   templateUrl: './create-user.component.html',
   styleUrl: './create-user.component.scss',
 })
