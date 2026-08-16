@@ -1,14 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MessageComponent } from '../message/message.component';
-import { HeaderComponent } from '../header/header.component';
-import { FooterComponent } from '../footer/footer.component';
-import { LoaderComponent } from '../loader/loader.component';
+import { MessageComponent } from './shared/components/message/message.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../features/auth/auth.service';
-import { LanguageService } from '../classes/language.service';
+import { AuthService } from './features/auth/services/auth.service';
+import { LanguageService } from './core/services/language.service';
 
 @Component({
   selector: 'app-root',

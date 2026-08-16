@@ -15,11 +15,11 @@ import Lara from '@primeuix/themes/lara';
 import Nora from '@primeuix/themes/nora';
 
 import { Preset } from '@primeuix/themes/types';
-import { Theme } from '../enums/Theme';
-import { loggingInterceptor } from '../interceptors/logging-interceptor';
-import { httpErrorInterceptor } from '../interceptors/http-error-interceptor';
-import { authInterceptor } from '../features/auth/auth.interceptor';
-import { AuthService } from '../features/auth/auth.service';
+import { Theme } from './core/enums/Theme';
+import { loggingInterceptor } from './core/interceptors/logging-interceptor';
+import { httpErrorInterceptor } from './core/interceptors/http-error-interceptor';
+import { authInterceptor } from './features/auth/auth.interceptor';
+import { AuthService } from './features/auth/services/auth.service';
 import { DATE_FORMAT } from '../date-format.token';
 import { APP_CONFIG } from '../config.token';
 import { provideTranslateService } from '@ngx-translate/core';
