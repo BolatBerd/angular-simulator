@@ -18,44 +18,37 @@ SRC\APP
 │   training.ts
 │   
 ├───core
-│   ├───enums
-│   │       Color.ts
-│   │       HttpStatusDescription.ts
-│   │       Language.ts
-│   │       MessageType.ts
-│   │       PhoneMode.ts
-│   │       Theme.ts
-│   │       
+│   ├───components
+│   │   ├───footer
+│   │   │       footer.component.html
+│   │   │       footer.component.scss
+│   │   │       footer.component.ts
+│   │   │       
+│   │   ├───header
+│   │   │       header.component.html
+│   │   │       header.component.scss
+│   │   │       header.component.ts
+│   │   │       
+│   │   ├───loader
+│   │   │       loader.component.html
+│   │   │       loader.component.scss
+│   │   │       loader.component.ts
+│   │   │       
+│   │   └───message
+│   │           message.component.html
+│   │           message.component.scss
+│   │           message.component.ts
+│   │           
 │   ├───interceptors
 │   │       http-error-interceptor.ts
 │   │       logging-interceptor.ts
-│   │       
-│   ├───interfaces
-│   │       IAppConfig.ts
-│   │       IDestination.ts
-│   │       IGradientConfiguration.ts
-│   │       IMessage.ts
-│   │       IMessenger.ts
-│   │       INavItem.ts
-│   │       IPhoneMode.ts
-│   │       IPhotoReport.ts
-│   │       IRoute.ts
-│   │       IService.ts
-│   │       IThemeOptions.ts
-│   │       ITourForm.ts
-│   │       ITravelBlog.ts
-│   │       ITravelEssential.ts
-│   │       IUser.ts
 │   │       
 │   └───services
 │           language.service.ts
 │           loader.service.ts
 │           local-storage.service.ts
 │           message.service.ts
-│           phone-modes.service.ts
 │           theme.service.ts
-│           user-api.service.ts
-│           user.service.ts
 │           
 ├───features
 │   ├───auth
@@ -79,11 +72,6 @@ SRC\APP
 │   │   └───services
 │   │           auth.service.ts
 │   │           
-│   ├───create-user
-│   │       create-user.component.html
-│   │       create-user.component.scss
-│   │       create-user.component.ts
-│   │       
 │   ├───home
 │   │       home.component.html
 │   │       home.component.scss
@@ -147,48 +135,67 @@ SRC\APP
 │   │           post-api.service.ts
 │   │           post-store.service.ts
 │   │           
-│   ├───user-card
-│   │       user-card.component.html
-│   │       user-card.component.scss
-│   │       user-card.component.ts
-│   │       
-│   ├───users-filter
-│   │       users-filter.component.html
-│   │       users-filter.component.scss
-│   │       users-filter.component.ts
-│   │       
-│   └───users-page
-│           users-page.component.html
-│           users-page.component.scss
-│           users-page.component.ts
-│           
+│   └───users
+│       ├───create-user
+│       │       create-user.component.html
+│       │       create-user.component.scss
+│       │       create-user.component.ts
+│       │       
+│       ├───directives
+│       │       hover-border.directive.ts
+│       │       hover.directive.ts
+│       │       
+│       ├───enums
+│       │       PhoneMode.ts
+│       │       
+│       ├───interfaces
+│       │       IGradientConfiguration.ts
+│       │       IPhoneMode.ts
+│       │       IUser.ts
+│       │       
+│       ├───pipes
+│       │       custom-plural.pipe.ts
+│       │       phone-numbers.pipe.ts
+│       │       
+│       ├───services
+│       │       phone-modes.service.ts
+│       │       user-api.service.ts
+│       │       user.service.ts
+│       │       
+│       ├───user-card
+│       │       user-card.component.html
+│       │       user-card.component.scss
+│       │       user-card.component.ts
+│       │       
+│       ├───users-filter
+│       │       users-filter.component.html
+│       │       users-filter.component.scss
+│       │       users-filter.component.ts
+│       │       
+│       └───users-page
+│               users-page.component.html
+│               users-page.component.scss
+│               users-page.component.ts
+│               
 └───shared
-    ├───components
-    │   ├───footer
-    │   │       footer.component.html
-    │   │       footer.component.scss
-    │   │       footer.component.ts
-    │   │       
-    │   ├───header
-    │   │       header.component.html
-    │   │       header.component.scss
-    │   │       header.component.ts
-    │   │       
-    │   ├───loader
-    │   │       loader.component.html
-    │   │       loader.component.scss
-    │   │       loader.component.ts
-    │   │       
-    │   └───message
-    │           message.component.html
-    │           message.component.scss
-    │           message.component.ts
-    │           
-    ├───directives
-    │       hover-border.directive.ts
-    │       hover.directive.ts
+    ├───enums
+    │       Color.ts
+    │       HttpStatusDescription.ts
+    │       Language.ts
+    │       MessageType.ts
+    │       Theme.ts
     │       
-    └───pipes
-            custom-plural.pipe.ts
-            phone-numbers.pipe.ts
+    └───interfaces
+            IAppConfig.ts
+            IDestination.ts
+            IMessage.ts
+            IMessenger.ts
+            INavItem.ts
+            IPhotoReport.ts
+            IRoute.ts
+            IService.ts
+            IThemeOptions.ts
+            ITourForm.ts
+            ITravelBlog.ts
+            ITravelEssential.ts
             

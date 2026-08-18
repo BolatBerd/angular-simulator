@@ -5,19 +5,19 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
-import { ThemeService } from '../../../core/services/theme.service';
+import { ThemeService } from '../../services/theme.service';
 import { AuthService } from '../../../features/auth/services/auth.service';
 import { DATE_FORMAT } from '../../../../date-format.token';
 import { FormsModule } from '@angular/forms';
 import { APP_CONFIG } from '../../../../config.token';
 import { Component, inject } from '@angular/core';
-import { INavItem } from '../../../core/interfaces/INavItem';
+import { INavItem } from '../../../shared/interfaces/INavItem';
 import { DatePipe } from '@angular/common';
-import { Theme } from '../../../core/enums/Theme';
-import { AppConfig } from '../../../core/interfaces/IAppConfig';
+import { Theme } from '../../../shared/enums/Theme';
+import { AppConfig } from '../../../shared/interfaces/IAppConfig';
 import { TranslatePipe } from '@ngx-translate/core';
-import { LanguageService} from '../../../core/services/language.service';
-import { AppLanguage } from '../../../core/enums/Language';
+import { LanguageService} from '../../services/language.service';
+import { AppLanguage } from '../../../shared/enums/Language';
 import { Observable } from 'rxjs';
 
 @Component({

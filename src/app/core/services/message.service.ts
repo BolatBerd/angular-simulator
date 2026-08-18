@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { IMessage } from '../interfaces/IMessage';
-import { MessageType } from '../enums/MessageType';
+import { IMessage } from '../../shared/interfaces/IMessage';
+import { MessageType } from '../../shared/enums/MessageType';
 import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
 import { APP_CONFIG } from '../../../config.token';
-import { AppConfig } from '../interfaces/IAppConfig';
+import { AppConfig } from '../../shared/interfaces/IAppConfig';
 
 @Injectable({
   providedIn: 'root',

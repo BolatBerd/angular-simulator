@@ -1,7 +1,7 @@
 import { LocalStorageService } from './local-storage.service';
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { AppLanguage } from '../enums/Language';
+import { AppLanguage } from '../../shared/enums/Language';
 import { PrimeNG } from 'primeng/config';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

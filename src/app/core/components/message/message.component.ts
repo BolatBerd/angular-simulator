@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { IMessage } from '../../../core/interfaces/IMessage';
-import { MessageService } from '../../../core/services/message.service';
+import { IMessage } from '../../../shared/interfaces/IMessage';
+import { MessageService } from '../../services/message.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';

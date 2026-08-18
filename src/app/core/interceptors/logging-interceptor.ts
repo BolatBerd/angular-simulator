@@ -1,9 +1,9 @@
 import { HttpEvent, HttpEventType, HttpHandlerFn, HttpRequest, HttpResponse } from '@angular/common/http';
-import { HttpStatusDescription } from '../enums/HttpStatusDescription';
+import { HttpStatusDescription } from '../../shared/enums/HttpStatusDescription';
 import { Observable, tap } from 'rxjs';
 import { APP_CONFIG } from '../../../config.token';
 import { inject } from '@angular/core';
-import { AppConfig } from '../interfaces/IAppConfig';
+import { AppConfig } from '../../shared//interfaces/IAppConfig';
 
 function getStatusMessage(status: number): string {
   switch (status) {

@@ -3,9 +3,9 @@ import { BehaviorSubject, catchError, finalize, of, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IUser } from '../interfaces/IUser';
 import { UserApiService } from './user-api.service';
-import { LoaderService } from './loader.service';
-import { MessageService } from './message.service';
-import { LocalStorageService } from './local-storage.service';
+import { LoaderService } from '../../../core/services/loader.service';
+import { MessageService } from '../../../core/services/message.service';
+import { LocalStorageService } from '../../../core/services/local-storage.service';
 
 @Injectable({
   providedIn: 'root',

@@ -15,7 +15,7 @@ import Lara from '@primeuix/themes/lara';
 import Nora from '@primeuix/themes/nora';
 
 import { Preset } from '@primeuix/themes/types';
-import { Theme } from './core/enums/Theme';
+import { Theme } from './shared/enums/Theme';
 import { loggingInterceptor } from './core/interceptors/logging-interceptor';
 import { httpErrorInterceptor } from './core/interceptors/http-error-interceptor';
 import { authInterceptor } from './features/auth/auth.interceptor';

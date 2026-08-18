@@ -8,7 +8,7 @@ import { IAuthToken } from '../interfaces/IAuthToken';
 import { IAuthUser } from '../interfaces/IAuthUser';
 import { UserRole } from '../UserRole';
 import { Router } from '@angular/router';
-import { AppConfig } from '../../../core/interfaces/IAppConfig';
+import { AppConfig } from '../../../shared/interfaces/IAppConfig';
 import { APP_CONFIG } from '../../../../config.token';
 
 @Injectable({

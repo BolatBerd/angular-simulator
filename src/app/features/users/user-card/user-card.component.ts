@@ -1,9 +1,9 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { IUser } from '../../core/interfaces/IUser';
+import { IUser } from '../interfaces/IUser';
 import { UpperCasePipe } from '@angular/common';
-import { PhoneNumbersPipe } from '../../shared/pipes/phone-numbers.pipe';
-import { PhoneMode } from '../../core/enums/PhoneMode';
-import { PhoneModesService } from '../../core/services/phone-modes.service';
+import { PhoneNumbersPipe } from '../pipes/phone-numbers.pipe';
+import { PhoneMode } from '../enums/PhoneMode';
+import { PhoneModesService } from '../services/phone-modes.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 

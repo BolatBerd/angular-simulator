@@ -1,5 +1,5 @@
 import { Directive, HostBinding, HostListener, Input, OnDestroy } from '@angular/core';
-import { IGradientConfiguration } from '../../core/interfaces/IGradientConfiguration';
+import { IGradientConfiguration } from '../interfaces/IGradientConfiguration';
 
 @Directive({
   selector: '[hoverBorder]',

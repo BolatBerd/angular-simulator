@@ -15,7 +15,7 @@ export const routes: Routes = [
   {
     path: 'user',
     canActivate: [authGuard, adminGuard],
-    loadComponent: () => import('./features/users-page/users-page.component').then(m => m.UsersPageComponent)
+    loadComponent: () => import('./features/users/users-page/users-page.component').then(m => m.UsersPageComponent)
   },
   {
     path: 'parent',

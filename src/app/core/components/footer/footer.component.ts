@@ -3,7 +3,7 @@ import { IconDefinition, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { Component, inject } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { APP_CONFIG } from '../../../../config.token';
-import { AppConfig } from '../../../core/interfaces/IAppConfig';
+import { AppConfig } from '../../../shared/interfaces/IAppConfig';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 

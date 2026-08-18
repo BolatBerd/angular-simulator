@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PhoneMode } from '../enums/PhoneMode';
 import { IPhoneMode } from '../interfaces/IPhoneMode';
-import { LocalStorageService } from './local-storage.service';
+import { LocalStorageService } from '../../../core/services/local-storage.service';
 
 @Injectable({
   providedIn: 'root',

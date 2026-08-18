@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { IUser } from '../../core/interfaces/IUser';
+import { IUser } from '../interfaces/IUser';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { HoverDirective } from '../../shared/directives/hover.directive';
-import { HoverBorderDirective } from '../../shared/directives/hover-border.directive';
-import { IGradientConfiguration } from '../../core/interfaces/IGradientConfiguration';
+import { HoverDirective } from '../directives/hover.directive';
+import { HoverBorderDirective } from '../directives/hover-border.directive';
+import { IGradientConfiguration } from '../interfaces/IGradientConfiguration';
 
 @Component({
   selector: 'app-create-user',
