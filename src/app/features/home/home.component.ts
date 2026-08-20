@@ -1,0 +1,217 @@
+import {
+  faAnglesDown,
+  IconDefinition,
+  faSpinner,
+  faStar,
+  faCirclePlay,
+  faPeopleGroup,
+  faShield,
+} from '@fortawesome/free-solid-svg-icons';
+import { Component, inject, InjectionToken } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ITravelEssential } from '../../shared/interfaces/ITravelEssential';
+import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
+import { MessageService } from '../../core/services/message.service';
+import { IDestination } from '../../shared/interfaces/IDestination';
+import { IPhotoReport } from '../../shared/interfaces/IPhotoReport';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ITravelBlog } from '../../shared/interfaces/ITravelBlog';
+import { Collection } from '../../../collection';
+import { ITourForm } from '../../shared/interfaces/ITourForm';
+import { faShopify } from '@fortawesome/free-brands-svg-icons';
+import { IService } from '../../shared/interfaces/IService';
+import { IMessage } from '../../shared/interfaces/IMessage';
+import { DATE_FORMAT } from '../../../date-format.token';
+import { DatePipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+
+@Component({
+  selector: 'app-home',
+  imports: [FormsModule, CommonModule, FontAwesomeModule, DatePipe, TranslatePipe],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
+})
+export class HomeComponent {
+  messageService: MessageService = inject(MessageService);
+  DATE_FORMAT: string = inject(DATE_FORMAT);
+
+  companyName: string = 'румтибет';
+  companyIP: string = 'ИП Константинопольский К.К., 2023';
+  currentDateAndTime: Date = new Date();
+  isDateView: boolean = true;
+  isLoading: boolean = true;
+  liveInputValue!: string;
+  count: number = 0;
+  form: ITourForm = {};
+  faAnglesDown: IconDefinition = faAnglesDown;
+  faCalendarDays: IconDefinition = faCalendarDays;
+  faSpinner: IconDefinition = faSpinner;
+  faStar: IconDefinition = faStar;
+  faCirclePlay: IconDefinition = faCirclePlay;
+
+  tours: Collection<string> = new Collection<string>([
+    'HOME.TOURS.MOUNTAIN',
+    'HOME.TOURS.PARK',
+    'HOME.TOURS.RIVER',
+  ]);
+
+  prices: Collection<number> = new Collection<number>([500, 600, 700]);
+
+  services: IService[] = [
+    {
+      id: 1,
+      icon: faPeopleGroup,
+      title: 'HOME.SERVICES.EXPERT_GUIDE',
+      description: 'HOME.SERVICES.EXPERT_GUIDE_DESC',
+    },
+    {
+      id: 2,
+      icon: faShield,
+      title: 'HOME.SERVICES.SAFE_TOUR',
+      description: 'HOME.SERVICES.SAFE_TOUR_DESC',
+    },
+    {
+      id: 3,
+      icon: faShopify,
+      title: 'HOME.SERVICES.FAIR_PRICES',
+      description: 'HOME.SERVICES.FAIR_PRICES_DESC',
+    },
+  ];
+
+  popularDestination: IDestination[] = [
+    {
+      id: 1,
+      image: 'boat-on-lake',
+      nameTour: 'HOME.POPULAR_DESTINATIONS.LAKE',
+      tourDescription: 'HOME.POPULAR_DESTINATIONS.LAKE_DESC',
+      tourPrice: '480',
+      tourEvaluation: 4.9,
+    },
+    {
+      id: 2,
+      image: 'night-in-mountains',
+      nameTour: 'HOME.POPULAR_DESTINATIONS.NIGHT',
+      tourDescription: 'HOME.POPULAR_DESTINATIONS.NIGHT_DESC',
+      tourPrice: '500',
+      tourEvaluation: 4.5,
+    },
+    {
+      id: 3,
+      image: 'yoga-in-mountains',
+      nameTour: 'HOME.POPULAR_DESTINATIONS.YOGA',
+      tourDescription: 'HOME.POPULAR_DESTINATIONS.YOGA_DESC',
+      tourPrice: '230',
+      tourEvaluation: 5.0,
+    },
+  ];
+
+  travelBlog: ITravelBlog[] = [
+    {
+      id: 1,
+      title: 'HOME.BLOG.TITLE_1',
+      content: 'HOME.BLOG.CONTENT_1',
+      imege: 'italy',
+    },
+    {
+      id: 2,
+      title: 'HOME.BLOG.TITLE_2',
+      content: 'HOME.BLOG.CONTENT_2',
+      imege: 'pallet',
+    },
+    {
+      id: 3,
+      title: 'HOME.BLOG.TITLE_3',
+      content: 'HOME.BLOG.CONTENT_3',
+      imege: 'traveling-alone',
+    },
+    {
+      id: 4,
+      title: 'HOME.BLOG.TITLE_4',
+      content: 'HOME.BLOG.CONTENT_4',
+      imege: 'india',
+    },
+  ];
+
+  photoReport: IPhotoReport[] = [
+    { id: 1, img: 'balloons' },
+    { id: 2, img: 'travel-map' },
+    { id: 3, img: 'skyscraper' },
+    { id: 4, img: 'coastal-zone' },
+    { id: 5, img: 'canyon' },
+    { id: 6, img: 'thing-for-travel' },
+  ];
+
+  travelEssentials: ITravelEssential[] = [
+    { title: 'HOME.TRAVEL_ESSENTIALS.ITEM_1' },
+    { title: 'HOME.TRAVEL_ESSENTIALS.ITEM_2' },
+    { title: 'HOME.TRAVEL_ESSENTIALS.ITEM_3' },
+    { title: 'HOME.TRAVEL_ESSENTIALS.ITEM_4' },
+  ];
+
+  constructor() {
+    this.saveLastVisitDate();
+    this.saveVisitCount();
+    this.prices.replace(2, 550);
+    this.tours.remove(1);
+    this.tours.clearCollection();
+
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 2000);
+
+    setInterval(() => {
+      this.currentDateAndTime = new Date();
+    }, 1000);
+
+    this.initializeCountFromStorage();
+  }
+
+  private saveCount(): void {
+    localStorage.setItem('count', this.count.toString());
+  }
+
+  private initializeCountFromStorage(): void {
+    const storedCount: string | null = localStorage.getItem('count');
+    this.count = storedCount ? Number(storedCount) : 0;
+  }
+
+  private saveLastVisitDate(): void {
+    localStorage.setItem('last-visit', new Date().toISOString());
+  }
+
+  private saveVisitCount(): void {
+    const current = Number(localStorage.getItem('visit-count') || 0);
+    localStorage.setItem('visit-count', String(current + 1));
+  }
+
+  toggleBlock(): void {
+    this.isDateView = !this.isDateView;
+  }
+
+  incrementCount(): void {
+    this.count++;
+    this.saveCount();
+  }
+
+  decrementCount(): void {
+    this.count--;
+    this.saveCount();
+  }
+
+  openDatePicker(input: HTMLInputElement): void {
+    input.showPicker();
+  }
+
+  isFormValid(): boolean {
+    return !!(this.form.location && this.form.date && this.form.persons);
+  }
+
+  openSelect(select: HTMLSelectElement | null): void {
+    select?.click();
+  }
+
+  closeMessage(message: IMessage): void {
+    this.messageService.closeMessage(message);
+  }
+}
