@@ -5,7 +5,9 @@
     "POSTS": "Posts",
     "PARENT": "Parent",
     "DEFAULT": "Default",
-    "ON_PUSH": "OnPush"
+    "ON_PUSH": "OnPush",
+    "PRODUCTS": "Products",
+    "CART": "Cart"
   },
   "HEADER": {
     "HELLO": "Hello",

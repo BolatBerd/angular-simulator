@@ -5,7 +5,9 @@
     "POSTS": "Посттар",
     "PARENT": "Ата-ана",
     "DEFAULT": "Default",
-    "ON_PUSH": "OnPush"
+    "ON_PUSH": "OnPush",
+    "PRODUCTS": "Өнімдер",
+    "CART": "Себет"
   },
   "HEADER": {
     "HELLO": "Сәлем",

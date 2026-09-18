@@ -1,0 +1,152 @@
+<div class="cart-container">
+  <h1>Корзина</h1>
+
+  @if (items().length > 0) {
+    <div class="cart-content">
+      <div class="cart-items">
+        <p-table [value]="items()" styleClass="p-datatable-sm">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Товар</th>
+              <th>Цена</th>
+              <th>Количество</th>
+              <th>Сумма</th>
+              <th>Действия</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-item>
+            <tr>
+              <td class="product-cell">
+                <img
+                  [src]="item.product.thumbnail"
+                  [alt]="item.product.title"
+                  class="product-thumbnail"
+                />
+                <div class="product-info">
+                  <div class="product-title">{{ item.product.title }}</div>
+                  <div class="product-category">{{ item.product.category }}</div>
+                </div>
+              </td>
+
+              <td>{{ formatCurrency(item.product.price) }}</td>
+
+              <td>
+                <p-inputnumber
+                  [ngModel]="item.quantity"
+                  (onInput)="onQuantityChange(item.product.id, $event.value)"
+                  [min]="1"
+                  [max]="item.product.stock"
+                  [showButtons]="true"
+                  buttonLayout="horizontal"
+                  decrementButtonClass="p-button-secondary"
+                  incrementButtonClass="p-button-secondary"
+                  incrementButtonIcon="pi pi-plus"
+                  decrementButtonIcon="pi pi-minus"
+                ></p-inputnumber>
+              </td>
+
+              <td class="item-total">
+                {{ formatCurrency(calculateItemTotal(item.product.price, item.quantity)) }}
+              </td>
+
+              <td>
+                <p-button
+                  icon="pi pi-trash"
+                  severity="danger"
+                  [text]="true"
+                  (onClick)="onRemoveItem(item.product.id)"
+                  pTooltip="Удалить из корзины"
+                ></p-button>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="5" class="empty-message">
+                Корзина пуста
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+
+        <div class="cart-actions">
+          <p-button
+            label="Очистить корзину"
+            icon="pi pi-trash"
+            severity="secondary"
+            (onClick)="onClearCart()"
+          ></p-button>
+        </div>
+      </div>
+
+      <div class="cart-summary">
+        <p-card>
+          <h3>Итого</h3>
+
+          <p-divider></p-divider>
+
+          <div class="summary-row">
+            <span>Товаров (позиций):</span>
+            <span>{{ itemsCount() }}</span>
+          </div>
+
+          <div class="summary-row">
+            <span>Общее количество:</span>
+            <span>{{ totalQuantity() }} шт.</span>
+          </div>
+
+          <p-divider></p-divider>
+
+          <div class="summary-row">
+            <span>Subtotal:</span>
+            <span>{{ formatCurrency(subtotal()) }}</span>
+          </div>
+
+          <div class="summary-row">
+            <span>Tax (20%):</span>
+            <span>{{ formatCurrency(tax()) }}</span>
+          </div>
+
+          <p-divider></p-divider>
+
+          <div class="summary-row total-row">
+            <span>Total:</span>
+            <span class="total-value">{{ formatCurrency(total()) }}</span>
+          </div>
+
+          <p-divider></p-divider>
+
+          <p-button
+            label="Оформить заказ"
+            icon="pi pi-shopping-cart"
+            severity="success"
+            styleClass="w-full"
+            size="large"
+          ></p-button>
+
+          <div class="continue-shopping">
+            <a routerLink="/products" class="continue-link">
+              ← Продолжить покупки
+            </a>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  } @else {
+    <div class="empty-cart">
+      <i class="pi pi-shopping-cart empty-icon"></i>
+      <h2>Ваша корзина пуста</h2>
+      <p>Добавьте товары, чтобы оформить заказ</p>
+      <p-button
+        label="Перейти к покупкам"
+        icon="pi pi-shopping-bag"
+        routerLink="/products"
+        severity="success"
+        size="large"
+      ></p-button>
+    </div>
+  }
+</div>
+

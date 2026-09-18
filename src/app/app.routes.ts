@@ -1,3 +1,4 @@
+import { productResolver } from './features/products/product.resolver'
 import { adminGuard } from './features/auth/guards/admin.guard';
 import { authGuard } from './features/auth/guards/auth.guard';
 import { Routes } from '@angular/router';
@@ -28,6 +29,21 @@ export const routes: Routes = [
   {
     path: 'change-detection-on-push',
     loadComponent: () => import('./features/homework-28/change-detection-on-push/change-detection-on-push.component').then(m => m.ChangeDetectionOnPushComponent)
+  },
+  {
+    path: 'products',
+    loadComponent: () => import('./features/products/product-list/product-list.component').then(m => m.ProductListComponent)
+  },
+  {
+    path: 'cart',
+    loadComponent: () => import('./features/products/cart/cart.component').then(m => m.CartComponent)
+  },
+  {
+    path: 'products/:id',
+    loadComponent: () => import('./features/products/product-detail/product-detail.component').then(m => m.ProductDetailComponent),
+    resolve: {
+      product: productResolver
+    }
   },
   {
     path: '',

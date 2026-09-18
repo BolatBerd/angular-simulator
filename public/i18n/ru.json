@@ -5,7 +5,9 @@
     "POSTS": "Посты",
     "PARENT": "Родитель",
     "DEFAULT": "Default",
-    "ON_PUSH": "OnPush"
+    "ON_PUSH": "OnPush",
+    "PRODUCTS": "Продукты",
+    "CART": "Корзина"
   },
   "HEADER": {
     "HELLO": "Привет",
