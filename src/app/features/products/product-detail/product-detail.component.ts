@@ -9,6 +9,8 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { IProduct } from '../interfaces/product/IProduct';
 import { CartService } from '../services/cart.service';
+import { catchError, tap } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-detail',
@@ -27,7 +29,7 @@ import { CartService } from '../services/cart.service';
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit {
-  
+
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly cartService: CartService = inject(CartService);
   private readonly messageService: MessageService = inject(MessageService);
@@ -46,16 +48,31 @@ export class ProductDetailComponent implements OnInit {
 
   onAddToCart(): void {
     const product: IProduct | null = this.product();
-    if (product) {
-      this.cartService.addToCart(product);
+    if (!product) return;
 
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Добавлено в корзину',
-        detail: `${product.title} добавлен в корзину`,
-        life: 3000
-      });
-    }
+    this.cartService.addToCart(product)
+      .pipe(
+        tap((success: boolean) => {
+          if (success) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Добавлено в корзину',
+              detail: `${product.title} добавлен в корзину`,
+              life: 3000
+            });
+          }
+        },
+      catchError ((error: HttpErrorResponse) => {
+        console.error('Непредвиденная ошибка при добавлении в корзину:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Ошибка',
+          detail: 'Не удалось добавить товар в корзину',
+          life: 3000
+        });
+        return [];
+      })
+    )).subscribe();
   }
 
 }

@@ -1,3 +1,5 @@
+import { IReview } from '../IReview';
+
 export interface IProduct {
   id: number;
   title: string;
@@ -21,7 +23,7 @@ export interface IProduct {
   warrantyInformation?: string;
   shippingInformation?: string;
   availabilityStatus?: string;
-  reviews?: any[];
+  reviews?: IReview[];
   returnPolicy?: string;
   minimumOrderQuantity?: number;
   meta?: {

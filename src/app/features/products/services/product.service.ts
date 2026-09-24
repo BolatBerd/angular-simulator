@@ -1,4 +1,4 @@
-import { Injectable, inject, signal, computed, WritableSignal, Signal } from '@angular/core';
+import { Injectable, inject, signal, computed, WritableSignal, Signal, effect } from '@angular/core';
 import { IProductListResponse } from '../interfaces/product/IProductListResponse';
 import { IProductQueryParams } from '../interfaces/product/IProductQueryParams';
 import { ProductApiService } from './product-api.service';
@@ -35,8 +35,7 @@ export class ProductService {
     category: this.category() || undefined
   }));
 
-  private getRequest$(): Observable<IProductListResponse> {
-    const params: IProductQueryParams = this.queryParams();
+  private getRequest$(params: IProductQueryParams): Observable<IProductListResponse> {
     if (params.q) {
       return this.productApiService.searchProducts(params.q, params);
     }
@@ -47,51 +46,57 @@ export class ProductService {
   }
 
   loadProducts(): void {
+    this.executeLoadProducts(this.queryParams());
+  }
+
+  private readonly loadProductsEffect = effect(() => {
+    const params: IProductQueryParams = this.queryParams();
+
+    if (!this.loading()) {
+      this.executeLoadProducts(params);
+    }
+  });
+
+  private executeLoadProducts(params: IProductQueryParams): void {
     this.loading.set(true);
 
-    this.getRequest$().pipe(
+    this.getRequest$(params).pipe(
       tap((response: IProductListResponse) => {
-          this.products.set(response.products);
-          this.total.set(response.total);
-          this.loading.set(false);
-        }),
+        this.products.set(response.products);
+        this.total.set(response.total);
+        this.loading.set(false);
+      }),
       catchError((error: HttpErrorResponse) => {
-          console.error('Ошибка загрузки продуктов:', error);
-          this.loading.set(false);
-          return EMPTY;
-        }
-      )
+        console.error('Ошибка загрузки продуктов:', error);
+        this.loading.set(false);
+        return [];
+      })
     ).subscribe();
   }
 
   setSearch(query: string): void {
     this.search.set(query.trim());
     this.page.set(1);
-    this.loadProducts();
   }
 
   setCategory(category: string | null): void {
     this.category.set(category);
     this.page.set(1);
-    this.loadProducts();
   }
 
   setPage(page: number): void {
     this.page.set(page);
-    this.loadProducts();
   }
 
   setPageSize(pageSize: number): void {
     this.pageSize.set(pageSize);
     this.page.set(1);
-    this.loadProducts();
   }
 
   setSort(field: string, order: 'asc' | 'desc'): void {
     this.sortField.set(field);
     this.sortOrder.set(order);
     this.page.set(1);
-    this.loadProducts();
   }
 
   resetFilters(): void {
@@ -100,7 +105,6 @@ export class ProductService {
     this.sortField.set('title');
     this.sortOrder.set('asc');
     this.page.set(1);
-    this.loadProducts();
   }
 
 }

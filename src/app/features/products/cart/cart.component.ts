@@ -1,14 +1,17 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Signal } from '@angular/core';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { MessageService } from 'primeng/api';
 import { DividerModule } from 'primeng/divider';
-import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
 import { CartService } from '../services/cart.service';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 import { RouterLink } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { TagModule } from 'primeng/tag';
+import { ICartItem } from '../interfaces/cart/ICartItem';
 
 @Component({
   selector: 'app-cart',
@@ -22,45 +25,27 @@ import { TagModule } from 'primeng/tag';
     InputNumberModule,
     TableModule,
     DividerModule,
-    TagModule
+    TagModule,
+    ToastModule
   ],
+  providers: [MessageService],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent {
 
   private readonly cartService: CartService = inject(CartService);
-
-  get items() {
-    return this.cartService.items;
-  }
-
-  get itemsCount() {
-    return this.cartService.itemsCount;
-  }
-
-  get totalQuantity() {
-    return this.cartService.totalQuantity;
-  }
-
-  get subtotal() {
-    return this.cartService.subtotal;
-  }
-
-  get tax() {
-    return this.cartService.tax;
-  }
-
-  get total() {
-    return this.cartService.total;
-  }
-
-  get loading() {
-    return this.cartService.loading;
-  }
+  readonly items: Signal<ICartItem[]> = this.cartService.items;
+  readonly itemsCount: Signal<number> = this.cartService.itemsCount;
+  readonly totalQuantity: Signal<number> = this.cartService.totalQuantity;
+  readonly subtotal: Signal<number> = this.cartService.subtotal;
+  readonly tax: Signal<number> = this.cartService.tax;
+  readonly total: Signal<number> = this.cartService.total;
+  readonly loading: Signal<boolean> = this.cartService.loading;
+  promoCodeInput: string = '';
 
   onQuantityChange(productId: number, quantity: number | null): void {
-    const safeQuantity = quantity ?? 1;
+    const safeQuantity: number = quantity ?? 1;
     this.cartService.updateQuantity(productId, safeQuantity);
   }
 
@@ -73,10 +58,10 @@ export class CartComponent {
   }
 
   calculateItemTotal(price: number, quantity: number): number {
-    return price * quantity;
+    return this.cartService.calculateItemTotal(price, quantity);
   }
 
   formatCurrency(value: number): string {
-    return `$${value.toFixed(2)}`;
+    return `$${ value.toFixed(2) }`;
   }
 }

@@ -13,19 +13,19 @@ export class CartApiService {
   private readonly baseUrl: string = 'https://dummyjson.com/carts';
 
   getCartById(cartId: number): Observable<ICart> {
-    return this.http.get<ICart>(`${this.baseUrl}/${cartId}`);
+    return this.http.get<ICart>(`${ this.baseUrl }/${ cartId }`);
   }
 
   createCart(userId: number, payload: IUpdateCartPayload): Observable<ICart> {
-    return this.http.post<ICart>(`${this.baseUrl}/add`, { userId, products: payload.products });
+    return this.http.post<ICart>(`${ this.baseUrl }/add`, { userId, products: payload.products });
   }
 
   updateCart(cartId: number, payload: IUpdateCartPayload): Observable<ICart> {
-    return this.http.put<ICart>(`${this.baseUrl}/${cartId}`, { merge: true, products: payload.products });
+    return this.http.put<ICart>(`${ this.baseUrl }/${ cartId }`, { merge: true, products: payload.products });
   }
 
   deleteCart(cartId: number): Observable<ICart> {
-    return this.http.delete<ICart>(`${this.baseUrl}/${cartId}`);
+    return this.http.delete<ICart>(`${ this.baseUrl }/${ cartId }`);
   }
 
 }

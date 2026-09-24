@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, OnDestroy, WritableSignal, DestroyRef } from '@angular/core';
-import { BehaviorSubject, Observable, debounceTime, tap, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, debounceTime, tap, Subscription, catchError } from 'rxjs';
 import { SelectModule, SelectChangeEvent } from 'primeng/select';
 import { IPaginatorPageChangeEvent } from '../interfaces/IPaginatorEvent';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -28,7 +28,7 @@ import { IProduct } from '../interfaces/product/IProduct';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
-export class ProductListComponent implements OnInit, OnDestroy {
+export class ProductListComponent implements OnInit {
 
   private readonly productService: ProductService = inject(ProductService);
   private readonly productApiService: ProductApiService = inject(ProductApiService);
@@ -48,14 +48,18 @@ export class ProductListComponent implements OnInit, OnDestroy {
   readonly sortOrder: WritableSignal<'asc' | 'desc'> = this.productService.sortOrder;
 
   readonly pageSizeOptions: ISelectOption<number>[] = [
-    { label: '10', value: 10 }, { label: '20', value: 20 }, { label: '30', value: 30 }
+    { label: '10', value: 10 }, { label: '20', value: 20 },
+    { label: '30', value: 30 }
   ];
   readonly sortFieldOptions: ISelectOption<string>[] = [
-    { label: 'Название', value: 'title' }, { label: 'Цена', value: 'price' },
-    { label: 'Рейтинг', value: 'rating' }, { label: 'Остаток', value: 'stock' }
+    { label: 'Название', value: 'title' },
+    { label: 'Цена', value: 'price' },
+    { label: 'Рейтинг', value: 'rating' },
+    { label: 'Остаток', value: 'stock' }
   ];
   readonly sortOrderOptions: ISelectOption<'asc' | 'desc'>[] = [
-    { label: 'По возрастанию', value: 'asc' }, { label: 'По убыванию', value: 'desc' }
+    { label: 'По возрастанию', value: 'asc' },
+    { label: 'По убыванию', value: 'desc' }
   ];
 
   categories: ISelectOption<string | null>[] = [];
@@ -64,12 +68,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.productService.loadProducts();
     this.loadCategories();
     this.setupSearchDebounce();
-  }
-
-  ngOnDestroy(): void {
-    if (this.searchSubscription) {
-      this.searchSubscription.unsubscribe();
-    }
   }
 
   private loadCategories(): void {
@@ -81,10 +79,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
         }));
         this.categories = [{ label: 'Все категории', value: null }, ...mappedCategories];
       }),
-      tap({ error: (error: HttpErrorResponse) => {
+       catchError ((error: HttpErrorResponse) => {
         console.error('Ошибка загрузки категорий:', error);
         this.categories = [{ label: 'Ошибка загрузки', value: null }];
-      }})
+        return [];
+      })
     ).subscribe();
   }
 
@@ -94,7 +93,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       debounceTime(500),
       tap((query: string) => this.productService.setSearch(query)),
       takeUntilDestroyed(this.destroyRef)
-      ).subscribe();
+    ).subscribe();
   }
 
   onSearchInput(event: Event): void {
@@ -132,4 +131,5 @@ export class ProductListComponent implements OnInit, OnDestroy {
   onResetFilters(): void {
     this.productService.resetFilters();
   }
+  
 }
