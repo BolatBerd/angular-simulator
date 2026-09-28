@@ -27,7 +27,7 @@ export class ProductApiService {
   }
 
   getProducts(params: IProductQueryParams = {}): Observable<IProductListResponse> {
-    const httpParams = this.buildHttpParams(params);
+    const httpParams: HttpParams = this.buildHttpParams(params);
     return this.http.get<IProductListResponse>(this.baseUrl, { params: httpParams });
   }
 
