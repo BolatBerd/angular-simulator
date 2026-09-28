@@ -1,0 +1,150 @@
+.product-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.back-button {
+  margin-bottom: 2rem;
+}
+
+.product-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.product-gallery {
+  .main-image {
+    text-align: center;
+    margin-bottom: 1rem;
+
+    .product-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+  }
+
+  .additional-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0.5rem;
+
+    .thumbnail {
+      width: 100%;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+.product-info {
+  .product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    .product-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+
+  .product-price-section {
+    .price-with-discount {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .original-price {
+        font-size: 1.2rem;
+        color: #999;
+        text-decoration: line-through;
+      }
+
+      .discounted-price {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #28a745;
+      }
+    }
+
+    .price-normal {
+      .price {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #333;
+      }
+    }
+  }
+
+  .product-meta {
+    display: flex;
+    gap: 2rem;
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.1rem;
+
+      i {
+        color: #ffc107;
+      }
+    }
+  }
+
+  .product-description {
+    h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      line-height: 1.6;
+      color: #666;
+    }
+  }
+
+  .product-details {
+    h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .detail-row {
+      display: flex;
+      margin-bottom: 0.5rem;
+
+      .detail-label {
+        font-weight: 600;
+        min-width: 150px;
+        color: #333;
+      }
+
+      .detail-value {
+        color: #666;
+      }
+    }
+  }
+
+  .product-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+}
