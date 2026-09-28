@@ -1,4 +1,4 @@
-export interface ISelectOption<T = string | number | null> {
+export interface ISelectOption<T = unknown> {
   label: string;
   value: T;
 }

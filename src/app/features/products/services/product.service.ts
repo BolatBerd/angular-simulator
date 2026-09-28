@@ -1,10 +1,13 @@
-import { Injectable, inject, signal, computed, WritableSignal, Signal, effect } from '@angular/core';
+import { Injectable, inject, signal, computed, WritableSignal, Signal, effect, untracked, EffectRef } from '@angular/core';
+import { catchError, EMPTY, Observable, tap } from 'rxjs';
 import { IProductListResponse } from '../interfaces/product/IProductListResponse';
 import { IProductQueryParams } from '../interfaces/product/IProductQueryParams';
 import { ProductApiService } from './product-api.service';
-import { catchError, EMPTY, Observable, tap } from 'rxjs';
-import { IProduct } from '../interfaces/product/IProduct';
 import { HttpErrorResponse } from '@angular/common/http';
+import { IProductFilters } from '../interfaces/IProductFilters';
+import { IProduct } from '../interfaces/product/IProduct';
+import { SortField } from '../SortField';
+import { SortOrder } from '../SortOrder';
 
 @Injectable({
   providedIn: 'root'
@@ -14,26 +17,58 @@ export class ProductService {
   private readonly productApiService: ProductApiService = inject(ProductApiService);
 
   readonly products: WritableSignal<IProduct[]> = signal<IProduct[]>([]);
-  readonly page: WritableSignal<number> = signal(1);
-  readonly pageSize: WritableSignal<number> = signal(10);
-  readonly search: WritableSignal<string> = signal('');
-  readonly category: WritableSignal<string | null> = signal<string | null>(null);
-  readonly sortField: WritableSignal<string> = signal<string>('title');
-  readonly sortOrder: WritableSignal<'asc' | 'desc'> = signal<'asc' | 'desc'>('asc');
   readonly total: WritableSignal<number> = signal(0);
   readonly loading: WritableSignal<boolean> = signal(false);
+  DEFAULT_FILTERS: IProductFilters = {
+    search: '',
+    category: null,
+    sortField: SortField.Title,
+    sortOrder: SortOrder.Asc,
+    page: 1,
+    pageSize: 10
+  };
 
-  readonly skip: Signal<number> = computed(() => (this.page() - 1) * this.pageSize());
-  readonly totalPages: Signal<number> = computed(() => Math.ceil(this.total() / this.pageSize()));
+  readonly filters: WritableSignal<IProductFilters> = signal<IProductFilters>({ ...this.DEFAULT_FILTERS });
+
+  readonly skip: Signal<number> = computed(() => (this.filters().page - 1) * this.filters().pageSize);
+  readonly totalPages: Signal<number> = computed(() => Math.ceil(this.total() / this.filters().pageSize));
 
   readonly queryParams: Signal<IProductQueryParams> = computed(() => ({
-    limit: this.pageSize(),
+    limit: this.filters().pageSize,
     skip: this.skip(),
-    sortBy: this.sortField(),
-    order: this.sortOrder(),
-    q: this.search() || undefined,
-    category: this.category() || undefined
+    sortBy: this.filters().sortField,
+    order: this.filters().sortOrder,
+    q: this.filters().search || undefined,
+    category: this.filters().category || undefined
   }));
+
+  private readonly filterKey: Signal<string> = computed(() =>
+    JSON.stringify({
+      search: this.filters().search,
+      category: this.filters().category,
+      sortField: this.filters().sortField,
+      sortOrder: this.filters().sortOrder,
+      pageSize: this.filters().pageSize
+    })
+  );
+
+  private readonly resetPageEffect: EffectRef = effect(() => {
+    this.filterKey();
+
+    untracked(() => {
+      if (this.filters().page !== 1) {
+        this.filters.update((f: IProductFilters) => ({ ...f, page: 1 }));
+      }
+    });
+  });
+
+  private readonly loadProductsEffect: EffectRef = effect(() => {
+    const params: IProductQueryParams = this.queryParams();
+
+    if (!untracked(() => this.loading())) {
+      this.executeLoadProducts(params);
+    }
+  });
 
   private getRequest$(params: IProductQueryParams): Observable<IProductListResponse> {
     if (params.q) {
@@ -49,14 +84,6 @@ export class ProductService {
     this.executeLoadProducts(this.queryParams());
   }
 
-  private readonly loadProductsEffect = effect(() => {
-    const params: IProductQueryParams = this.queryParams();
-
-    if (!this.loading()) {
-      this.executeLoadProducts(params);
-    }
-  });
-
   private executeLoadProducts(params: IProductQueryParams): void {
     this.loading.set(true);
 
@@ -69,42 +96,33 @@ export class ProductService {
       catchError((error: HttpErrorResponse) => {
         console.error('Ошибка загрузки продуктов:', error);
         this.loading.set(false);
-        return [];
+        return EMPTY;
       })
     ).subscribe();
   }
 
   setSearch(query: string): void {
-    this.search.set(query.trim());
-    this.page.set(1);
+    this.filters.update(f => ({ ...f, search: query.trim() }));
   }
 
   setCategory(category: string | null): void {
-    this.category.set(category);
-    this.page.set(1);
+    this.filters.update(f => ({ ...f, category }));
   }
 
   setPage(page: number): void {
-    this.page.set(page);
+    this.filters.update(f => ({ ...f, page }));
   }
 
   setPageSize(pageSize: number): void {
-    this.pageSize.set(pageSize);
-    this.page.set(1);
+    this.filters.update(f => ({ ...f, pageSize }));
   }
 
-  setSort(field: string, order: 'asc' | 'desc'): void {
-    this.sortField.set(field);
-    this.sortOrder.set(order);
-    this.page.set(1);
+  setSort(field: SortField, order: SortOrder): void {
+    this.filters.update(f => ({ ...f, sortField: field, sortOrder: order }));
   }
 
   resetFilters(): void {
-    this.search.set('');
-    this.category.set(null);
-    this.sortField.set('title');
-    this.sortOrder.set('asc');
-    this.page.set(1);
+    this.filters.set({ ...this.DEFAULT_FILTERS });
   }
 
 }

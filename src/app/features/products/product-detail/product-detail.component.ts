@@ -57,7 +57,7 @@ export class ProductDetailComponent implements OnInit {
             this.messageService.add({
               severity: 'success',
               summary: 'Добавлено в корзину',
-              detail: `${product.title} добавлен в корзину`,
+              detail: `${ product.title } добавлен в корзину`,
               life: 3000
             });
           }

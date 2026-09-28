@@ -255,5 +255,36 @@
     "passwordPrompt": "Құпия сөзді енгізіңіз",
     "emptyMessage": "Деректер жоқ",
     "emptyFilterMessage": "Нәтижелер табылмады"
+  },
+  "PRODUCTS": {
+    "TITLE": "Өнімдер тізімі",
+    "SEARCH": {
+      "LABEL": "Іздеу:",
+      "PLACEHOLDER": "Атауын енгізіңіз..."
+    },
+    "CATEGORY": {
+      "LABEL": "Санат:",
+      "ALL": "Барлық санаттар"
+    },
+    "SORT": {
+      "LABEL": "Сұрыптау:",
+      "FIELD": {
+        "TITLE": "Атауы",
+        "PRICE": "Бағасы",
+        "RATING": "Рейтинг",
+        "STOCK": "Қалдық"
+      },
+      "ORDER": {
+        "ASC": "Өсу ретімен",
+        "DESC": "Кему ретімен"
+      }
+    },
+    "RESET_FILTERS": "Сүзгілерді тастау",
+    "NOT_FOUND": "Өнімдер табылмады",
+    "DETAILS": "Толығырақ",
+    "CATEGORY_LABEL": "Санат:",
+    "PRICE_LABEL": "Бағасы:",
+    "RATING_LABEL": "Рейтинг:",
+    "STOCK_LABEL": "Қолда бар:"
   }
 }
