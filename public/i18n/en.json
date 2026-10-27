@@ -5,7 +5,9 @@
     "POSTS": "Posts",
     "PARENT": "Parent",
     "DEFAULT": "Default",
-    "ON_PUSH": "OnPush"
+    "ON_PUSH": "OnPush",
+    "PRODUCTS": "Products",
+    "CART": "Cart"
   },
   "HEADER": {
     "HELLO": "Hello",
@@ -253,5 +255,36 @@
     "passwordPrompt": "Enter password",
     "emptyMessage": "No records found",
     "emptyFilterMessage": "No results found"
+  },
+  "PRODUCTS": {
+    "TITLE": "Список продуктов",
+    "SEARCH": {
+      "LABEL": "Поиск:",
+      "PLACEHOLDER": "Введите название..."
+    },
+    "CATEGORY": {
+      "LABEL": "Категория:",
+      "ALL": "Все категории"
+    },
+    "SORT": {
+      "LABEL": "Сортировать по:",
+      "FIELD": {
+        "TITLE": "Название",
+        "PRICE": "Цена",
+        "RATING": "Рейтинг",
+        "STOCK": "Остаток"
+      },
+      "ORDER": {
+        "ASC": "По возрастанию",
+        "DESC": "По убыванию"
+      }
+    },
+    "RESET_FILTERS": "Сбросить фильтры",
+    "NOT_FOUND": "Продукты не найдены",
+    "DETAILS": "Подробнее",
+    "CATEGORY_LABEL": "Категория:",
+    "PRICE_LABEL": "Цена:",
+    "RATING_LABEL": "Рейтинг:",
+    "STOCK_LABEL": "В наличии:"
   }
 }

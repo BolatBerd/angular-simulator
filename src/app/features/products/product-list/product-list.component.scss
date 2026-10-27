@@ -1,0 +1,123 @@
+.products-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  gap: 1.5rem !important;
+  margin-bottom: 2rem;
+}
+.product-list-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  margin-bottom: 100px;
+  h1 {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+}
+
+.filters-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+
+  .filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #333;
+    }
+
+    input,
+    p-select {
+      min-width: 200px;
+    }
+  }
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+
+  .product-card {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .product-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0.5rem 0;
+      color: #333;
+    }
+
+    .product-category {
+      font-size: 0.875rem;
+      color: #666;
+      margin: 0.25rem 0;
+    }
+
+    .product-price {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #28a745;
+      margin: 0.5rem 0;
+    }
+
+    .product-rating {
+      font-size: 0.875rem;
+      color: #ffc107;
+      margin: 0.25rem 0;
+    }
+
+    .product-stock {
+      font-size: 0.875rem;
+      color: #666;
+      margin: 0.25rem 0;
+    }
+  }
+}
+
+p-paginator {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .filters-panel {
+    flex-direction: column;
+
+    .filter-item {
+      input,
+      p-select {
+        min-width: 100%;
+      }
+    }
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+}

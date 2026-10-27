@@ -56,6 +56,8 @@ export class HeaderComponent {
     { label: 'NAV.PARENT', path: 'parent' },
     { label: 'NAV.DEFAULT', path: 'change-detection-default' },
     { label: 'NAV.ON_PUSH', path: 'change-detection-on-push' },
+    { label: 'NAV.PRODUCTS', path: 'products' },
+    { label: 'NAV.CART', path: 'cart' },
   ];
 
   languageOptions: { code: AppLanguage; label: string }[] = [

@@ -1,0 +1,158 @@
+<div class="product-detail-container">
+  @if (product(); as p) {
+    <div class="back-button">
+      <a
+        pButton
+        label="Назад к списку"
+        icon="pi pi-arrow-left"
+        routerLink="/products"
+        severity="secondary"
+      ></a>
+    </div>
+
+    <div class="product-main">
+      <div class="product-gallery">
+        <p-card>
+          <div class="main-image">
+            <img
+              [src]="p.thumbnail"
+              [alt]="p.title"
+              class="product-image"
+            />
+          </div>
+
+          @if (p.images && p.images.length > 1) {
+            <div class="additional-images">
+              @for (image of p.images; track image) {
+                <img
+                  [src]="image"
+                  [alt]="p.title"
+                  class="thumbnail"
+                />
+              }
+            </div>
+          }
+        </p-card>
+      </div>
+
+      <div class="product-info">
+        <p-card>
+          <div class="product-header">
+            <h1 class="product-title">{{ p.title }}</h1>
+            <p-tag [value]="p.category" severity="info"></p-tag>
+          </div>
+
+          <p-divider></p-divider>
+
+          <div class="product-price-section">
+            @if (p.discountPercentage > 0) {
+              <div class="price-with-discount">
+                <span class="original-price">${{ p.price }}</span>
+                <span class="discounted-price">${{ getDiscountedPrice(p) }}</span>
+                <p-tag
+                  [value]=" '-' + p.discountPercentage + '%'"
+                  severity="danger"
+                ></p-tag>
+              </div>
+            } @else {
+              <div class="price-normal">
+                <span class="price">${{ p.price }}</span>
+              </div>
+            }
+          </div>
+
+          <p-divider></p-divider>
+
+          <div class="product-meta">
+            <div class="meta-item">
+              <i class="pi pi-star-fill"></i>
+              <span>Рейтинг: {{ p.rating }} / 5</span>
+            </div>
+            <div class="meta-item">
+              <i class="pi pi-box"></i>
+              <span>В наличии: {{ p.stock }} шт.</span>
+            </div>
+          </div>
+
+          <p-divider></p-divider>
+
+          <div class="product-description">
+            <h3>Описание</h3>
+            <p>{{ p.description }}</p>
+          </div>
+
+          <p-divider></p-divider>
+
+          <div class="product-details">
+            <h3>Характеристики</h3>
+
+            @if (p.brand) {
+              <div class="detail-row">
+                <span class="detail-label">Бренд:</span>
+                <span class="detail-value">{{ p.brand }}</span>
+              </div>
+            }
+
+            @if (p.dimensions) {
+              <div class="detail-row">
+                <span class="detail-label">Размеры:</span>
+                <span class="detail-value">
+                  {{ p.dimensions.width }} × {{ p.dimensions.height }} × {{ p.dimensions.depth }} см
+                </span>
+              </div>
+            }
+
+            @if (p.weight) {
+              <div class="detail-row">
+                <span class="detail-label">Вес:</span>
+                <span class="detail-value">{{ p.weight }} кг</span>
+              </div>
+            }
+
+            @if (p.warrantyInformation) {
+              <div class="detail-row">
+                <span class="detail-label">Гарантия:</span>
+                <span class="detail-value">{{ p.warrantyInformation }}</span>
+              </div>
+            }
+
+            @if (p.shippingInformation) {
+              <div class="detail-row">
+                <span class="detail-label">Доставка:</span>
+                <span class="detail-value">{{ p.shippingInformation }}</span>
+              </div>
+            }
+
+            @if (p.availabilityStatus) {
+              <div class="detail-row">
+                <span class="detail-label">Статус:</span>
+                <span class="detail-value">{{ p.availabilityStatus }}</span>
+              </div>
+            }
+
+            @if (p.returnPolicy) {
+              <div class="detail-row">
+                <span class="detail-label">Возврат:</span>
+                <span class="detail-value">{{ p.returnPolicy }}</span>
+              </div>
+            }
+          </div>
+
+          <p-divider></p-divider>
+
+          <div class="product-actions">
+            <p-button
+              label="Добавить в корзину"
+              icon="pi pi-shopping-cart"
+              severity="success"
+              size="large"
+              (onClick)="onAddToCart()"
+            ></p-button>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  } @else {
+    <p>Продукт не найден</p>
+  }
+</div>
