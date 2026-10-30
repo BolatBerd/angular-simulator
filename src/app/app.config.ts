@@ -5,6 +5,12 @@ import {
   provideZoneChangeDetection,
 } from '@angular/core';
 
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+
+import { recipesReducer } from './features/recipes/store/recipes.reducer'; // Путь может отличаться
+import { RecipesEffects } from './features/recipes/store/recipes.effects';
+
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
@@ -82,5 +88,9 @@ export const appConfig: ApplicationConfig = {
         sessionTimeout: 30,
       },
     },
+    provideStore({
+      recipes: recipesReducer
+    }),
+    provideEffects([RecipesEffects])
   ],
 };
