@@ -1,0 +1,24 @@
+@if (loading$ | async) {
+  <div class="loader">Загрузка рецептов...</div>
+}
+
+@if (error$ | async; as error) {
+  <div class="error">
+    Ошибка: {{ error }}
+  </div>
+}
+
+<button (click)="onReload()">Reload recipes</button>
+
+<div class="recipes-grid">
+  @for (recipe of recipes$ | async; track recipe.id) {
+    <div class="recipe-card">
+      <h3>{{ recipe.name }}</h3>
+      <p>Кухня: {{ recipe.cuisine }}</p>
+      <p>Время: {{ recipe.prepTimeMinutes + recipe.cookTimeMinutes }} мин.</p>
+      <p>Рейтинг: ⭐ {{ recipe.rating }}</p>
+    </div>
+  } @empty {
+    <p>Рецепты не найдены.</p>
+  }
+</div>
