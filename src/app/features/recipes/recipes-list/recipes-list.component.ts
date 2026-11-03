@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -15,22 +15,21 @@ import { selectRecipes, selectLoading, selectError } from '../store/recipes.sele
 })
 export class RecipesListComponent implements OnInit {
 
-  recipes$: Observable<IRecipe[]>;
-  loading$: Observable<boolean>;
-  error$: Observable<string | null>;
+  private store: Store = inject(Store);
 
-  constructor(private store: Store) {
+  recipes$!: Observable<IRecipe[]>;
+  loading$!: Observable<boolean>;
+  error$!: Observable<string | null>;
+
+  ngOnInit(): void {
     this.recipes$ = this.store.select(selectRecipes);
     this.loading$ = this.store.select(selectLoading);
     this.error$ = this.store.select(selectError);
-  }
-
-  ngOnInit(): void {
     this.store.dispatch(RecipesActions.loadRecipes());
   }
 
   onReload(): void {
     this.store.dispatch(RecipesActions.loadRecipes());
   }
-  
+
 }

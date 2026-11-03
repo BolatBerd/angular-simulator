@@ -16,7 +16,7 @@ export const recipesReducer = createReducer(
     loading: true,
     error: null,
   })),
-  on(RecipesActions.loadRecipesSuccess, (state, { recipes }) => ({
+  on(RecipesActions.loadRecipesSuccess, (state: IRecipesState, { recipes }) => ({
     ...state,
     recipes,
     loading: false,

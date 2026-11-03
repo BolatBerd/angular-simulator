@@ -8,7 +8,7 @@ import {
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 
-import { recipesReducer } from './features/recipes/store/recipes.reducer'; // Путь может отличаться
+import { recipesReducer } from './features/recipes/store/recipes.reducer';
 import { RecipesEffects } from './features/recipes/store/recipes.effects';
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';

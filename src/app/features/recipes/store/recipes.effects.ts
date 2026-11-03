@@ -3,6 +3,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { RecipeApiService } from '../services/recipe-api.service';
 import * as RecipesActions from './recipes.actions';
 import { catchError, map, of, switchMap } from 'rxjs';
+import { IRecipesResponse } from '../interfaces/IRecipesResponse';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class RecipesEffects {
@@ -15,8 +17,8 @@ export class RecipesEffects {
       ofType(RecipesActions.loadRecipes),
       switchMap(() =>
         this.recipeApiService.getRecipes().pipe(
-          map((response) => RecipesActions.loadRecipesSuccess({ recipes: response.recipes })),
-          catchError((error) => of(RecipesActions.loadRecipesFailure({ error: error.message })))
+          map((response: IRecipesResponse) => RecipesActions.loadRecipesSuccess({ recipes: response.recipes })),
+          catchError((error: HttpErrorResponse) => of(RecipesActions.loadRecipesFailure({ error: error.message })))
         )
       )
     )
