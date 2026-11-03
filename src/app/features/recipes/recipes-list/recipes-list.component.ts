@@ -17,14 +17,11 @@ export class RecipesListComponent implements OnInit {
 
   private store: Store = inject(Store);
 
-  recipes$!: Observable<IRecipe[]>;
-  loading$!: Observable<boolean>;
-  error$!: Observable<string | null>;
+  recipes$: Observable<IRecipe[]> = this.store.select(selectRecipes);
+  loading$: Observable<boolean> = this.store.select(selectLoading);
+  error$: Observable<string | null> = this.store.select(selectError);
 
   ngOnInit(): void {
-    this.recipes$ = this.store.select(selectRecipes);
-    this.loading$ = this.store.select(selectLoading);
-    this.error$ = this.store.select(selectError);
     this.store.dispatch(RecipesActions.loadRecipes());
   }
 
