@@ -1,23 +1,23 @@
 <div class="stats">
-  <span>Избранное: {{ favoritesCount() }}</span>
-  <span>Авторы: {{ authorsCount() }}</span>
+  <span>Избранное: {{ store.favoritesCount() }}</span>
+  <span>Авторы: {{ store.authorsCount() }}</span>
 </div>
 
 <div class="filters">
-  <button (click)="setFilter('all')" [class.active]="store.filter() === 'all'">Все</button>
-  <button (click)="setFilter('favorites')" [class.active]="store.filter() === 'favorites'">Избранное</button>
+  <button (click)="store.setFilter('all')" [class.active]="store.filter() === 'all'">Все</button>
+  <button (click)="store.setFilter('favorites')" [class.active]="store.filter() === 'favorites'">Избранное</button>
 </div>
 
-@if (loading()) {
+@if (store.loading()) {
   <p>Загрузка цитат...</p>
-} @else if (error()) {
+} @else if (store.error()) {
   <div class="error">
     <p>Не удалось загрузить</p>
     <button (click)="retry()">Повторить попытку</button>
   </div>
 } @else {
   <div class="quotes-grid">
-    @for (quote of quotes(); track quote.id) {
+    @for (quote of store.quotes(); track quote.id) {
       <div class="quote-card">
         <p>"{{ quote.quote }}"</p>
         <p>— {{ quote.author }}</p>
@@ -31,11 +31,11 @@
   </div>
 }
 
-@if (randomQuote()) {
+@if (store.randomQuote()) {
   <div class="random-block">
     <h3>Случайная цитата</h3>
-    <p>"{{ randomQuote()?.quote }}"</p>
-    <p>— {{ randomQuote()?.author }}</p>
+    <p>"{{ store.randomQuote()?.quote }}"</p>
+    <p>— {{ store.randomQuote()?.author }}</p>
   </div>
 }
 

@@ -16,6 +16,8 @@ const initialState: IQuotesState = {
   randomQuote: null,
 };
 
+export const provideQuotesStore = () => QuotesStore;
+
 export const QuotesStore = signalStore(
   withState(type<IQuotesState>()),
   withState(initialState),

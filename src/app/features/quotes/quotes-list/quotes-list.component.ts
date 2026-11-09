@@ -7,7 +7,7 @@ import { QuotesStore } from '../store/quotes.store';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './quotes-list.component.html',
-  providers: [QuotesStore]
+  // providers: [QuotesStore]
 })
 export class QuotesListComponent implements OnInit {
 
@@ -16,13 +16,6 @@ export class QuotesListComponent implements OnInit {
   ngOnInit() {
     this.store.loadQuotes();
   }
-
-  get quotes() { return this.store.displayedQuotes; }
-  get loading() { return this.store.loading; }
-  get error() { return this.store.error; }
-  get favoritesCount() { return this.store.favoritesCount; }
-  get authorsCount() { return this.store.authorsCount; }
-  get randomQuote() { return this.store.randomQuote; }
 
   toggleFavorite(quote: any) {
     this.store.toggleFavorite(quote);

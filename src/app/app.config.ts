@@ -30,6 +30,7 @@ import { DATE_FORMAT } from '../date-format.token';
 import { APP_CONFIG } from '../config.token';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader'
+import { QuotesStore } from './features/quotes/store/quotes.store';
 
 function getThemePresetFromStorage(): Preset {
   const themeMap: Record<Theme, Preset> = {
@@ -58,6 +59,7 @@ export const appConfig: ApplicationConfig = {
         suffix: '.json'
       })
     }),
+    QuotesStore,
     provideRouter(routes),
     provideZoneChangeDetection(),
     providePrimeNG({
