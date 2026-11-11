@@ -1,3 +1,4 @@
+import { QuoteFilter } from '../enums/QuoteFilter';
 import { IQuote } from './IQuote';
 
 export interface IQuotesState {
@@ -5,6 +6,6 @@ export interface IQuotesState {
   favorites: IQuote[];
   loading: boolean;
   error: string | null;
-  filter: 'all' | 'favorites';
+  filter: QuoteFilter;
   randomQuote: IQuote | null;
 }

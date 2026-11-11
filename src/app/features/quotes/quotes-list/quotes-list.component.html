@@ -4,8 +4,8 @@
 </div>
 
 <div class="filters">
-  <button (click)="store.setFilter('all')" [class.active]="store.filter() === 'all'">Все</button>
-  <button (click)="store.setFilter('favorites')" [class.active]="store.filter() === 'favorites'">Избранное</button>
+  <button (click)="store.setFilter(QuoteFilter.All)" [class.active]="store.filter() === 'all'">Все</button>
+  <button (click)="store.setFilter(QuoteFilter.Favorites)" [class.active]="store.filter() === 'favorites'">Избранное</button>
 </div>
 
 @if (store.loading()) {

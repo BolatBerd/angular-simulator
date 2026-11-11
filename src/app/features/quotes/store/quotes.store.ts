@@ -3,6 +3,7 @@ import { pipe, switchMap, tap, catchError, of } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IQuotesResponse } from '../interfaces/IQuotesResponse';
 import { IQuotesState } from '../interfaces/IQuotesState';
+import { QuoteFilter } from '../enums/QuoteFilter';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { inject } from '@angular/core';
 import { IQuote } from '../interfaces/IQuote';
@@ -12,7 +13,7 @@ const initialState: IQuotesState = {
   favorites: [],
   loading: false,
   error: null,
-  filter: 'all',
+  filter: QuoteFilter.All,
   randomQuote: null,
 };
 
@@ -25,8 +26,8 @@ export const QuotesStore = signalStore(
     favoritesCount: (): number => store.favorites().length,
     authorsCount: (): number => new Set(store.quotes().map((q: IQuote) => q.author)).size,
     displayedQuotes: (): IQuote[] => {
-      const currentFilter: 'all' | 'favorites' = store.filter();
-      if (currentFilter === 'favorites') {
+      const currentFilter: QuoteFilter = store.filter();
+      if (currentFilter === QuoteFilter.Favorites) {
         return store.favorites();
       }
       return store.quotes();
@@ -65,7 +66,7 @@ export const QuotesStore = signalStore(
         }
       },
 
-      setFilter(filter: 'all' | 'favorites') {
+      setFilter(filter: QuoteFilter) {
         patchState(store, { filter });
       },
 
