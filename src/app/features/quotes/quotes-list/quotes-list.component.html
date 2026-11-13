@@ -1,0 +1,42 @@
+<div class="stats">
+  <span>Избранное: {{ store.favoritesCount() }}</span>
+  <span>Авторы: {{ store.authorsCount() }}</span>
+</div>
+
+<div class="filters">
+  <button (click)="store.setFilter(QuoteFilter.All)" [class.active]="store.filter() === 'all'">Все</button>
+  <button (click)="store.setFilter(QuoteFilter.Favorites)" [class.active]="store.filter() === 'favorites'">Избранное</button>
+</div>
+
+@if (store.loading()) {
+  <p>Загрузка цитат...</p>
+} @else if (store.error()) {
+  <div class="error">
+    <p>Не удалось загрузить</p>
+    <button (click)="retry()">Повторить попытку</button>
+  </div>
+} @else {
+  <div class="quotes-grid">
+    @for (quote of store.quotes(); track quote.id) {
+      <div class="quote-card">
+        <p>"{{ quote.quote }}"</p>
+        <p>— {{ quote.author }}</p>
+        <button (click)="toggleFavorite(quote)">
+          {{ store.favorites().some(f => f.id === quote.id) ? '★ Удалить' : '☆ Добавить в избранное' }}
+        </button>
+      </div>
+    } @empty {
+      <p>Цитаты не найдены.</p>
+    }
+  </div>
+}
+
+@if (store.randomQuote()) {
+  <div class="random-block">
+    <h3>Случайная цитата</h3>
+    <p>"{{ store.randomQuote()?.quote }}"</p>
+    <p>— {{ store.randomQuote()?.author }}</p>
+  </div>
+}
+
+<button (click)="pickRandom()">Случайная цитата</button>
